@@ -20,4 +20,9 @@
         android:icon="@drawable/ic_chat"
         android:menuCategory="secondary"
         android:title="Chats" />
+    <item
+        android:id="@id/meetupFragment"
+        android:icon="@drawable/ic_people"
+        android:menuCategory="secondary"
+        android:title="Meetups" />
 </menu>

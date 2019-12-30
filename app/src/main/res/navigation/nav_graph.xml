@@ -25,4 +25,9 @@
         android:name="com.halalrishtey.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/meetupFragment"
+        android:name="com.halalrishtey.MeetupFragment"
+        android:label="fragment_meetup"
+        tools:layout="@layout/fragment_meetup" />
 </navigation>
