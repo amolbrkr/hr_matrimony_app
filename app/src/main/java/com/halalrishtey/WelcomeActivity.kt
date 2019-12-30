@@ -12,25 +12,8 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-
-        welcome_viewPager.adapter = WelcomeViewPagerAdapter(supportFragmentManager, lifecycle)
     }
+
+    //TODO: Hookup nav host fragment here.
 }
 
-private const val ARG_RES_ID = "image_res_id"
-private val imageResources =
-    listOf(R.mipmap.welcome_0, R.mipmap.welcome_1, R.mipmap.welcome_2, R.mipmap.welcome_3)
-
-class WelcomeViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
-    FragmentStateAdapter(fragmentManager, lifecycle) {
-    override fun getItemCount(): Int = 4
-
-    override fun createFragment(position: Int): Fragment {
-        val fragment = WelcomePageFragment()
-        fragment.arguments = Bundle().apply {
-            putInt(ARG_RES_ID, imageResources[position])
-        }
-
-        return fragment
-    }
-}
