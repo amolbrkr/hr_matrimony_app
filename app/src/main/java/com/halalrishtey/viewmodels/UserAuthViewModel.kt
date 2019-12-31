@@ -1,26 +1,13 @@
 package com.halalrishtey.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseUser
-import com.halalrishtey.services.AuthService
+import com.halalrishtey.services.AuthRepository
 
 
 class UserAuthViewModel : ViewModel() {
-    private val authService = AuthService()
-    var authenticatedUserLiveData: LiveData<FirebaseUser>? = null
-    var currentUserLiveData: MutableLiveData<FirebaseUser>? = null
+    private val authService = AuthRepository()
 
-    init {
-        currentUserLiveData = authService.getCurrentUser()
-    }
+    fun signIn(email: String, password: String) = authService.loginWithEmail(email, password)
 
-    fun signInWithEmail(email: String, password: String) {
-        authenticatedUserLiveData = authService.loginWithEmail(email, password)
-    }
-
-    fun createUserWithEmailAndPassword(email: String, password: String) {
-        authenticatedUserLiveData = authService.createNewUser(email, password)
-    }
+    fun signUp(email: String, password: String) = authService.createNewUser(email, password)
 }
