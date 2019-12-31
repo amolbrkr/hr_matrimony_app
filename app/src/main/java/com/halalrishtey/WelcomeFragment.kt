@@ -23,8 +23,8 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         welcome_viewPager.adapter = WelcomeViewPagerAdapter(this)
 
-        getStartedButton.setOnClickListener { v: View? ->
-            findNavController().navigate(R.id.loginFragment)
+        getStartedButton.setOnClickListener {
+            findNavController().navigate(R.id.action_welcomeFragment_to_loginFragment)
         }
     }
 }
