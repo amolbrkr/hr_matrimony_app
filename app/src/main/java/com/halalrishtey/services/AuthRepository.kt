@@ -12,7 +12,7 @@ class AuthRepository {
         FirebaseAuth.getInstance()
     }
 
-    fun getCurrentUser() = firebaseAuth.currentUser
+    fun currentUser() = firebaseAuth.currentUser
 
     fun createNewUser(email: String, password: String): MutableLiveData<AuthData> {
         val authenticatedUserLiveData = MutableLiveData<AuthData>()
@@ -62,5 +62,39 @@ class AuthRepository {
             }
 
         return userLiveData
+    }
+
+    fun sendVerificationEmail(): MutableLiveData<String?> {
+        val msg = MutableLiveData<String?>()
+
+        if (currentUser() != null) {
+            currentUser()?.sendEmailVerification()
+                ?.addOnCompleteListener { task: Task<Void> ->
+                    if (!task.isSuccessful) {
+                        msg.value = task.exception?.message
+                    }
+                }
+        } else {
+            msg.value = "User is not logged in!"
+        }
+
+        return msg
+    }
+
+    fun logOut() {
+        firebaseAuth.signOut()
+    }
+
+    fun resetPassword(email: String): MutableLiveData<String> {
+        val res = MutableLiveData<String>()
+        firebaseAuth.sendPasswordResetEmail(email)
+            .addOnCompleteListener {
+                res.value = if (it.isSuccessful) {
+                    "Check your email to reset your password."
+                } else {
+                    "There was some error while sending you the reset password mail."
+                }
+            }
+        return res
     }
 }
