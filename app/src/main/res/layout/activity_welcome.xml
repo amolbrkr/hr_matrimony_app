@@ -16,6 +16,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
-        app:navGraph="@navigation/auth_nav" />
+        app:navGraph="@navigation/auth_nav_graph" />
 
 </FrameLayout>
