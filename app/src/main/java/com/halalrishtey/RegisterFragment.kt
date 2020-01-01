@@ -1,10 +1,10 @@
 package com.halalrishtey
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -21,7 +21,6 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
@@ -31,24 +30,43 @@ class RegisterFragment : Fragment() {
             val email = registerEmail_editText.editText?.text
             val pw = registerPassword_editText.editText?.text
 
-            userAuthVM.signUp(email.toString(), pw.toString())
-                .observe(viewLifecycleOwner, Observer { authData: AuthData ->
+            val emailError = userAuthVM.validateEmail(email.toString())
+            val pwError = userAuthVM.validatePassword(pw.toString())
 
-                    if (authData.errorMessage != null) {
-                        Snackbar.make(
-                            view,
-                            "Error: ${authData.errorMessage}",
-                            Snackbar.LENGTH_SHORT
-                        )
-                            .show()
-                    }
+            if (emailError != null) {
+                registerEmail_editText.error = emailError
+            } else {
+                registerEmail_editText.error = null
+            }
 
-                    if (authData.data != null) {
-                        Toast.makeText(context, "User: ${authData.data.email}", Toast.LENGTH_SHORT)
-                            .show()
+            if (pwError != null) {
+                registerPassword_editText.error = pwError
+            } else {
+                registerPassword_editText.error = null
+            }
 
-                    }
-                })
+            if (emailError == null && pwError == null) {
+                userAuthVM.signUp(email.toString(), pw.toString())
+                    .observe(viewLifecycleOwner, Observer { authData: AuthData ->
+
+                        if (authData.errorMessage != null) {
+                            Snackbar.make(
+                                view,
+                                "Error: ${authData.errorMessage}",
+                                Snackbar.LENGTH_LONG
+                            )
+                                .show()
+                        }
+
+                        if (authData.data != null && authData.errorMessage == null) {
+                            val i: Intent = Intent(
+                                activity, MainActivity::class.java
+                            )
+                            startActivity(i)
+                            activity?.finish()
+                        }
+                    })
+            }
         }
     }
 }
