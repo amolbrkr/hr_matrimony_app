@@ -1,15 +1,18 @@
 package com.halalrishtey
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.halalrishtey.models.AuthData
+import com.halalrishtey.models.User
 import com.halalrishtey.viewmodels.UserAuthViewModel
 import kotlinx.android.synthetic.main.fragment_register.*
 
@@ -59,11 +62,29 @@ class RegisterFragment : Fragment() {
                         }
 
                         if (authData.data != null && authData.errorMessage == null) {
-                            val i: Intent = Intent(
+                            val sharedPref =
+                                context?.getSharedPreferences("halalrishtey", Context.MODE_PRIVATE)
+                                    ?.edit()
+
+                            sharedPref?.putString("user_uid", authData.data.uid)
+                            sharedPref?.commit()
+
+                            //Create a new user
+                            val newUser = User(authData.data.uid, authData.data.email!!)
+                            val bundle = bundleOf("userInfo" to newUser)
+
+                            //Navigate to personal details
+                            findNavController().navigate(
+                                R.id.action_registerFragment_to_personalDetailsFragment,
+                                bundle
+                            )
+
+                            /*val i: Intent = Intent(
                                 activity, MainActivity::class.java
                             )
+                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(i)
-                            activity?.finish()
+                            activity?.finish()*/
                         }
                     })
             }
