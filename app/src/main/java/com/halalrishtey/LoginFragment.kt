@@ -1,6 +1,7 @@
 package com.halalrishtey
 
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -56,11 +57,20 @@ class LoginFragment : Fragment() {
                         }
 
                         if (it?.data != null && it.errorMessage == null) {
+                            //Saving authentication data
+                            val sharedPref =
+                                context?.getSharedPreferences("halalrishtey", Context.MODE_PRIVATE)
+                                    ?.edit()
+
+                            sharedPref?.putString("user_uid", it.data.uid)
+                            sharedPref?.commit()
+
                             val i: Intent = Intent(
                                 activity, MainActivity::class.java
                             )
-                            i.flags += Intent.FLAG_ACTIVITY_NO_HISTORY
+                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(i)
+                            activity?.finish()
                         }
                     })
             }
