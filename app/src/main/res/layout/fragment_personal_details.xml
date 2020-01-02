@@ -13,7 +13,7 @@
         android:id="@+id/pdTitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="36dp"
         android:gravity="center"
         android:text="Personal details"
         android:textColor="@color/primaryColor"
@@ -35,7 +35,7 @@
         android:id="@+id/gender_radioGrp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="36dp"
+        android:layout_margin="24dp"
         android:checkedButton="@+id/maleSelector"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8"
+        android:layout_margin="8dp"
         android:hint="Full name"
         app:layout_constraintTop_toBottomOf="@id/gender_radioGrp"
         tools:layout_editor_absoluteX="24dp">
@@ -89,13 +89,31 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dropdownInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Creating account for"
+        app:layout_constraintTop_toBottomOf="@id/phone_editText"
+        tools:layout_editor_absoluteX="24dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/createdFor_dropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dob_editText"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Date of birth"
-        app:layout_constraintTop_toBottomOf="@id/phone_editText">
+        app:layout_constraintTop_toBottomOf="@id/dropdownInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -110,7 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="State"
-        app:layout_constraintTop_toBottomOf="@id/phone_editText">
+        app:layout_constraintTop_toBottomOf="@id/dropdownInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
