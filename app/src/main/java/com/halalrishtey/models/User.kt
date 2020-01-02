@@ -38,8 +38,8 @@ enum class MaritalStatus {
 @Parcelize
 data class User(
     val uid: String,
-    val displayName: String,
     val email: String,
+    var displayName: String = "",
     val photoUrl: String = "",
     val phoneNumber: Number = 0,
     val gender: Gender = Gender.FEMALE,
@@ -60,4 +60,8 @@ data class User(
     val organizationName: String = "",
     val sect: Sect = Sect.OTHERS,
     val maritalStatus: MaritalStatus = MaritalStatus.UNMARRIED
-) : Parcelable
+) : Parcelable {
+    override fun toString(): String {
+        return "id: $uid, email: $email, name: $displayName"
+    }
+}
