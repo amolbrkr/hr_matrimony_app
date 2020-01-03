@@ -40,10 +40,61 @@
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_personalDetailsFragment"
+            app:destination="@id/personalDetailsFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_right"
+            app:popExitAnim="@anim/anim_slide_out_right"
+            app:popUpTo="@+id/registerFragment" />
     </fragment>
     <fragment
         android:id="@+id/passwordResetFragment"
         android:name="com.halalrishtey.PasswordResetFragment"
         android:label="fragment_password_reset"
         tools:layout="@layout/fragment_password_reset" />
+    <fragment
+        android:id="@+id/personalDetailsFragment"
+        android:name="com.halalrishtey.PersonalDetailsFragment"
+        android:label="Personal Details"
+        tools:layout="@layout/fragment_personal_details">
+        <argument
+            android:name="userData"
+            app:argType="com.halalrishtey.models.User" />
+        <action
+            android:id="@+id/action_personalDetailsFragment_to_professionalDetails"
+            app:destination="@id/professionalDetails"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_right"
+            app:popExitAnim="@anim/anim_slide_out_right"
+            app:popUpTo="@+id/personalDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/professionalDetails"
+        android:name="com.halalrishtey.ProfessionalDetails"
+        android:label="Professional Details"
+        tools:layout="@layout/fragment_professional_details">
+        <argument
+            android:name="userData"
+            app:argType="com.halalrishtey.models.User" />
+        <action
+            android:id="@+id/action_professionalDetails_to_uploadImageFragment"
+            app:destination="@id/uploadImageFragment"
+            app:popUpTo="@+id/professionalDetails" />
+        <argument
+            android:name="aadharImgUrl"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/uploadImageFragment"
+        android:name="com.halalrishtey.UploadImageFragment"
+        android:label="fragment_upload_image"
+        tools:layout="@layout/fragment_upload_image">
+        <action
+            android:id="@+id/action_uploadImageFragment_to_professionalDetails"
+            app:destination="@id/professionalDetails" />
+    </fragment>
 </navigation>

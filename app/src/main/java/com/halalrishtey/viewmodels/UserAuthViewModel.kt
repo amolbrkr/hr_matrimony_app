@@ -1,6 +1,7 @@
 package com.halalrishtey.viewmodels
 
 import androidx.lifecycle.ViewModel
+import com.halalrishtey.models.User
 import com.halalrishtey.services.AuthRepository
 
 
@@ -34,4 +35,6 @@ class UserAuthViewModel : ViewModel() {
     fun signOut() = authService.logOut()
 
     fun sendResetPasswordEmail(email: String) = authService.resetPassword(email)
+
+    fun addUserToDB(uid: String, userData: User) = authService.addNewUserToDB(uid, userData)
 }
