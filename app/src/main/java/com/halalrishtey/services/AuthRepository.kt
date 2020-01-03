@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.halalrishtey.models.AuthData
+import com.halalrishtey.models.User
 
 class AuthRepository {
     private val firebaseAuth: FirebaseAuth by lazy {
@@ -21,26 +22,34 @@ class AuthRepository {
             .addOnCompleteListener { task: Task<AuthResult> ->
                 if (task.isSuccessful) {
                     Log.d("AuthService", "Created new user! ${task.result?.user?.email}")
-                    authenticatedUserLiveData.postValue(AuthData(task.result?.user, null))
-
-                    task.result?.user?.let {
-                        DatabaseRepository.getDbInstance().collection("users")
-                            .document(it.uid).set(it).addOnCompleteListener {
-                                Log.d("AuthService", "Added new user to database.")
-                            }
-                    }
+                    authenticatedUserLiveData.value = AuthData(
+                        User(
+                            task.result?.user!!
+                        ), null
+                    )
                 } else {
                     Log.d(
                         "AuthService",
                         "Failed to create new user! $email ${task.exception?.message}"
                     )
-                    authenticatedUserLiveData.postValue(
+                    authenticatedUserLiveData.value =
                         AuthData(null, task.exception?.message)
-                    )
                 }
             }
 
         return authenticatedUserLiveData
+    }
+
+    fun addNewUserToDB(uid: String, userData: User): MutableLiveData<String?> {
+        val msg = MutableLiveData<String?>()
+        DatabaseRepository.getDbInstance().collection("users")
+            .document(uid).set(userData).addOnCompleteListener {
+                Log.d("AuthService", "Added new user to database. ${userData.email}")
+                if (it.isSuccessful) {
+                    msg.value = "Successfully created!"
+                }
+            }
+        return msg
     }
 
     fun loginWithEmail(email: String, password: String): MutableLiveData<AuthData> {
@@ -51,7 +60,7 @@ class AuthRepository {
                 if (task.isSuccessful) {
                     Log.d("AuthService", "Sign in with new user! $email")
                     userLiveData.value =
-                        AuthData(task.result?.user, null)
+                        AuthData(User(task.result?.user!!), null)
                 } else {
                     Log.d(
                         "AuthService",
