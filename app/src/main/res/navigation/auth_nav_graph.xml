@@ -59,9 +59,6 @@
         android:name="com.halalrishtey.PersonalDetailsFragment"
         android:label="Personal Details"
         tools:layout="@layout/fragment_personal_details">
-        <argument
-            android:name="userData"
-            app:argType="com.halalrishtey.models.User" />
         <action
             android:id="@+id/action_personalDetailsFragment_to_professionalDetails"
             app:destination="@id/professionalDetails"
@@ -73,12 +70,9 @@
     </fragment>
     <fragment
         android:id="@+id/professionalDetails"
-        android:name="com.halalrishtey.ProfessionalDetails"
+        android:name="com.halalrishtey.ProfessionalDetailsFragment"
         android:label="Professional Details"
         tools:layout="@layout/fragment_professional_details">
-        <argument
-            android:name="userData"
-            app:argType="com.halalrishtey.models.User" />
         <action
             android:id="@+id/action_professionalDetails_to_uploadImageFragment"
             app:destination="@id/uploadImageFragment"
