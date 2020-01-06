@@ -1,10 +1,13 @@
 package com.halalrishtey.models
 
+import android.location.Address
 import android.os.Parcelable
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
+
+data class Height(var feet: Int, var inch: Int)
 
 enum class Gender {
     Male,
@@ -58,8 +61,8 @@ enum class MaritalStatus {
 
 @Parcelize
 data class User(
-    val uid: String,
-    val email: String? = "",
+    val email: String,
+    var uid: String? = "",
     var displayName: String = "",
     var photoUrl: String = "",
     var aadharPhotoUrl: String = "",
@@ -69,13 +72,12 @@ data class User(
     var createdAt: Long = System.currentTimeMillis(),
     var lastSignInAt: Long = System.currentTimeMillis(),
     var isEmailVerified: Boolean = false,
-    var age: Int = 25,
-    var country: String = "India",
-    var state: String = "",
-    var city: String = "",
+    var address: Address? = null,
+    var age: Int = 24,
     var pinCode: Int = 0,
     var dateOfBirth: Date? = null,
-    var height: Float = 5.7f,
+    var heightFeet: String = "",
+    var heightInch: String = "",
     var education: String = "",
     var occupation: String = "",
     var workExperience: String = "",
