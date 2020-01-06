@@ -1,5 +1,6 @@
 package com.halalrishtey.viewmodels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.halalrishtey.models.User
 import com.halalrishtey.services.AuthRepository
@@ -7,6 +8,9 @@ import com.halalrishtey.services.AuthRepository
 
 class UserAuthViewModel : ViewModel() {
     private val authService = AuthRepository()
+
+    val newUser = MutableLiveData<User>()
+    val pwd = MutableLiveData<String>()
 
     fun validateEmail(email: String): String? {
         return if (email.isEmpty() || email.isBlank()) {
@@ -30,11 +34,12 @@ class UserAuthViewModel : ViewModel() {
 
     fun signIn(email: String, password: String) = authService.loginWithEmail(email, password)
 
-    fun signUp(email: String, password: String) = authService.createNewUser(email, password)
+    fun signUp(email: String, password: String, userData: User) =
+        authService.createNewUser(email, password, userData)
 
     fun signOut() = authService.logOut()
 
     fun sendResetPasswordEmail(email: String) = authService.resetPassword(email)
 
-    fun addUserToDB(uid: String, userData: User) = authService.addNewUserToDB(uid, userData)
+    fun addUserToDB(uid: String?, userData: User?) = authService.addNewUserToDB(uid, userData)
 }
