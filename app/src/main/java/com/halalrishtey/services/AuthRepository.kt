@@ -15,18 +15,24 @@ class AuthRepository {
 
     fun currentUser() = firebaseAuth.currentUser
 
-    fun createNewUser(email: String, password: String): MutableLiveData<AuthData> {
+    fun createNewUser(email: String, password: String, newUser: User): MutableLiveData<AuthData> {
         val authenticatedUserLiveData = MutableLiveData<AuthData>()
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task: Task<AuthResult> ->
                 if (task.isSuccessful) {
                     Log.d("AuthService", "Created new user! ${task.result?.user?.email}")
-                    authenticatedUserLiveData.value = AuthData(
-                        User(
-                            task.result?.user!!
-                        ), null
-                    )
+                    newUser.uid = task.result?.user?.uid
+                    DatabaseRepository.getDbInstance().collection("users")
+                        .document(newUser.uid!!).set(newUser).addOnCompleteListener {
+                            Log.d("AuthService", "Added new user to database. ${newUser.email}")
+                            if (it.isSuccessful) {
+                                authenticatedUserLiveData.value = AuthData(newUser, null)
+                            } else {
+                                authenticatedUserLiveData.value =
+                                    AuthData(null, "Cannot add new user to database!")
+                            }
+                        }
                 } else {
                     Log.d(
                         "AuthService",
@@ -40,15 +46,19 @@ class AuthRepository {
         return authenticatedUserLiveData
     }
 
-    fun addNewUserToDB(uid: String, userData: User): MutableLiveData<String?> {
+    fun addNewUserToDB(uid: String?, userData: User?): MutableLiveData<String?> {
         val msg = MutableLiveData<String?>()
-        DatabaseRepository.getDbInstance().collection("users")
-            .document(uid).set(userData).addOnCompleteListener {
-                Log.d("AuthService", "Added new user to database. ${userData.email}")
-                if (it.isSuccessful) {
-                    msg.value = "Successfully created!"
+        if (uid != null && userData != null) {
+            DatabaseRepository.getDbInstance().collection("users")
+                .document(uid).set(userData).addOnCompleteListener {
+                    Log.d("AuthService", "Added new user to database. ${userData.email}")
+                    if (it.isSuccessful) {
+                        msg.value = "Successfully created!"
+                    }
                 }
-            }
+        } else {
+            msg.value = "Invalid or blank uid & userData!"
+        }
         return msg
     }
 
