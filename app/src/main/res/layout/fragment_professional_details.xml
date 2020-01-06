@@ -5,25 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ProfessionalDetails">
+    tools:context=".ProfessionalDetailsFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/height_ediText"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+    <LinearLayout
+        android:id="@+id/heightInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="128dp"
-        android:layout_marginRight="8dp"
-        android:hint="Height"
-
+        android:layout_marginTop="80dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/hFt_editText"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:hint="Height (feet)"
+            android:minWidth="175dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/hIn_editText"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="Height (inches)">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/age_editText"
@@ -32,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Age"
-        app:layout_constraintTop_toBottomOf="@id/height_ediText">
+        app:layout_constraintTop_toBottomOf="@id/heightInput">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -109,14 +130,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="Maslak / Sect"
+        android:hint="Select Maslak / Sect"
         app:layout_constraintTop_toBottomOf="@id/occupation_editText">
 
         <AutoCompleteTextView
             android:id="@+id/sect_dropDown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select sect"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
