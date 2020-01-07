@@ -53,7 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Age"
-        app:layout_constraintTop_toBottomOf="@id/heightInput">
+        app:layout_constraintTop_toBottomOf="@id/heightInput"
+        app:startIconDrawable="@drawable/ic_person">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -68,7 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Highest Education"
-        app:layout_constraintTop_toBottomOf="@id/age_editText">
+        app:layout_constraintTop_toBottomOf="@id/age_editText"
+        app:startIconDrawable="@drawable/ic_account_balance">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -85,6 +87,7 @@
         android:layout_margin="8dp"
         android:hint="@string/work_experience"
         app:layout_constraintTop_toBottomOf="@id/highestEdu_editText"
+        app:startIconDrawable="@drawable/ic_work"
         tools:layout_editor_absoluteX="24dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -101,7 +104,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Occupation"
-        app:layout_constraintTop_toBottomOf="@id/workExp_editText">
+        app:layout_constraintTop_toBottomOf="@id/workExp_editText"
+        app:startIconDrawable="@drawable/ic_attach_money">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

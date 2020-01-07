@@ -11,7 +11,7 @@
         android:id="@+id/loginTitle_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="80dp"
         android:gravity="center"
         android:text="Sign in with Email"
         android:textColor="@color/primaryColor"
@@ -37,8 +37,7 @@
         android:layout_marginTop="60dp"
         android:hint="Email"
         app:layout_constraintTop_toBottomOf="@id/loginSubtitle_textView"
-        app:startIconDrawable="@drawable/ic_email"
-        app:startIconTint="@color/primaryColor">
+        app:startIconDrawable="@drawable/ic_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -55,8 +54,7 @@
         android:hint="Password"
         app:endIconMode="password_toggle"
         app:layout_constraintTop_toBottomOf="@id/email_editText"
-        app:startIconDrawable="@drawable/ic_vpn_key"
-        app:startIconTint="@color/primaryColor">
+        app:startIconDrawable="@drawable/ic_vpn_key">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

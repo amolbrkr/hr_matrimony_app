@@ -13,7 +13,7 @@
         android:id="@+id/pdTitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="Personal details"
         android:textColor="@color/primaryColor"
@@ -90,12 +90,13 @@
         android:layout_margin="8dp"
         android:hint="Full name"
         app:layout_constraintTop_toBottomOf="@id/dropdownInputLayout"
+        app:startIconDrawable="@drawable/ic_face"
         tools:layout_editor_absoluteX="24dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -105,44 +106,25 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Phone"
-        app:layout_constraintTop_toBottomOf="@id/name_editText">
+        app:layout_constraintTop_toBottomOf="@id/name_editText"
+        app:startIconDrawable="@drawable/ic_phone">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/dob_button"
-        app:layout_constraintTop_toBottomOf="@id/phone_editText"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:text="Date of Birth"
         android:textColor="@color/primaryColor"
-        android:text="Date of Birth" />
-
-
-    <!--    <com.google.android.material.textfield.TextInputLayout-->
-    <!--        android:id="@+id/dob_editText"-->
-    <!--        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_margin="8dp"-->
-    <!--        android:clickable="false"-->
-    <!--        android:focusable="false"-->
-    <!--        android:hint="Date of birth"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/phone_editText">-->
-
-    <!--        <com.google.android.material.textfield.TextInputEditText-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:clickable="false"-->
-    <!--            android:cursorVisible="false"-->
-    <!--            android:inputType="date" />-->
-    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+        app:layout_constraintTop_toBottomOf="@id/phone_editText" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/pincode_editText"
@@ -151,7 +133,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Pin code"
-        app:layout_constraintTop_toBottomOf="@id/dob_button">
+        app:layout_constraintTop_toBottomOf="@id/dob_button"
+        app:startIconDrawable="@drawable/ic_fiber_pin">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

@@ -11,7 +11,7 @@
         android:id="@+id/registerTitle_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="80dp"
         android:gravity="center"
         android:text="Register"
         android:textColor="@color/primaryColor"
@@ -36,7 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:hint="Email"
-        app:layout_constraintTop_toBottomOf="@id/registerSubtitle_textView">
+        app:layout_constraintTop_toBottomOf="@id/registerSubtitle_textView"
+        app:startIconDrawable="@drawable/ic_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -52,7 +53,8 @@
         android:layout_marginTop="24dp"
         android:hint="Password"
         app:endIconMode="password_toggle"
-        app:layout_constraintTop_toBottomOf="@id/registerEmail_editText">
+        app:layout_constraintTop_toBottomOf="@id/registerEmail_editText"
+        app:startIconDrawable="@drawable/ic_vpn_key">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
