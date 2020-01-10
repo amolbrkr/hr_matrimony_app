@@ -67,6 +67,9 @@
             app:popEnterAnim="@anim/anim_slide_in_right"
             app:popExitAnim="@anim/anim_slide_out_right"
             app:popUpTo="@+id/personalDetailsFragment" />
+        <action
+            android:id="@+id/action_personalDetailsFragment_to_uploadImageFragment"
+            app:destination="@id/uploadImageFragment" />
     </fragment>
     <fragment
         android:id="@+id/professionalDetails"
