@@ -10,7 +10,7 @@
         android:id="@+id/uploadImg_titleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Upload Image"
         android:textColor="@color/primaryColor"
@@ -23,17 +23,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="500dp"
+
         android:src="@drawable/ic_launcher_background"
+        app:layout_constraintBottom_toTopOf="@id/imgUploadButtonLayout"
         app:layout_constraintTop_toBottomOf="@+id/uploadImg_titleText"
         tools:layout_editor_absoluteX="0dp" />
 
     <LinearLayout
+        android:id="@+id/imgUploadButtonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/uploadImg_imageView">
+        app:layout_constraintRight_toRightOf="parent">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/chooseImg_button"
