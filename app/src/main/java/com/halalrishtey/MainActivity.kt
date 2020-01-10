@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(i)
             this.finish()
         } else {
-            //TODO: Load user data using this uid.
             Toast.makeText(applicationContext, uid.toString(), Toast.LENGTH_SHORT).show()
         }
     }
