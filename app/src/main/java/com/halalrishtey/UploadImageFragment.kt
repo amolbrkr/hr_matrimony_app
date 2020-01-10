@@ -10,28 +10,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.activityViewModels
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.halalrishtey.services.StorageRepository
+import com.halalrishtey.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_upload_image.*
 
 
 class UploadImageFragment : Fragment() {
-
-    private lateinit var storageReference: StorageReference
+    private val sharedVM: SharedViewModel by activityViewModels()
     private var imgUri: Uri? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        storageReference = FirebaseStorage.getInstance().getReference("Images")
         return inflater.inflate(R.layout.fragment_upload_image, container, false)
     }
 
@@ -46,32 +43,35 @@ class UploadImageFragment : Fragment() {
 
         uploadImg_button.setOnClickListener {
 
-            Toast.makeText(context, "Upload in progress...", Toast.LENGTH_SHORT).show()
-            uploadImg_button.isClickable = false
+            if (imgUri != null) {
 
-            val ref = storageReference
-                .child("${System.currentTimeMillis()}.${getExt(imgUri!!)}")
+                Toast.makeText(context, "Upload in progress...", Toast.LENGTH_SHORT).show()
+                uploadImg_button.isEnabled = false
 
-            ref.putFile(imgUri!!)
-                .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> {
-                    ref.downloadUrl.addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            val url: String = it.result.toString()
-                            val bundle = bundleOf("aadharImgUrl" to url)
-                            findNavController().navigate(
-                                R.id.action_uploadImageFragment_to_professionalDetails,
-                                bundle
-                            )
-                        } else {
-                            uploadImg_button.isClickable = true
-                        }
-                    }
-                })
-                .addOnFailureListener(OnFailureListener {
-                    uploadImg_button.isClickable = true
-                    Snackbar.make(view, "Image upload failed, try again!", Snackbar.LENGTH_LONG)
-                        .show()
-                })
+                val ref = StorageRepository.imagesReference
+                        .child("${System.currentTimeMillis()}.${getExt(imgUri!!)}")
+
+                ref.putFile(imgUri!!)
+                        .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> {
+                            ref.downloadUrl.addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    val url: String = it.result.toString()
+                                    val bundle = Bundle().apply { putString("uploadedImageUrl", url) }
+                                    sharedVM.bundleFromUploadImageFragment.value = bundle
+                                    requireActivity().onBackPressed()
+                                } else {
+                                    uploadImg_button.isEnabled = true
+                                }
+                            }
+                        })
+                        .addOnFailureListener(OnFailureListener {
+                            uploadImg_button.isEnabled = true
+                            Snackbar.make(view, "Error: ${it.message}", Snackbar.LENGTH_LONG)
+                                    .show()
+                        })
+            } else {
+                Snackbar.make(view, "No Image selected!", Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -79,7 +79,6 @@ class UploadImageFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-
             imgUri = data.data
             uploadImg_imageView.setImageURI(imgUri)
         }
