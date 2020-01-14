@@ -10,7 +10,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 
 
-class LocationLiveData(context: Context) : LiveData<Location>() {
+class LocationLiveData(context: Context) : LiveData<Location?>() {
     private val fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(context)
 
