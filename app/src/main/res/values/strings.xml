@@ -4,4 +4,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="work_experience">Work Experience</string>
+    <string name="auth_warning"><![CDATA[This is for security & authenticity purposes, we don\'t reveal anyone\'s personal information. ID Proof must be clear in visiblity.]]></string>
 </resources>
