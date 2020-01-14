@@ -6,4 +6,5 @@ import androidx.lifecycle.ViewModel
 
 class SharedViewModel : ViewModel() {
     val bundleFromUploadImageFragment = MutableLiveData<Bundle>()
+    val uploadImageRequester = MutableLiveData<String>()
 }
