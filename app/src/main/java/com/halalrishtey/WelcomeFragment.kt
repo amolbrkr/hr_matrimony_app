@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.fragment_welcome.*
 
 class WelcomeFragment : Fragment() {
@@ -25,9 +26,21 @@ class WelcomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        welcome_viewPager.adapter = WelcomeViewPagerAdapter(this)
+        welcomeViewPager.adapter = WelcomeViewPagerAdapter(this)
 
-        getStartedButton.setOnClickListener {
+        welcomeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                if (position == 3) {
+                    swipeNextText.visibility = View.GONE
+                    getStartedBtn.visibility = View.VISIBLE
+                } else {
+                    swipeNextText.visibility = View.VISIBLE
+                    getStartedBtn.visibility = View.GONE
+                }
+            }
+        })
+
+        getStartedBtn.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (ContextCompat.checkSelfPermission(
                                 requireContext(),
@@ -49,7 +62,6 @@ class WelcomeFragment : Fragment() {
         }
     }
 }
-
 
 private const val ARG_RES_ID = "image_res_id"
 private val imageResources =
