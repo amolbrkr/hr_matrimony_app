@@ -7,17 +7,25 @@
     tools:context=".WelcomeFragment">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/welcome_viewPager"
+        android:id="@+id/welcomeViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/swipeNextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="700dp"
+        android:text="Swipe left -->" />
+
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/getStartedButton"
+        android:id="@+id/getStartedBtn"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="525dp"
+        android:layout_marginTop="600dp"
         android:backgroundTint="#FFF"
         android:text="Get Started"
         android:textColor="@color/primaryColor"

@@ -8,7 +8,7 @@
     tools:context=".RegisterFragment">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/registerTitle_textView"
+        android:id="@+id/registerTitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -20,23 +20,23 @@
         tools:layout_editor_absoluteX="16dp" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/registerSubtitle_textView"
+        android:id="@+id/registerSubtitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Please fill below fields to create your account"
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/registerTitle_textView" />
+        app:layout_constraintTop_toBottomOf="@id/registerTitleText" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/registerEmail_editText"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:id="@+id/registerEmailTextInp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="48dp"
         android:hint="Email"
-        app:layout_constraintTop_toBottomOf="@id/registerSubtitle_textView"
+        app:layout_constraintTop_toBottomOf="@id/registerSubtitleText"
         app:startIconDrawable="@drawable/ic_email">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -45,15 +45,76 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/registerPassword_editText"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+
+    <LinearLayout
+        android:id="@+id/phoneInpLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:hint="Password"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/registerEmailTextInp">
+
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:id="@+id/countryCodeTextInp"-->
+        <!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+        <!--            android:layout_width="80dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:layout_marginEnd="8dp"-->
+        <!--            android:hint="Code"-->
+
+        <!--            app:layout_constraintTop_toBottomOf="@id/registerEmailTextInp"-->
+        <!--            text>-->
+
+        <!--            <com.google.android.material.textfield.TextInputEditText-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:inputType="number" />-->
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneTextInp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Phone"
+            app:layout_constraintTop_toBottomOf="@id/registerEmailTextInp"
+            app:startIconDrawable="@drawable/ic_phone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerPwTextInp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Create password"
         app:endIconMode="password_toggle"
-        app:layout_constraintTop_toBottomOf="@id/registerEmail_editText"
+        app:layout_constraintTop_toBottomOf="@id/phoneInpLayout"
+        app:startIconDrawable="@drawable/ic_vpn_key">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confirmPWTextInp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Confirm Password"
+        app:endIconMode="password_toggle"
+        app:layout_constraintTop_toBottomOf="@id/registerPwTextInp"
         app:startIconDrawable="@drawable/ic_vpn_key">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -63,19 +124,19 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/register_button"
+        android:id="@+id/registerBtn"
         style="@style/CTAButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#FFF"
-        android:text="Register"
+        android:text="Next"
         android:textAllCaps="false"
         android:textColor="@color/primaryColor"
         android:theme="@style/Widget.MaterialComponents.Button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registerPassword_editText" />
+        app:layout_constraintTop_toBottomOf="@id/confirmPWTextInp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -84,7 +145,7 @@
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/register_button">
+        app:layout_constraintTop_toBottomOf="@id/registerBtn">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
@@ -95,7 +156,7 @@
             android:textSize="16sp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/goToLoginButton"
+            android:id="@+id/goToLoginBtn"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
