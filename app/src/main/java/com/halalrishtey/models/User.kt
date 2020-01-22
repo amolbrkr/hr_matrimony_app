@@ -20,14 +20,13 @@ data class User(
     var idProofUrl: String = "",        //done
     var phoneNumber: Number = 0,        //done
     var gender: Gender = Gender.Male, //done
-    var createdFor: String = "",
+    var createdFor: String = "",     //done
     var createdAt: Long = System.currentTimeMillis(),
     var lastSignInAt: Long = System.currentTimeMillis(),
-    var isPhoneVerified: Boolean = false,
     var address: String = "",       //done
     var dateOfBirth: Date? = null,      //done
     var height: String = "",            //done
-    var education: String = "",
+    var education: String = "",         //done
     var occupation: String = "",        //done
     var workLocation: String = "",        //done
     var annualIncome: Number = 0,       //done
@@ -38,7 +37,9 @@ data class User(
     var locationLat: Double = 0.0,      //done
     var locationLong: Double = 0.0,     //done
     var countryCode: String = "IN",     //done
-    var pincode: String = ""        //done
+    var pincode: String = "",        //done
+    var isOTPVerified: Boolean = false,     //done
+    var countryCallingCode: String = ""     //done
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)
