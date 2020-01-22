@@ -53,23 +53,22 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/registerEmailTextInp">
 
-        <!--        <com.google.android.material.textfield.TextInputLayout-->
-        <!--            android:id="@+id/countryCodeTextInp"-->
-        <!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
-        <!--            android:layout_width="80dp"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="8dp"-->
-        <!--            android:layout_marginEnd="8dp"-->
-        <!--            android:hint="Code"-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/countryCodeTextInp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:hint="Country"
+            app:layout_constraintTop_toBottomOf="@id/registerEmailTextInp">
 
-        <!--            app:layout_constraintTop_toBottomOf="@id/registerEmailTextInp"-->
-        <!--            text>-->
-
-        <!--            <com.google.android.material.textfield.TextInputEditText-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:inputType="number" />-->
-        <!--        </com.google.android.material.textfield.TextInputLayout>-->
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="+91" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phoneTextInp"
@@ -163,5 +162,12 @@
             android:text="Sign in"
             android:textAllCaps="false" />
     </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To verifty that its really you we'll send an One Time Password (OTP) to the phone number you provide us!"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
