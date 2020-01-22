@@ -1,14 +1,11 @@
 package com.halalrishtey
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -49,7 +46,7 @@ class ProfessionalDetailsFragment : Fragment() {
             R.layout.dropdown_menu_popup_item,
             arrayOf(
                 "Marital Status",
-                "Bachelor",
+                "Never Married",
                 "Divorced",
                 "Widowed",
                 "Annulled"
@@ -117,35 +114,7 @@ class ProfessionalDetailsFragment : Fragment() {
 
                 Log.d("Auth", "Trying to create user for: $email & $pw")
 
-                userAuthVM.signUp(
-                    email, pw, userAuthVM.newUser.value!!
-                ).observe(viewLifecycleOwner, Observer { authData ->
-                    if (authData.data != null) {
-
-                        val sharedPref =
-                            context?.getSharedPreferences("halalrishtey", Context.MODE_PRIVATE)
-                                ?.edit()
-
-                        sharedPref?.putString("user_uid", authData.data.uid)
-                        sharedPref?.commit()
-
-                        Toast.makeText(
-                            context,
-                            "Successfully Created: ${authData.data.uid}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        val i = Intent(
-                            activity, MainActivity::class.java
-                        )
-                        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(i)
-                        activity?.finish()
-                    } else {
-                        Snackbar.make(view, "Error: ${authData.errorMessage}", Snackbar.LENGTH_LONG)
-                            .show()
-                    }
-                })
+                findNavController().navigate(R.id.action_professionalDetails_to_OTPVerificationFragment)
             }
         }
     }
