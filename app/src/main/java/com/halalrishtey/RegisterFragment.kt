@@ -21,8 +21,8 @@ class RegisterFragment : Fragment() {
     private lateinit var userLoc: Address
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
@@ -78,20 +78,21 @@ class RegisterFragment : Fragment() {
             if (emailError == null && pwError == null && phoneError == null && pwMatch) {
                 //user takes a id and an email
                 val newUser = User(
-                        email.toString(),
-                        phoneNumber = phone.toString().toLong(),
-                        address = userLoc.getAddressLine(0),
-                        locationLat = userLoc.latitude,
-                        locationLong = userLoc.longitude,
-                        countryCode = userLoc.countryCode,
-                        pincode = userLoc.postalCode
+                    email.toString(),
+                    phoneNumber = phone.toString().toLong(),
+                    address = userLoc.getAddressLine(0),
+                    locationLat = userLoc.latitude,
+                    locationLong = userLoc.longitude,
+                    countryCode = userLoc.countryCode,
+                    countryCallingCode = countryCodeTextInp.editText?.text.toString(),
+                    pincode = userLoc.postalCode
                 )
                 userAuthVM.newUser.value = newUser
                 userAuthVM.pwd.value = pw.toString()
 
                 //Navigate to personal details
                 findNavController().navigate(
-                        R.id.action_registerFragment_to_personalDetailsFragment
+                    R.id.action_registerFragment_to_personalDetailsFragment
                 )
             }
 
