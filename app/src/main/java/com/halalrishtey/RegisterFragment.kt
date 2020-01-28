@@ -3,6 +3,7 @@ package com.halalrishtey
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.halalrishtey.models.User
 import com.halalrishtey.viewmodels.UserAuthViewModel
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -18,7 +20,7 @@ import java.util.*
 
 class RegisterFragment : Fragment() {
     private val userAuthVM: UserAuthViewModel by activityViewModels()
-    private lateinit var userLoc: Address
+    private var userLoc: Address? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +33,14 @@ class RegisterFragment : Fragment() {
 
         userAuthVM.locationUpdates.observe(viewLifecycleOwner, Observer {
             val geocoder = Geocoder(context, Locale.getDefault())
-            if (it != null) {
-                userLoc = geocoder.getFromLocation(it.latitude, it.longitude, 1)[0]
+
+            try {
+                userLoc = if (it != null) {
+                    geocoder.getFromLocation(it.latitude, it.longitude, 1)[0]
+                } else null
+            } catch (e: Exception) {
+                Log.d("Register", "error: ${e.message}")
+                Snackbar.make(view, "Error: ${e.message}", Snackbar.LENGTH_LONG).show()
             }
         })
 
@@ -76,17 +84,30 @@ class RegisterFragment : Fragment() {
             }
 
             if (emailError == null && pwError == null && phoneError == null && pwMatch) {
-                //user takes a id and an email
-                val newUser = User(
-                    email.toString(),
-                    phoneNumber = phone.toString().toLong(),
-                    address = userLoc.getAddressLine(0),
-                    locationLat = userLoc.latitude,
-                    locationLong = userLoc.longitude,
-                    countryCode = userLoc.countryCode,
-                    countryCallingCode = countryCodeTextInp.editText?.text.toString(),
-                    pincode = userLoc.postalCode
-                )
+                val newUser = if (userLoc != null) {
+                    User(
+                        email.toString(),
+                        phoneNumber = phone.toString().toLong(),
+                        address = userLoc!!.getAddressLine(0),
+                        locationLat = userLoc!!.latitude,
+                        locationLong = userLoc!!.longitude,
+                        countryCode = userLoc!!.countryCode,
+                        countryCallingCode = countryCodeTextInp.editText?.text.toString(),
+                        pincode = userLoc!!.postalCode
+                    )
+                } else {
+                    Snackbar.make(
+                        view,
+                        "We can't access your location which is required for proper functioning of the app. Please enable your location",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+
+                    User(
+                        email.toString(),
+                        phoneNumber = phone.toString().toLong(),
+                        countryCallingCode = countryCodeTextInp.editText?.text.toString()
+                    )
+                }
                 userAuthVM.newUser.value = newUser
                 userAuthVM.pwd.value = pw.toString()
 
@@ -95,7 +116,6 @@ class RegisterFragment : Fragment() {
                     R.id.action_registerFragment_to_personalDetailsFragment
                 )
             }
-
         }
     }
 }
