@@ -1,6 +1,7 @@
 package com.halalrishtey
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit
 
 class OTPVerificationFragment : Fragment() {
     private val userAuthVM: UserAuthViewModel by activityViewModels()
+    private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +35,8 @@ class OTPVerificationFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        resendOtpBtn.isEnabled = false
 
         val phoneNum =
             userAuthVM.newUser.value?.countryCallingCode + userAuthVM.newUser.value?.phoneNumber
@@ -85,6 +89,7 @@ class OTPVerificationFragment : Fragment() {
             }
 
             override fun onVerificationFailed(p0: FirebaseException) {
+                resendOtpBtn.isEnabled = true
                 Log.d("OTP", p0.message)
                 val s = Snackbar.make(
                     requireView(),
@@ -99,19 +104,33 @@ class OTPVerificationFragment : Fragment() {
 
             override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
                 super.onCodeSent(p0, p1)
-                Log.d("OTP", "p0: $p0")
-                timeRemainingText.text = "Time Remaining: 60"
+
+                //Assign resending token
+                forceResendingToken = p1
+
+                timeRemainingText.text = "Time Remaining: 60 Seconds"
                 val h = Handler()
                 var count = 60
                 val r = object : Runnable {
                     override fun run() {
                         count--
-                        timeRemainingText.text = "Time Remaining: $count"
+                        timeRemainingText.text = "Time Remaining: $count Seconds"
                         if (count > 0) h.postDelayed(this, 1000)
                     }
                 }
                 h.postDelayed(r, 1000)
             }
+        }
+
+        resendOtpBtn.setOnClickListener {
+            PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNum,
+                60,
+                TimeUnit.SECONDS,
+                requireActivity(),
+                callbacks,
+                forceResendingToken
+            )
         }
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
