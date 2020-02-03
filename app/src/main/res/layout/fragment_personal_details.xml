@@ -36,10 +36,20 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_margin="16dp"
-        android:src="@drawable/add"
+        android:src="@drawable/add_user"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pdSubtitleText" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/addProfilePicText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Add a profile picture"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileImageView" />
 
     <RadioGroup
         android:id="@+id/genderRadioGrp"
@@ -50,7 +60,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileImageView">
+        app:layout_constraintTop_toBottomOf="@id/addProfilePicText">
 
         <RadioButton
             android:id="@+id/maleSelector"
