@@ -86,7 +86,6 @@ class ProfessionalDetailsFragment : Fragment() {
 
         pdRegisterButton.setOnClickListener {
             pdRegisterButton.isEnabled = false
-            registrationProgressBar.visibility = View.VISIBLE
 
             if (validateProfessionalDetails() != null) {
                 Snackbar.make(
@@ -96,10 +95,8 @@ class ProfessionalDetailsFragment : Fragment() {
                 ).show()
 
                 pdRegisterButton.isEnabled = true
-                registrationProgressBar.visibility = View.GONE
             } else {
-
-                userAuthVM.newUser.value?.occupation = workLocTextInp.editText?.text.toString()
+                userAuthVM.newUser.value?.workLocation = workLocTextInp.editText?.text.toString()
                 userAuthVM.newUser.value?.organizationName =
                     orgNameTextInp.editText?.text.toString()
                 userAuthVM.newUser.value?.annualIncome =
