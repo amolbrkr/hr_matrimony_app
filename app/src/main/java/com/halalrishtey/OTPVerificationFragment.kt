@@ -114,7 +114,7 @@ class OTPVerificationFragment : Fragment() {
                 val r = object : Runnable {
                     override fun run() {
                         count--
-                        timeRemainingText.text = "Time Remaining: $count Seconds"
+                        timeRemainingText?.text = "Time Remaining: $count Seconds"
                         if (count > 0) h.postDelayed(this, 1000)
                     }
                 }
