@@ -42,7 +42,8 @@ class UserAuthViewModel(application: Application) : AndroidViewModel(application
         } else null
     }
 
-    fun signIn(email: String, password: String) = authService.loginWithEmail(email, password)
+    fun signIn(email: String, password: String, newUserInfo: HashMap<String, Any?>?) =
+        authService.loginWithEmail(email, password, newUserInfo)
 
     fun signUp(email: String, password: String, userData: User) =
         authService.createNewUser(email, password, userData)
