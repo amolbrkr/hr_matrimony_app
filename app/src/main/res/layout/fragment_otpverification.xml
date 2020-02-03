@@ -59,6 +59,21 @@
         app:layout_constraintBottom_toTopOf="@id/otpVerifyLayout"
         app:layout_constraintTop_toBottomOf="@+id/otpTextInp" />
 
+
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/otpProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:minWidth="100dp"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timeRemainingText"
+        app:mpb_progressStyle="horizontal" />
+
     <LinearLayout
         android:id="@+id/otpVerifyLayout"
         android:layout_width="wrap_content"
@@ -67,7 +82,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timeRemainingText">
+        app:layout_constraintTop_toBottomOf="@id/otpProgress">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/resendOtpBtn"
