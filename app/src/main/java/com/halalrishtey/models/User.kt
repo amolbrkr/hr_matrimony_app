@@ -27,7 +27,7 @@ data class User(
     var dateOfBirth: Date? = null,      //done
     var height: String = "",            //done
     var education: String = "",         //done
-    var occupation: String = "",        //done
+//    var occupation: String = "",        //done
     var workLocation: String = "",        //done
     var annualIncome: Number = 0,       //done
     var organizationName: String = "",      //done
