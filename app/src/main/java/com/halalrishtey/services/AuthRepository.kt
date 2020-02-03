@@ -62,7 +62,11 @@ class AuthRepository {
         return msg
     }
 
-    fun loginWithEmail(email: String, password: String): MutableLiveData<AuthData> {
+    fun loginWithEmail(
+        email: String,
+        password: String,
+        newUserInfo: HashMap<String, Any?>?
+    ): MutableLiveData<AuthData> {
         val userLiveData = MutableLiveData<AuthData>()
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -71,6 +75,10 @@ class AuthRepository {
                     Log.d("AuthService", "Sign in with new user! $email")
                     userLiveData.value =
                         AuthData(User(task.result?.user!!), null)
+
+                    if (newUserInfo != null) {
+                        updateUserData(task.result?.user?.uid!!, newUserInfo)
+                    }
                 } else {
                     Log.d(
                         "AuthService",
@@ -83,21 +91,16 @@ class AuthRepository {
         return userLiveData
     }
 
-    fun sendVerificationEmail(): MutableLiveData<String?> {
-        val msg = MutableLiveData<String?>()
-
-        if (currentUser() != null) {
-            currentUser()?.sendEmailVerification()
-                ?.addOnCompleteListener { task: Task<Void> ->
-                    if (!task.isSuccessful) {
-                        msg.value = task.exception?.message
-                    }
+    fun updateUserData(userId: String, newData: HashMap<String, Any?>) {
+        DatabaseRepository.getDbInstance()
+            .collection("users").document(userId).update(newData)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d("AuthService", "Succesfully updated user data for $userId")
+                } else {
+                    Log.d("AuthService", "Failed to update data $userId, ${it.exception?.message}")
                 }
-        } else {
-            msg.value = "User is not logged in!"
-        }
-
-        return msg
+            }
     }
 
     fun logOut() {
