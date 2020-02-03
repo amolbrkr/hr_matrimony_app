@@ -29,6 +29,19 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        val loc = userAuthVM.locationUpdates.value
+        val addr = if (loc != null) {
+            CustomUtils.convertCoordsToAddr(requireContext(), loc.latitude, loc.longitude);
+        } else null
+
+        val infoToBeUpdated = hashMapOf(
+            "pincode" to addr?.postalCode,
+            "locationLat" to addr?.latitude,
+            "locationLong" to addr?.longitude,
+            "address" to addr?.getAddressLine(0),
+            "lastSignInAt" to System.currentTimeMillis()
+        )
+
         login_button.setOnClickListener {
             val email = email_editText.editText?.text
             val pw = password_editText.editText?.text
@@ -49,7 +62,7 @@ class LoginFragment : Fragment() {
             }
 
             if (emailError == null && pwError == null) {
-                userAuthVM.signIn(email.toString(), pw.toString())
+                userAuthVM.signIn(email.toString(), pw.toString(), infoToBeUpdated)
                     .observe(viewLifecycleOwner, Observer {
                         if (it?.errorMessage != null) {
                             Snackbar.make(view, "Error: ${it.errorMessage}", Snackbar.LENGTH_LONG)
