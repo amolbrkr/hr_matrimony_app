@@ -2,6 +2,7 @@ package com.halalrishtey
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,9 +29,9 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         usersToShow = ArrayList()
-//        UserRepository.getAllUserProfiles().value?.forEach {
-//            usersToShow.add(ProfileCardData(it.displayName, it.age.toString(), it.idProofUrl))
-//        }
+        UserRepository.getAllUserProfiles().value?.forEach {
+            usersToShow.add(ProfileCardData(it.displayName, it.age.toString(), it.idProofUrl))
+        }
 
         adapter = CardDataRVAdapter(usersToShow)
         linearLayoutManager = LinearLayoutManager(context)
@@ -43,11 +44,13 @@ class HomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        Log.d("HomeFragemnt", adapter.itemCount.toString())
         if (usersToShow.size == 0) {
             UserRepository.getAllUserProfiles().observe(viewLifecycleOwner, Observer {
+                usersToShow.clear()
                 it.forEach { user ->
                     //TODO: Pass proper values here.
-                    usersToShow.clear()
                     usersToShow.add(
                         ProfileCardData(
                             user.displayName,
@@ -56,6 +59,7 @@ class HomeFragment : Fragment() {
                         )
                     )
                 }
+                adapter.notifyDataSetChanged()
             })
         }
     }
@@ -71,6 +75,4 @@ class HomeFragment : Fragment() {
 
         profileRV.layoutManager?.scrollToPosition(lastScrollPos)
     }
-
-
 }
