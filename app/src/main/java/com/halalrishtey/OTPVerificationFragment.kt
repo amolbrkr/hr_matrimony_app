@@ -44,7 +44,7 @@ class OTPVerificationFragment : Fragment() {
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(p0: PhoneAuthCredential) {
                 if (p0.smsCode != null) {
-                    Log.d("OTP", p0.smsCode)
+                    Log.d("OTP", p0.smsCode!!)
 
                     userAuthVM.newUser.value?.isOTPVerified = true
                     otpTextInp.editText?.setText(p0.smsCode)

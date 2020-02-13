@@ -39,8 +39,10 @@ data class User(
     var countryCode: String = "IN",     //done
     var pincode: String = "",        //done
     var isOTPVerified: Boolean = false,     //done
-    var countryCallingCode: String = ""     //done
+    var countryCallingCode: String = "",     //done
+    var interestCount: Int = 0
 ) : Parcelable {
+
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)
 
