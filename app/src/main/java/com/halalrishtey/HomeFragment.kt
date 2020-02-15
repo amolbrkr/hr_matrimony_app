@@ -7,16 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.services.UserRepository
+import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 
 class HomeFragment : Fragment() {
+    private val userVM: UserViewModel by activityViewModels()
+
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: CardDataRVAdapter
     private lateinit var usersToShow: ArrayList<ProfileCardData>
@@ -45,16 +49,22 @@ class HomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        Log.d("HomeFragemnt", adapter.itemCount.toString())
+        Log.d(
+            "HomeFragment",
+            "Logged in user data: ${UserRepository.getProfileOfUser(userVM.currentUserId.value!!)}"
+        )
+
+        Log.d("HomeFragment", adapter.itemCount.toString())
         if (usersToShow.size == 0) {
             UserRepository.getAllUserProfiles().observe(viewLifecycleOwner, Observer {
                 usersToShow.clear()
                 it.forEach { user ->
                     //TODO: Pass proper values here.
+
                     usersToShow.add(
                         ProfileCardData(
                             user.displayName,
-                            user.age.toString(),
+                            "${user.age.toString()}, ${user.gender}",
                             user.idProofUrl
                         )
                     )
