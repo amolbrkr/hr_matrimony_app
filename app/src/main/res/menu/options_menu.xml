@@ -13,6 +13,10 @@
         android:title="About" />
 
     <item
+        android:id="@+id/option_signout"
+        android:title="Sign Out" />
+
+    <item
         android:id="@+id/option_exit"
         android:title="Exit" />
 </menu>
