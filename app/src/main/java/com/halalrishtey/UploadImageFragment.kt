@@ -44,9 +44,9 @@ class UploadImageFragment : Fragment() {
         uploadImg_button.setOnClickListener {
 
             if (imgUri != null) {
-
                 Toast.makeText(context, "Upload in progress...", Toast.LENGTH_SHORT).show()
                 uploadImg_button.isEnabled = false
+                uploadProgress.visibility = View.VISIBLE
 
                 val ref = StorageRepository.imagesReference
                         .child("${System.currentTimeMillis()}.${getExt(imgUri!!)}")
@@ -60,6 +60,7 @@ class UploadImageFragment : Fragment() {
                                     sharedVM.bundleFromUploadImageFragment.value = bundle
                                     requireActivity().onBackPressed()
                                 } else {
+                                    uploadProgress.visibility = View.GONE
                                     uploadImg_button.isEnabled = true
                                 }
                             }
