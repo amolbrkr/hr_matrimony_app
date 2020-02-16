@@ -26,7 +26,8 @@
             android:foregroundGravity="center"
             android:minWidth="250dp"
             android:minHeight="375dp"
-            android:scaleType="centerCrop" />
+            android:maxHeight="400dp"
+            android:scaleType="centerInside" />
 
         <LinearLayout
             android:layout_width="match_parent"
