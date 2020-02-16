@@ -29,6 +29,20 @@
         app:layout_constraintTop_toBottomOf="@+id/uploadImg_titleText"
         tools:layout_editor_absoluteX="0dp" />
 
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/uploadProgress"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:minWidth="150dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/uploadImg_imageView"
+        app:mpb_progressStyle="horizontal" />
+
     <LinearLayout
         android:id="@+id/imgUploadButtonLayout"
         android:layout_width="match_parent"
@@ -44,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="Choose Image"
-            android:theme="@style/Widget.MaterialComponents.Button.TextButton" />
+            android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/uploadImg_button"
