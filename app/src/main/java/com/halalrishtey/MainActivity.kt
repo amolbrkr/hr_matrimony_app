@@ -3,12 +3,14 @@ package com.halalrishtey
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.halalrishtey.viewmodels.UserViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        toolbar.overflowIcon = null
 
         bottom_navigation.setupWithNavController(findNavController(R.id.nav_host_fragment))
 
@@ -31,7 +35,25 @@ class MainActivity : AppCompatActivity() {
             this.finish()
         } else {
             userVM.currentUserId.value = uid
-            Toast.makeText(applicationContext, uid.toString(), Toast.LENGTH_SHORT).show()
         }
+
+
+        userVM.getCurrentUser().observe(this, Observer {
+            Picasso.get().load(it.photoUrl)
+                .centerCrop()
+                .fit()
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(userImageView)
+        })
+
+        userImageView.setOnClickListener {
+            toolbar.showOverflowMenu()
+        }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu);
+        return true
     }
 }
