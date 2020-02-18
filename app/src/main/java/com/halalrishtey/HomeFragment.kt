@@ -45,7 +45,8 @@ class HomeFragment : Fragment() {
         super.onStart()
 
         if (usersToShow.size == 0) {
-            userVM.getCurrentUser().observe(viewLifecycleOwner, Observer { currentUser ->
+            userVM.getUser(userVM.currentUserId.value!!)
+                .observe(viewLifecycleOwner, Observer { currentUser ->
                 if (currentUser != null) {
                     UserRepository.getAllUserProfiles().observe(viewLifecycleOwner, Observer {
                         usersToShow.clear()
@@ -55,7 +56,7 @@ class HomeFragment : Fragment() {
                                 usersToShow.add(
                                     ProfileCardData(
                                         user.displayName,
-                                        "${user.age.toString()}, ${user.gender}",
+                                        "${user.age.toString()}, ${user.height}",
                                         user.photoUrl
                                     )
                                 )

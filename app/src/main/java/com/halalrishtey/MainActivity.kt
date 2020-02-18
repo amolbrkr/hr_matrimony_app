@@ -3,19 +3,21 @@ package com.halalrishtey
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private val userVM: UserViewModel by viewModels()
+    private val userAuthVM: UserAuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,23 +38,44 @@ class MainActivity : AppCompatActivity() {
             this.finish()
         } else {
             userVM.currentUserId.value = uid
-        }
 
-
-        userVM.getCurrentUser().observe(this, Observer {
-            if (it.photoUrl.isNotEmpty()) {
+            userVM.getUser(uid).observe(this, Observer {
+                //                if (it.photoUrl.isNotEmpty()) {
                 Picasso.get().load(it.photoUrl)
                     .centerCrop()
                     .fit()
                     .placeholder(R.drawable.ic_launcher_background)
+                    .error(R.drawable.ic_launcher_background)
                     .into(userImageView)
-            } else {
-                Log.d("MainActivity", "Cannot get Photo url")
-            }
-        })
+//                } else {
+//                    Log.d("MainActivity", "Cannot get Photo url")
+//                }
+            })
+        }
 
         userImageView.setOnClickListener {
             toolbar.showOverflowMenu()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.option_signout -> {
+                userAuthVM.signOut()
+                val i = Intent(this, WelcomeActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(i)
+                this.finish()
+                return true
+            }
+
+            R.id.option_exit -> {
+                return true
+            }
+
+            else -> {
+                return true
+            }
         }
     }
 

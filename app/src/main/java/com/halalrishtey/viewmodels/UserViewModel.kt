@@ -7,5 +7,5 @@ import com.halalrishtey.services.UserRepository
 
 class UserViewModel : ViewModel() {
     val currentUserId = MutableLiveData<String>()
-    fun getCurrentUser() = UserRepository.getProfileOfUser(currentUserId.value!!)
+    fun getUser(uid: String) = UserRepository.getProfileOfUser(uid)
 }
