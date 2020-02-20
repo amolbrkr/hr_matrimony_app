@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.services.UserRepository
+import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
     private val userVM: UserViewModel by activityViewModels()
+    private val userAuthVM: UserAuthViewModel by activityViewModels()
 
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: CardDataRVAdapter
@@ -47,26 +49,44 @@ class HomeFragment : Fragment() {
         if (usersToShow.size == 0) {
             userVM.getUser(userVM.currentUserId.value!!)
                 .observe(viewLifecycleOwner, Observer { currentUser ->
-                if (currentUser != null) {
-                    UserRepository.getAllUserProfiles().observe(viewLifecycleOwner, Observer {
-                        usersToShow.clear()
-                        it.forEach { user ->
-                            if (user.uid != currentUser.uid && user.gender != currentUser.gender) {
+                    if (currentUser != null) {
+                        UserRepository.getAllUserProfiles().observe(viewLifecycleOwner, Observer {
+                            usersToShow.clear()
+                            it.forEach { user ->
+                                if (user.uid != currentUser.uid && user.gender != currentUser.gender) {
 
-                                usersToShow.add(
-                                    ProfileCardData(
-                                        user.displayName,
-                                        "${user.age.toString()}, ${user.height}",
-                                        user.photoUrl
+                                    usersToShow.add(
+                                        ProfileCardData(
+                                            user.displayName,
+                                            "${user.age.toString()}, ${user.height}",
+                                            user.photoUrl
+                                        )
                                     )
-                                )
+                                }
                             }
-                        }
-                        adapter.notifyDataSetChanged()
-                    })
-                }
-            })
+                            adapter.notifyDataSetChanged()
+                        })
+                    }
+                })
         }
+
+        userAuthVM.locationUpdates.observe(viewLifecycleOwner, Observer { loc ->
+            val addr = if (loc != null) {
+                CustomUtils.convertCoordsToAddr(requireContext(), loc.latitude, loc.longitude);
+            } else null
+
+            val infoToBeUpdated = hashMapOf(
+                "pincode" to addr?.postalCode,
+                "locationLat" to addr?.latitude,
+                "locationLong" to addr?.longitude,
+                "address" to addr?.getAddressLine(0),
+                "lastSignInAt" to System.currentTimeMillis()
+            )
+
+            userAuthVM.updateUserData(userVM.currentUserId.value!!, infoToBeUpdated)
+            userAuthVM.locationUpdates.removeObservers(viewLifecycleOwner)
+        })
+
     }
 
     override fun onPause() {
