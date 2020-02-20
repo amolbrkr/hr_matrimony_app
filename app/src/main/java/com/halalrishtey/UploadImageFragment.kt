@@ -26,8 +26,8 @@ class UploadImageFragment : Fragment() {
     private var imgUri: Uri? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_upload_image, container, false)
     }
@@ -49,27 +49,27 @@ class UploadImageFragment : Fragment() {
                 uploadProgress.visibility = View.VISIBLE
 
                 val ref = StorageRepository.imagesReference
-                        .child("${System.currentTimeMillis()}.${getExt(imgUri!!)}")
+                    .child("${System.currentTimeMillis()}.${getExt(imgUri!!)}")
 
                 ref.putFile(imgUri!!)
-                        .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> {
-                            ref.downloadUrl.addOnCompleteListener {
-                                if (it.isSuccessful) {
-                                    val url: String = it.result.toString()
-                                    val bundle = Bundle().apply { putString("uploadedImageUrl", url) }
-                                    sharedVM.bundleFromUploadImageFragment.value = bundle
-                                    requireActivity().onBackPressed()
-                                } else {
-                                    uploadProgress.visibility = View.GONE
-                                    uploadImg_button.isEnabled = true
-                                }
+                    .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> {
+                        ref.downloadUrl.addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                val url: String = it.result.toString()
+                                val bundle = Bundle().apply { putString("uploadedImageUrl", url) }
+                                sharedVM.bundleFromUploadImageFragment.value = bundle
+                                requireActivity().onBackPressed()
+                            } else {
+                                uploadProgress.visibility = View.GONE
+                                uploadImg_button.isEnabled = true
                             }
-                        })
-                        .addOnFailureListener(OnFailureListener {
-                            uploadImg_button.isEnabled = true
-                            Snackbar.make(view, "Error: ${it.message}", Snackbar.LENGTH_LONG)
-                                    .show()
-                        })
+                        }
+                    })
+                    .addOnFailureListener(OnFailureListener {
+                        uploadImg_button.isEnabled = true
+                        Snackbar.make(view, "Error: ${it.message}", Snackbar.LENGTH_LONG)
+                            .show()
+                    })
             } else {
                 Snackbar.make(view, "No Image selected!", Snackbar.LENGTH_SHORT).show()
             }

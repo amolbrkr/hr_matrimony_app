@@ -2,6 +2,7 @@ package com.halalrishtey
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,11 +56,12 @@ class HomeFragment : Fragment() {
                             it.forEach { user ->
                                 if (user.uid != currentUser.uid && user.gender != currentUser.gender) {
 
+                                    Log.d("HomeFragment", "user.photoUrl: ${user.photoUrl}")
                                     usersToShow.add(
                                         ProfileCardData(
-                                            user.displayName,
-                                            "${user.age.toString()}, ${user.height}",
-                                            user.photoUrl
+                                            title = user.displayName,
+                                            subTitle = "${user.age.toString()}, ${user.height}",
+                                            imageUrl = user.photoUrl
                                         )
                                     )
                                 }
