@@ -3,6 +3,7 @@ package com.halalrishtey
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -40,16 +41,16 @@ class MainActivity : AppCompatActivity() {
             userVM.currentUserId.value = uid
 
             userVM.getUser(uid).observe(this, Observer {
-                //                if (it.photoUrl.isNotEmpty()) {
-                Picasso.get().load(it.photoUrl)
-                    .centerCrop()
-                    .fit()
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.ic_launcher_background)
-                    .into(userImageView)
-//                } else {
-//                    Log.d("MainActivity", "Cannot get Photo url")
-//                }
+                if (it.photoUrl.isNotEmpty()) {
+                    Picasso.get().load(it.photoUrl)
+                        .centerCrop()
+                        .fit()
+                        .placeholder(R.drawable.ph_gray)
+                        .error(R.drawable.ic_launcher_background)
+                        .into(userImageView)
+                } else {
+                    Log.d("MainActivity", "Cannot get Photo url")
+                }
             })
         }
 
