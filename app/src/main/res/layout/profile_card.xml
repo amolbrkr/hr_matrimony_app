@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     android:checkable="false"
     android:clickable="true"
@@ -22,11 +22,12 @@
             android:id="@+id/cardImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:contentDescription="Card Image"
             android:foregroundGravity="center"
             android:maxHeight="450dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside" />
+            android:scaleType="fitXY"
+            android:src="@drawable/ph_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,7 +39,8 @@
                 android:id="@+id/cardAvatarImageView"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_margin="8dp" />
+                android:layout_margin="8dp"
+                android:src="@drawable/ph_gray" />
 
             <!-- Layout for card heading and subheading -->
             <LinearLayout
@@ -78,9 +80,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/shortlist_button"
                 style="@style/IconOnlyButton"
-                app:icon="@drawable/ic_star"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_star" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/interest_button"

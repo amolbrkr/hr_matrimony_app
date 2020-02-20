@@ -39,6 +39,8 @@ class UserAuthViewModel(application: Application) : AndroidViewModel(application
             "Phone number can't be empty"
         } else if (phone.length < 9) {
             "Phone number seems too short"
+        } else if (phone.length > 11) {
+            "Phone number seems too long"
         } else null
     }
 
@@ -49,6 +51,9 @@ class UserAuthViewModel(application: Application) : AndroidViewModel(application
         authService.createNewUser(email, password, userData)
 
     fun signOut() = authService.logOut()
+
+    fun updateUserData(userId: String, newData: HashMap<String, Any?>) =
+        authService.updateUserData(userId, newData)
 
     fun sendResetPasswordEmail(email: String) = authService.resetPassword(email)
 }

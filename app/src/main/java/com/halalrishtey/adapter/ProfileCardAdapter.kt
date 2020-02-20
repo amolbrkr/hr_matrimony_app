@@ -53,15 +53,13 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
         fun bindCard(card: ProfileCardData) {
             this.cardData = card
 
-            Picasso.get().load(card.imageUrl)
-                .centerCrop()
-                .fit()
-                .placeholder(R.drawable.ph_gray)
-                .into(view.cardImageView)
+            if (card.imageUrl.length > 5) {
+                Picasso.get().load(card.imageUrl)
+                    .into(view.cardImageView)
 
-            Picasso.get().load(card.imageUrl)
-                .placeholder(R.drawable.ph_gray)
-                .into(view.cardAvatarImageView)
+                Picasso.get().load(card.imageUrl)
+                    .into(view.cardAvatarImageView)
+            }
 
             view.cardTitleTextView.text = card.title
             view.cardSubtitleTextView.text = card.subTitle
