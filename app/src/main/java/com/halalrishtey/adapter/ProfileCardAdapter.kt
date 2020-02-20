@@ -56,12 +56,11 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
             Picasso.get().load(card.imageUrl)
                 .centerCrop()
                 .fit()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ph_gray)
                 .into(view.cardImageView)
 
             Picasso.get().load(card.imageUrl)
-                .resize(400, 400)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ph_gray)
                 .into(view.cardAvatarImageView)
 
             view.cardTitleTextView.text = card.title
