@@ -24,9 +24,8 @@
             android:layout_height="wrap_content"
             android:contentDescription="Card Image"
             android:foregroundGravity="center"
-            android:minWidth="250dp"
-            android:minHeight="375dp"
-            android:maxHeight="400dp"
+            android:maxHeight="450dp"
+            android:adjustViewBounds="true"
             android:scaleType="centerInside" />
 
         <LinearLayout

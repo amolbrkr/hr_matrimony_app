@@ -17,6 +17,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userImageView"
+            android:src="@drawable/ph_gray"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="8dp"

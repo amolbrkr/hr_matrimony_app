@@ -11,6 +11,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="64dp"
         android:id="@+id/profileRV" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
