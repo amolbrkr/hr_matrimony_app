@@ -28,20 +28,6 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-//        val loc = userAuthVM.locationUpdates.value
-//        val addr = if (loc != null) {
-//            CustomUtils.convertCoordsToAddr(requireContext(), loc.latitude, loc.longitude);
-//        } else null
-//
-//        val infoToBeUpdated = hashMapOf(
-//            "pincode" to addr?.postalCode,
-//            "locationLat" to addr?.latitude,
-//            "locationLong" to addr?.longitude,
-//            "address" to addr?.getAddressLine(0),
-//            "lastSignInAt" to System.currentTimeMillis()
-//        )
-
         login_button.setOnClickListener {
             val email = email_editText.editText?.text
             val pw = password_editText.editText?.text
@@ -76,7 +62,7 @@ class LoginFragment : Fragment() {
                                     ?.edit()
 
                             sharedPref?.putString("user_uid", it.data.uid)
-                            sharedPref?.commit()
+                            sharedPref?.apply()
 
                             val i: Intent = Intent(
                                 activity, MainActivity::class.java
