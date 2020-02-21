@@ -22,8 +22,9 @@
         android:id="@+id/uploadImg_imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="500dp"
-
+        android:adjustViewBounds="true"
+        android:maxHeight="500dp"
+        android:minHeight="300dp"
         android:src="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toTopOf="@id/imgUploadButtonLayout"
         app:layout_constraintTop_toBottomOf="@+id/uploadImg_titleText"
