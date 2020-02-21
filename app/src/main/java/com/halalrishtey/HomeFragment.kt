@@ -61,7 +61,9 @@ class HomeFragment : Fragment() {
                                         ProfileCardData(
                                             title = user.displayName,
                                             subTitle = "${user.age.toString()}, ${user.height}",
-                                            imageUrl = user.photoUrl
+                                            imageUrl = user.photoUrl,
+                                            userId = user.uid!!,
+                                            currentUserId = userVM.currentUserId.value!!
                                         )
                                     )
                                 }
