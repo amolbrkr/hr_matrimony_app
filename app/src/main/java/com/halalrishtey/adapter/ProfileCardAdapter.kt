@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.halalrishtey.R
 import com.halalrishtey.models.ProfileCardData
+import com.halalrishtey.services.UserRepository
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_card.view.*
 
@@ -46,6 +47,7 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
             ).show()
         }
 
+
         companion object {
             private val KEY = "CARD"
         }
@@ -63,6 +65,10 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
 
             view.cardTitleTextView.text = card.title
             view.cardSubtitleTextView.text = card.subTitle
+
+            view.shortlist_button.setOnClickListener {
+                UserRepository.shortlistUser(card.currentUserId, card.userId)
+            }
         }
     }
 }

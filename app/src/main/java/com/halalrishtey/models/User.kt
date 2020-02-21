@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.parcel.Parcelize
 import java.util.*
+import kotlin.collections.ArrayList
 
 enum class Gender {
     Male,
@@ -41,9 +42,9 @@ data class User(
     var isOTPVerified: Boolean = false,     //done
     var isIdProofVerified: Boolean = false,
     var countryCallingCode: String = "",     //done
-    var interestCount: Int = 0
+    var interestCount: Int = 0,
+    var shortlistedProfiles: ArrayList<String>? = null
 ) : Parcelable {
-
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)
 

@@ -2,10 +2,33 @@ package com.halalrishtey.services
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.FieldValue
 import com.halalrishtey.models.Gender
 import com.halalrishtey.models.User
 
 object UserRepository {
+
+    fun shortlistUser(currentUserId: String, targetUserId: String): MutableLiveData<String> {
+        val result = MutableLiveData<String>()
+        val ref = DatabaseRepository
+            .getDbInstance()
+            .collection("users")
+            .document(currentUserId)
+
+        ref.update("shortlistedProfiles", FieldValue.arrayUnion(targetUserId))
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d(
+                        "UserRepo",
+                        "Succesfully shorlisted target: $targetUserId for $currentUserId"
+                    )
+                    result.value = "Successfully Shortlisted"
+                } else result.value = it.exception?.message
+            }
+
+        return result;
+    }
+
     fun getProfileOfUser(userId: String): MutableLiveData<User> {
         val fetchedUser = MutableLiveData<User>()
 
@@ -94,9 +117,7 @@ object UserRepository {
                             )
                         )
                     }
-                    Log.d("UserRepo", tempList.toString())
                     listOfUsers.value = tempList
-//                    Log.d("UserRepository", task.result?.documents[0].)
                 } else {
                     Log.d("UserRepository", "Error: ${task.exception?.message}")
                 }
