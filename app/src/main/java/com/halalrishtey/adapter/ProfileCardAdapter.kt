@@ -68,6 +68,9 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
 
             view.shortlist_button.setOnClickListener {
                 UserRepository.shortlistUser(card.currentUserId, card.userId)
+
+                Toast.makeText(it.context, "Shortlisted ${card.title}!", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
