@@ -7,6 +7,11 @@
     android:gravity="center"
     tools:context=".ShortlistFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shortlistedProfilesRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
     <ImageView
         android:layout_marginTop="250dp"
