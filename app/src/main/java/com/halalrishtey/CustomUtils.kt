@@ -9,34 +9,36 @@ import com.halalrishtey.models.Gender
 import com.halalrishtey.models.User
 import java.util.*
 
+
 object CustomUtils {
 
-    fun convertToUser(snapshot: DocumentSnapshot): User {
+    fun convertToUser(doc: DocumentSnapshot): User {
         return User(
-            email = snapshot.get("email").toString(),
-            uid = snapshot.get("uid").toString(),
-            displayName = snapshot.get("displayName").toString(),
-            age = snapshot.get("age").toString().toInt(),
-            photoUrl = snapshot.get("photoUrl").toString(),
-            idProofUrl = snapshot.get("idProofUrl").toString(),
-            phoneNumber = snapshot.get("phoneNumber") as Number,
-            gender = Gender.valueOf(snapshot.get("gender").toString()),
-            createdFor = snapshot.get("createdFor").toString(),
+            email = doc.get("email").toString(),
+            uid = doc.get("uid").toString(),
+            displayName = doc.get("displayName").toString(),
+            age = doc.get("age").toString().toInt(),
+            photoUrl = doc.get("photoUrl").toString(),
+            idProofUrl = doc.get("idProofUrl").toString(),
+            phoneNumber = doc.get("phoneNumber") as Number,
+            gender = Gender.valueOf(doc.get("gender").toString()),
+            createdFor = doc.get("createdFor").toString(),
             lastSignInAt = System.currentTimeMillis(),
-            address = snapshot.get("address")?.toString() ?: "Not found",
-            height = snapshot.get("height").toString(),
-            education = snapshot.get("education").toString(),
-            workLocation = snapshot.get("workLocation").toString(),
-            sect = snapshot.get("sect").toString(),
-            dargah = snapshot.get("dargah").toString(),
-            maritalStatus = snapshot.get("maritalStatus").toString(),
-            locationLat = snapshot.get("locationLat")?.toString()?.toDouble() ?: 0.0,
-            locationLong = snapshot.get("locationLong")?.toString()?.toDouble()
+            address = doc.get("address")?.toString() ?: "Not found",
+            height = doc.get("height").toString(),
+            education = doc.get("education").toString(),
+            workLocation = doc.get("workLocation").toString(),
+            sect = doc.get("sect").toString(),
+            dargah = doc.get("dargah").toString(),
+            maritalStatus = doc.get("maritalStatus").toString(),
+            locationLat = doc.get("locationLat")?.toString()?.toDouble() ?: 0.0,
+            locationLong = doc.get("locationLong")?.toString()?.toDouble()
                 ?: 0.0,
-            countryCode = snapshot.get("countryCode").toString(),
-            pincode = snapshot.get("pincode")?.toString() ?: "Not found",
-            isOTPVerified = snapshot.get("otpverified") as Boolean,
-            countryCallingCode = snapshot.get("countryCallingCode").toString()
+            countryCode = doc.get("countryCode").toString(),
+            pincode = doc.get("pincode")?.toString() ?: "Not found",
+            isOTPVerified = doc.get("otpverified") as Boolean,
+            countryCallingCode = doc.get("countryCallingCode").toString(),
+            shortlistedProfiles = doc.get("shortlistedProfiles") as ArrayList<String>
             //interestCount = it.get("interestCount") as Int
         )
     }
