@@ -8,6 +8,46 @@ import com.halalrishtey.models.Gender
 import com.halalrishtey.models.User
 
 object UserRepository {
+    fun initInterest(currentUserId: String, targetUserId: String): MutableLiveData<String> {
+        val res = MutableLiveData<String>()
+        val interest = mapOf(currentUserId to true, targetUserId to false);
+
+        val ref = DatabaseRepository.getDbInstance()
+            .collection("interests")
+            .document()
+
+        ref.set(interest).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Log.d(
+                    "UserRepo",
+                    "Successfully created interest between $currentUserId & $targetUserId"
+                )
+
+                val currentRef = DatabaseRepository.getDbInstance()
+                    .collection("users")
+                    .document(currentUserId)
+
+                val targetRef = DatabaseRepository.getDbInstance()
+                    .collection("users")
+                    .document(targetUserId)
+
+                DatabaseRepository.getDbInstance().runBatch { batch ->
+                    batch.update(currentRef, "interestsList", FieldValue.arrayUnion(ref.id))
+                    batch.update(targetRef, "interestsList", FieldValue.arrayUnion(ref.id))
+                }.addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        res.value = "Successfully showed your interest!"
+                    } else {
+                        res.value = "Oops! Something went wrong!"
+                    }
+                }
+            } else {
+                res.value = "Cannot create new interest";
+            }
+        }
+
+        return res;
+    }
 
     fun shortlistUser(currentUserId: String, targetUserId: String): MutableLiveData<String> {
         val result = MutableLiveData<String>()
@@ -43,7 +83,7 @@ object UserRepository {
                     fetchedUser.value = CustomUtils.convertToUser(task.result!!)
                 } else {
                     fetchedUser.value = null
-                    Log.d("UserRepository", "")
+                    Log.d("UserRepository", "Couldn't get profile of $userId")
                 }
             }
         return fetchedUser
