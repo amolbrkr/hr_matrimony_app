@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FieldValue
 import com.halalrishtey.CustomUtils
-import com.halalrishtey.models.Gender
 import com.halalrishtey.models.User
 
 object UserRepository {
@@ -16,8 +15,8 @@ object UserRepository {
             .collection("interests")
             .document()
 
-        ref.set(interest).addOnCompleteListener {
-            if (it.isSuccessful) {
+        ref.set(interest).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 Log.d(
                     "UserRepo",
                     "Successfully created interest between $currentUserId & $targetUserId"
@@ -46,6 +45,20 @@ object UserRepository {
             }
         }
 
+        return res
+    }
+
+    fun acceptInterest(acceptingUserId: String, interestId: String): MutableLiveData<String> {
+        val res = MutableLiveData<String>();
+        DatabaseRepository.getDbInstance()
+            .collection("interests")
+            .document(interestId)
+            .update(acceptingUserId, true)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    res.value = "You're also interested, that's great!"
+                } else res.value = "Oops! Something went wrong!"
+            }
         return res;
     }
 
@@ -68,6 +81,31 @@ object UserRepository {
             }
 
         return result;
+    }
+
+    fun getProfilesByIds(listOfIds: ArrayList<String>): MutableLiveData<ArrayList<User>> {
+        val res = MutableLiveData<ArrayList<User>>()
+        val temp = ArrayList<User>()
+
+        listOfIds.forEach { uid ->
+            DatabaseRepository.getDbInstance()
+                .collection("users")
+                .document(uid)
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        temp.add(CustomUtils.convertToUser(it.result!!))
+                        res.value = temp
+                    } else {
+                        Log.d(
+                            "UserRepository",
+                            "Cannot get user data for id $uid, err: ${it.exception?.message}"
+                        )
+                    }
+                }
+        }
+
+        return res
     }
 
     fun getProfileOfUser(userId: String): MutableLiveData<User> {
