@@ -15,7 +15,7 @@ enum class Gender {
 data class User(
     val email: String,      //done //Must be first
     var uid: String? = "",      //done
-    var displayName: String = "", //done
+    var displayName: String = "", //doneK
     var age: Int? = null,          //done
     var photoUrl: String = "",      //done
     var idProofUrl: String = "",        //done
@@ -42,8 +42,7 @@ data class User(
     var isOTPVerified: Boolean = false,     //done
     var isIdProofVerified: Boolean = false,
     var countryCallingCode: String = "",     //done
-    var shortlistedProfiles: ArrayList<String> = ArrayList(),
-    var interestsList: ArrayList<String> = ArrayList()
+    var shortlistedProfiles: ArrayList<String> = ArrayList()
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)

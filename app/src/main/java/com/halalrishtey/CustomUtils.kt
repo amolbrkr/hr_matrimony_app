@@ -13,37 +13,34 @@ import java.util.*
 object CustomUtils {
 
     fun convertToUser(doc: DocumentSnapshot): User {
-        val tmp = doc.get("shortlistedProfiles")
-            val u = User(
-                email = doc.get("email").toString(),
-                uid = doc.get("uid").toString(),
-                displayName = doc.get("displayName").toString(),
-                age = doc.get("age").toString().toInt(),
-                photoUrl = doc.get("photoUrl").toString(),
-                idProofUrl = doc.get("idProofUrl").toString(),
-                phoneNumber = doc.get("phoneNumber") as Number,
-                gender = Gender.valueOf(doc.get("gender").toString()),
-                createdFor = doc.get("createdFor").toString(),
-                lastSignInAt = System.currentTimeMillis(),
-                address = doc.get("address")?.toString() ?: "Not found",
-                height = doc.get("height").toString(),
-                education = doc.get("education").toString(),
-                workLocation = doc.get("workLocation").toString(),
-                sect = doc.get("sect").toString(),
-                dargah = doc.get("dargah").toString(),
-                maritalStatus = doc.get("maritalStatus").toString(),
-                locationLat = doc.get("locationLat")?.toString()?.toDouble() ?: 0.0,
-                locationLong = doc.get("locationLong")?.toString()?.toDouble()
-                    ?: 0.0,
-                countryCode = doc.get("countryCode").toString(),
-                pincode = doc.get("pincode")?.toString() ?: "Not found",
-                isOTPVerified = doc.get("otpverified") as Boolean,
-                countryCallingCode = doc.get("countryCallingCode").toString(),
-                shortlistedProfiles = tmp as ArrayList<String>
-                //interestCount = it.get("interestCount") as Int
-            )
-            Log.d("CustomUtils", "Shortlisted Profiles: ${u.shortlistedProfiles}")
-            return u
+        return User(
+            email = doc.get("email").toString(),
+            uid = doc.get("uid").toString(),
+            displayName = doc.get("displayName").toString(),
+            age = doc.get("age").toString().toInt(),
+            photoUrl = doc.get("photoUrl").toString(),
+            idProofUrl = doc.get("idProofUrl").toString(),
+            phoneNumber = doc.get("phoneNumber") as Number,
+            gender = Gender.valueOf(doc.get("gender").toString()),
+            createdFor = doc.get("createdFor").toString(),
+            lastSignInAt = System.currentTimeMillis(),
+            address = doc.get("address")?.toString() ?: "Not found",
+            height = doc.get("height").toString(),
+            education = doc.get("education").toString(),
+            workLocation = doc.get("workLocation").toString(),
+            sect = doc.get("sect").toString(),
+            dargah = doc.get("dargah").toString(),
+            maritalStatus = doc.get("maritalStatus").toString(),
+            locationLat = doc.get("locationLat")?.toString()?.toDouble() ?: 0.0,
+            locationLong = doc.get("locationLong")?.toString()?.toDouble()
+                ?: 0.0,
+            countryCode = doc.get("countryCode").toString(),
+            pincode = doc.get("pincode")?.toString() ?: "Not found",
+            isOTPVerified = doc.get("otpverified") as Boolean,
+            countryCallingCode = doc.get("countryCallingCode").toString(),
+            shortlistedProfiles = doc.get("shortlistedProfiles") as ArrayList<String>
+            //interestCount = it.get("interestCount") as Int
+        )
     }
 
     fun convertCoordsToAddr(context: Context, latitude: Double, longitude: Double): Address? {
