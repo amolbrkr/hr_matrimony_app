@@ -12,9 +12,9 @@
         android:title="Search" />
     <item
         android:id="@id/shortlistFragment"
-        android:icon="@drawable/ic_star"
+        android:icon="@drawable/ic_favorite"
         android:menuCategory="secondary"
-        android:title="Shortlist" />
+        android:title="Interests" />
     <item
         android:id="@id/chatsFragment"
         android:icon="@drawable/ic_chat"

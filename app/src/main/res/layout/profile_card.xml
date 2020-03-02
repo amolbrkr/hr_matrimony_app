@@ -2,7 +2,6 @@
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -81,14 +80,16 @@
                 style="@style/IconOnlyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_star" />
+                android:layout_marginHorizontal="8dp"
+                app:icon="@drawable/ic_favorite_border" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/interest_button"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Show Interest" />
+                app:icon="@drawable/ic_chat_bubble_outline"
+                android:text="Message" />
         </LinearLayout>
     </LinearLayout>
 
