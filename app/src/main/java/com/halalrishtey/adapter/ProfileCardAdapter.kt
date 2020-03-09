@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.halalrishtey.R
 import com.halalrishtey.models.ProfileCardData
-import com.halalrishtey.services.UserRepository
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_card.view.*
 
@@ -55,22 +54,25 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
         fun bindCard(card: ProfileCardData) {
             this.cardData = card
 
-            if (card.imageUrl.length > 5) {
-                Picasso.get().load(card.imageUrl)
+            if (card.isUserShortlisted) {
+                view.showInterestBtn.setIconResource(R.drawable.ic_favorite)
+            } else {
+                view.showInterestBtn.setIconResource(R.drawable.ic_favorite_border)
+            }
+
+            if (card.data.photoUrl.length > 5) {
+                Picasso.get().load(card.data.photoUrl)
                     .into(view.cardImageView)
 
-                Picasso.get().load(card.imageUrl)
+                Picasso.get().load(card.data.photoUrl)
                     .into(view.cardAvatarImageView)
             }
 
-            view.cardTitleTextView.text = card.title
-            view.cardSubtitleTextView.text = card.subTitle
+            view.cardTitleTextView.text = card.data.displayName
+            view.cardSubtitleTextView.text = "${card.data.age} - ${card.data.height}"
 
-            view.shortlist_button.setOnClickListener {
-                UserRepository.shortlistUser(card.currentUserId, card.userId)
-                Toast.makeText(it.context, "Shortlisted ${card.title}!", Toast.LENGTH_SHORT)
-                    .show()
-            }
+            view.showInterestBtn.setOnClickListener(card.showBtnInterestListener)
+            view.sendMessageBtn.setOnClickListener(card.messageBtnListener)
         }
     }
 }
