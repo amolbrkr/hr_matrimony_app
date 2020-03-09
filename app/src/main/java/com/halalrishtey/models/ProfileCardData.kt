@@ -1,9 +1,10 @@
 package com.halalrishtey.models
 
+import android.view.View
+
 data class ProfileCardData(
-    var title: String,
-    var subTitle: String,
-    var imageUrl: String,
-    var userId: String,
-    var currentUserId: String
+    var data: User,
+    var showBtnInterestListener: View.OnClickListener,
+    var messageBtnListener: View.OnClickListener,
+    var isUserShortlisted: Boolean
 )

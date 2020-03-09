@@ -42,7 +42,7 @@ data class User(
     var isOTPVerified: Boolean = false,     //done
     var isIdProofVerified: Boolean = false,
     var countryCallingCode: String = "",     //done
-    var shortlistedProfiles: ArrayList<String> = ArrayList()
+    var interestedProfiles: ArrayList<String> = ArrayList()
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)
