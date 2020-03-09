@@ -22,6 +22,9 @@ class UserViewModel : ViewModel() {
 
     fun getProfilesByIds(listOfIds: ArrayList<String>) = UserRepository.getProfilesByIds(listOfIds)
 
-    fun shortlistUser(currentUserId: String, targetUserId: String) =
-        UserRepository.shortlistUser(currentUserId, targetUserId)
+    fun initInterest(currentUserId: String, targetUserId: String) =
+        UserRepository.initInterest(currentUserId, targetUserId)
+
+    fun removeInterest(currentUserId: String, targetUserId: String) =
+        UserRepository.removeInterest(currentUserId, targetUserId)
 }
