@@ -38,7 +38,7 @@ object CustomUtils {
             pincode = doc.get("pincode")?.toString() ?: "Not found",
             isOTPVerified = doc.get("otpverified") as Boolean,
             countryCallingCode = doc.get("countryCallingCode").toString(),
-            shortlistedProfiles = doc.get("shortlistedProfiles") as ArrayList<String>
+            interestedProfiles = doc.get("interestedProfiles") as ArrayList<String>
             //interestCount = it.get("interestCount") as Int
         )
     }

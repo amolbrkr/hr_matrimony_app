@@ -77,10 +77,10 @@ class OTPVerificationFragment : Fragment() {
                             activity?.finish()
                         } else {
                             Snackbar.make(
-                                requireView(),
-                                "Error: ${authData.errorMessage}",
-                                Snackbar.LENGTH_LONG
-                            )
+                                    requireView(),
+                                    "Error: ${authData.errorMessage}",
+                                    Snackbar.LENGTH_LONG
+                                )
                                 .show()
                         }
                     })
