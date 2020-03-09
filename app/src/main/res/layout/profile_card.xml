@@ -76,20 +76,21 @@
             android:gravity="start">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/shortlist_button"
+                android:id="@+id/showInterestBtn"
                 style="@style/IconOnlyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                app:icon="@drawable/ic_favorite_border" />
+                app:icon="@drawable/ic_favorite_border"
+                app:iconSize="24dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/interest_button"
+                android:id="@+id/sendMessageBtn"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Message"
                 app:icon="@drawable/ic_chat_bubble_outline"
-                android:text="Message" />
+                app:iconSize="24dp" />
         </LinearLayout>
     </LinearLayout>
 
