@@ -8,79 +8,46 @@ import com.halalrishtey.models.User
 
 object UserRepository {
     fun initInterest(currentUserId: String, targetUserId: String): MutableLiveData<String> {
-        val res = MutableLiveData<String>()
-        val interest = mapOf(currentUserId to true, targetUserId to false);
-
-        val ref = DatabaseRepository.getDbInstance()
-            .collection("interests")
-            .document()
-
-        ref.set(interest).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d(
-                    "UserRepo",
-                    "Successfully created interest between $currentUserId & $targetUserId"
-                )
-
-                val currentRef = DatabaseRepository.getDbInstance()
-                    .collection("users")
-                    .document(currentUserId)
-
-                val targetRef = DatabaseRepository.getDbInstance()
-                    .collection("users")
-                    .document(targetUserId)
-
-                DatabaseRepository.getDbInstance().runBatch { batch ->
-                    batch.update(currentRef, "interestsList", FieldValue.arrayUnion(ref.id))
-                    batch.update(targetRef, "interestsList", FieldValue.arrayUnion(ref.id))
-                }.addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        res.value = "Successfully showed your interest!"
-                    } else {
-                        res.value = "Oops! Something went wrong!"
-                    }
-                }
-            } else {
-                res.value = "Cannot create new interest";
-            }
-        }
-
-        return res
-    }
-
-    fun acceptInterest(acceptingUserId: String, interestId: String): MutableLiveData<String> {
-        val res = MutableLiveData<String>();
-        DatabaseRepository.getDbInstance()
-            .collection("interests")
-            .document(interestId)
-            .update(acceptingUserId, true)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    res.value = "You're also interested, that's great!"
-                } else res.value = "Oops! Something went wrong!"
-            }
-        return res;
-    }
-
-    fun shortlistUser(currentUserId: String, targetUserId: String): MutableLiveData<String> {
         val result = MutableLiveData<String>()
         val ref = DatabaseRepository
             .getDbInstance()
             .collection("users")
             .document(currentUserId)
 
-        ref.update("shortlistedProfiles", FieldValue.arrayUnion(targetUserId))
+        ref.update("interestedProfiles", FieldValue.arrayUnion(targetUserId))
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     Log.d(
                         "UserRepo",
-                        "Succesfully shorlisted target: $targetUserId for $currentUserId"
+                        "Succesfully expressed interest to target: $targetUserId for $currentUserId"
                     )
-                    result.value = "Successfully Shortlisted"
+                    result.value = "We'll let them know that you're interested!"
                 } else result.value = it.exception?.message
             }
 
         return result;
+    }
+
+    fun removeInterest(currentUserId: String, targetUserId: String): MutableLiveData<String> {
+        val res = MutableLiveData<String>()
+
+        val ref = DatabaseRepository
+            .getDbInstance()
+            .collection("users")
+            .document(currentUserId)
+
+        ref.update("interestedProfiles", FieldValue.arrayRemove(targetUserId))
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d(
+                        "UserRepo",
+                        "Succesfully removed interest target: $targetUserId for $currentUserId"
+                    )
+                    res.value = "You're no longer interested in this user, got it!"
+                } else res.value = it.exception?.message
+            }
+
+        return res
     }
 
     fun getProfilesByIds(listOfIds: ArrayList<String>): MutableLiveData<ArrayList<User>> {
