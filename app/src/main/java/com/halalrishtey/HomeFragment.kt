@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -17,6 +18,7 @@ import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.profile_card.view.*
 
 
 class HomeFragment : Fragment() {
@@ -55,15 +57,61 @@ class HomeFragment : Fragment() {
                             usersToShow.clear()
                             it.forEach { user ->
                                 if (user.uid != currentUser.uid && user.gender != currentUser.gender) {
+                                    val isShortlisted =
+                                        userVM.currentUserProfile.value?.interestedProfiles?.contains(
+                                            user.uid
+                                        ) ?: false
+                                    Log.d(
+                                        "HomeFragment",
+                                        "User ${user.uid} is shortlisted by current user: $isShortlisted"
+                                    )
 
-                                    Log.d("HomeFragment", "user.photoUrl: ${user.photoUrl}")
+                                    val interestBtnListener = View.OnClickListener { v ->
+                                        if (!isShortlisted) {
+                                            v.showInterestBtn.setIconResource(R.drawable.ic_favorite)
+
+                                            //Add interest target to correct arraylist
+                                            currentUser.interestedProfiles.add(user.uid!!)
+                                            userVM.currentUserProfile.value = currentUser
+
+                                            userVM.initInterest(
+                                                userVM.currentUserId.value!!,
+                                                user.uid!!
+                                            ).observe(viewLifecycleOwner, Observer { msg ->
+                                                Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+                                                    .show()
+                                            })
+                                        } else {
+                                            v.showInterestBtn.setIconResource(R.drawable.ic_favorite_border)
+
+                                            //Remove interest target from correct arraylist
+                                            currentUser.interestedProfiles.remove(user.uid!!)
+                                            userVM.currentUserProfile.value = currentUser
+
+                                            userVM.removeInterest(
+                                                userVM.currentUserId.value!!,
+                                                user.uid!!
+                                            ).observe(viewLifecycleOwner, Observer { msg ->
+                                                Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+                                                    .show()
+                                            })
+                                        }
+                                    }
+
+                                    val messageBtnListener = View.OnClickListener { v ->
+                                        Toast.makeText(
+                                            context,
+                                            "Message button clicked for ${user.displayName}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+
                                     usersToShow.add(
                                         ProfileCardData(
-                                            title = user.displayName,
-                                            subTitle = "${user.age.toString()}, ${user.height}",
-                                            imageUrl = user.photoUrl,
-                                            userId = user.uid!!,
-                                            currentUserId = userVM.currentUserId.value!!
+                                            data = user,
+                                            showBtnInterestListener = interestBtnListener,
+                                            messageBtnListener = messageBtnListener,
+                                            isUserShortlisted = isShortlisted
                                         )
                                     )
                                 }
@@ -79,7 +127,7 @@ class HomeFragment : Fragment() {
                 CustomUtils.convertCoordsToAddr(requireContext(), loc.latitude, loc.longitude);
             } else null
 
-            val infoToBeUpdated = hashMapOf(
+            val infoToBeUpdated: HashMap<String, Any?> = hashMapOf(
                 "pincode" to addr?.postalCode,
                 "locationLat" to addr?.latitude,
                 "locationLong" to addr?.longitude,
