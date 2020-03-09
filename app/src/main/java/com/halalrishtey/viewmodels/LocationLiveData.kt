@@ -12,7 +12,7 @@ import com.google.android.gms.location.LocationServices
 
 class LocationLiveData(context: Context) : LiveData<Location?>() {
     private val fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(context)
+        LocationServices.getFusedLocationProviderClient(context)
 
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(p0: LocationResult?) {
@@ -45,9 +45,9 @@ class LocationLiveData(context: Context) : LiveData<Location?>() {
         }
 
         fusedLocationProviderClient.requestLocationUpdates(
-                locationRequest,
-                locationCallback,
-                null
+            locationRequest,
+            locationCallback,
+            null
         )
     }
 

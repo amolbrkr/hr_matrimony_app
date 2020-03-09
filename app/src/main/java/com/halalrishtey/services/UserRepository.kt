@@ -25,7 +25,7 @@ object UserRepository {
                 } else result.value = it.exception?.message
             }
 
-        return result;
+        return result
     }
 
     fun removeInterest(currentUserId: String, targetUserId: String): MutableLiveData<String> {

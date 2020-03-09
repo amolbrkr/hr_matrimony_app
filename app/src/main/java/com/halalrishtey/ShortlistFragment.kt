@@ -64,7 +64,7 @@ class ShortlistFragment : Fragment() {
                         val isShortlisted =
                             currentUser.interestedProfiles.contains(
                                 u.uid
-                            ) ?: false
+                            )
 
                         val interestBtnListener = View.OnClickListener { v ->
                             if (!isShortlisted) {

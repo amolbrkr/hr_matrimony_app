@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.storage.FirebaseStorage
 
 data class UploadResult(
-        var fileUrl: String?,
-        var errorMsg: String?
+    var fileUrl: String?,
+    var errorMsg: String?
 )
 
 object StorageRepository {
@@ -18,20 +18,20 @@ object StorageRepository {
     val imagesReference = storageReference.getReference("Images")
 
     fun uploadImgToStorage(imageUri: Uri): MutableLiveData<UploadResult> {
-        val fileLink = MutableLiveData<UploadResult>();
+        val fileLink = MutableLiveData<UploadResult>()
 
         val ref = imagesReference.child("${System.currentTimeMillis()}")
 
         ref.putFile(imageUri)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        ref.downloadUrl.addOnSuccessListener {
-                            fileLink.value = UploadResult(it.toString(), null)
-                        }
-                    } else {
-                        fileLink.value = UploadResult(null, "File upload failed!")
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    ref.downloadUrl.addOnSuccessListener {
+                        fileLink.value = UploadResult(it.toString(), null)
                     }
+                } else {
+                    fileLink.value = UploadResult(null, "File upload failed!")
                 }
+            }
         return fileLink
     }
 

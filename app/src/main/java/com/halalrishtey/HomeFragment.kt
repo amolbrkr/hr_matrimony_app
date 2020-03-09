@@ -124,7 +124,7 @@ class HomeFragment : Fragment() {
 
         userAuthVM.locationUpdates.observe(viewLifecycleOwner, Observer { loc ->
             val addr = if (loc != null) {
-                CustomUtils.convertCoordsToAddr(requireContext(), loc.latitude, loc.longitude);
+                CustomUtils.convertCoordsToAddr(requireContext(), loc.latitude, loc.longitude)
             } else null
 
             val infoToBeUpdated: HashMap<String, Any?> = hashMapOf(
