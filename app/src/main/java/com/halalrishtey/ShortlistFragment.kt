@@ -15,7 +15,6 @@ import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_shortlist.*
 import kotlinx.android.synthetic.main.fragment_shortlist.view.*
-import kotlinx.android.synthetic.main.profile_card.view.*
 
 
 class ShortlistFragment : Fragment() {
@@ -66,37 +65,6 @@ class ShortlistFragment : Fragment() {
                                 u.uid
                             )
 
-                        val interestBtnListener = View.OnClickListener { v ->
-                            if (!isShortlisted) {
-                                v.showInterestBtn.setIconResource(R.drawable.ic_favorite)
-
-                                //Add interest target to correct arraylist
-                                currentUser.interestedProfiles.add(u.uid!!)
-                                userVM.currentUserProfile.value = currentUser
-
-                                userVM.initInterest(
-                                    userVM.currentUserId.value!!,
-                                    u.uid!!
-                                ).observe(viewLifecycleOwner, Observer { msg ->
-                                    Toast.makeText(context, msg, Toast.LENGTH_SHORT)
-                                        .show()
-                                })
-                            } else {
-                                v.showInterestBtn.setIconResource(R.drawable.ic_favorite_border)
-
-                                //Remove interest target from correct arraylist
-                                currentUser.interestedProfiles.remove(u.uid!!)
-                                userVM.currentUserProfile.value = currentUser
-
-                                userVM.removeInterest(
-                                    userVM.currentUserId.value!!,
-                                    u.uid!!
-                                ).observe(viewLifecycleOwner, Observer { msg ->
-                                    Toast.makeText(context, msg, Toast.LENGTH_SHORT)
-                                        .show()
-                                })
-                            }
-                        }
                         val messageBtnListener = View.OnClickListener { v ->
                             Toast.makeText(
                                 context,
@@ -107,7 +75,12 @@ class ShortlistFragment : Fragment() {
                         interestedProfiles.add(
                             ProfileCardData(
                                 data = u,
-                                showBtnInterestListener = interestBtnListener,
+                                showBtnInterestListener = HomeFragment().genInterestBtnListener(
+                                    isShortlisted,
+                                    u.uid!!,
+                                    currentUser,
+                                    requireView()
+                                ),
                                 messageBtnListener = messageBtnListener,
                                 isUserShortlisted = isShortlisted
                             )

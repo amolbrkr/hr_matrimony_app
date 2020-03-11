@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
+import com.halalrishtey.models.User
 import com.halalrishtey.services.UserRepository
 import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
@@ -29,6 +30,45 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: CardDataRVAdapter
     private lateinit var usersToShow: ArrayList<ProfileCardData>
     private var lastScrollPos: Int = 0
+
+    fun genInterestBtnListener(
+        isShortlisted: Boolean,
+        targetUserId: String,
+        currentUser: User,
+        v: View
+    ): View.OnClickListener {
+        return View.OnClickListener {
+            if (!isShortlisted) {
+                v.showInterestBtn.setIconResource(R.drawable.ic_favorite)
+
+                //Add interest target to correct arraylist
+                currentUser.interestedProfiles.add(targetUserId)
+                userVM.currentUserProfile.value = currentUser
+
+                userVM.initInterest(
+                    userVM.currentUserId.value!!,
+                    targetUserId
+                ).observe(viewLifecycleOwner, Observer { msg ->
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+                        .show()
+                })
+            } else {
+                v.showInterestBtn.setIconResource(R.drawable.ic_favorite_border)
+
+                //Remove interest target from correct arraylist
+                currentUser.interestedProfiles.remove(targetUserId)
+                userVM.currentUserProfile.value = currentUser
+
+                userVM.removeInterest(
+                    userVM.currentUserId.value!!,
+                    targetUserId
+                ).observe(viewLifecycleOwner, Observer { msg ->
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+                        .show()
+                })
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,37 +106,6 @@ class HomeFragment : Fragment() {
                                         "User ${user.uid} is shortlisted by current user: $isShortlisted"
                                     )
 
-                                    val interestBtnListener = View.OnClickListener { v ->
-                                        if (!isShortlisted) {
-                                            v.showInterestBtn.setIconResource(R.drawable.ic_favorite)
-
-                                            //Add interest target to correct arraylist
-                                            currentUser.interestedProfiles.add(user.uid!!)
-                                            userVM.currentUserProfile.value = currentUser
-
-                                            userVM.initInterest(
-                                                userVM.currentUserId.value!!,
-                                                user.uid!!
-                                            ).observe(viewLifecycleOwner, Observer { msg ->
-                                                Toast.makeText(context, msg, Toast.LENGTH_SHORT)
-                                                    .show()
-                                            })
-                                        } else {
-                                            v.showInterestBtn.setIconResource(R.drawable.ic_favorite_border)
-
-                                            //Remove interest target from correct arraylist
-                                            currentUser.interestedProfiles.remove(user.uid!!)
-                                            userVM.currentUserProfile.value = currentUser
-
-                                            userVM.removeInterest(
-                                                userVM.currentUserId.value!!,
-                                                user.uid!!
-                                            ).observe(viewLifecycleOwner, Observer { msg ->
-                                                Toast.makeText(context, msg, Toast.LENGTH_SHORT)
-                                                    .show()
-                                            })
-                                        }
-                                    }
 
                                     val messageBtnListener = View.OnClickListener { v ->
                                         Toast.makeText(
@@ -109,7 +118,12 @@ class HomeFragment : Fragment() {
                                     usersToShow.add(
                                         ProfileCardData(
                                             data = user,
-                                            showBtnInterestListener = interestBtnListener,
+                                            showBtnInterestListener = genInterestBtnListener(
+                                                isShortlisted,
+                                                user.uid!!,
+                                                currentUser,
+                                                requireView()
+                                            ),
                                             messageBtnListener = messageBtnListener,
                                             isUserShortlisted = isShortlisted
                                         )
