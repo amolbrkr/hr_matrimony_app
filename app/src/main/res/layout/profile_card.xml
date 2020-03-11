@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_favorite_border"
-                app:iconSize="24dp" />
+                app:iconSize="28dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sendMessageBtn"
@@ -89,8 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Message"
-                app:icon="@drawable/ic_chat_bubble_outline"
-                app:iconSize="24dp" />
+                app:icon="@drawable/ic_chat_bubble_outline" />
         </LinearLayout>
     </LinearLayout>
 
