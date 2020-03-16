@@ -31,6 +31,19 @@ class HomeFragment : Fragment() {
     private lateinit var usersToShow: ArrayList<ProfileCardData>
     private var lastScrollPos: Int = 0
 
+    fun genMessageBtnListener(
+        currentUserId: String,
+        targetUser: User
+    ): View.OnClickListener {
+        return View.OnClickListener {
+            //TODO: Properly implement this function
+            userVM.initConversation(currentUserId, targetUser)
+                .observe(viewLifecycleOwner, Observer {
+                    Toast.makeText(context, "Result: $it", Toast.LENGTH_SHORT).show()
+                })
+        }
+    }
+
     fun genInterestBtnListener(
         isShortlisted: Boolean,
         targetUserId: String,
@@ -40,11 +53,6 @@ class HomeFragment : Fragment() {
         return View.OnClickListener {
             if (!isShortlisted) {
                 v.showInterestBtn.setIconResource(R.drawable.ic_favorite)
-
-                //Add interest target to correct arraylist
-                currentUser.interestedProfiles.add(targetUserId)
-                userVM.currentUserProfile.value = currentUser
-
                 userVM.initInterest(
                     userVM.currentUserId.value!!,
                     targetUserId
@@ -54,11 +62,6 @@ class HomeFragment : Fragment() {
                 })
             } else {
                 v.showInterestBtn.setIconResource(R.drawable.ic_favorite_border)
-
-                //Remove interest target from correct arraylist
-                currentUser.interestedProfiles.remove(targetUserId)
-                userVM.currentUserProfile.value = currentUser
-
                 userVM.removeInterest(
                     userVM.currentUserId.value!!,
                     targetUserId
@@ -106,15 +109,6 @@ class HomeFragment : Fragment() {
                                         "User ${user.uid} is shortlisted by current user: $isShortlisted"
                                     )
 
-
-                                    val messageBtnListener = View.OnClickListener { v ->
-                                        Toast.makeText(
-                                            context,
-                                            "Message button clicked for ${user.displayName}",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-
                                     usersToShow.add(
                                         ProfileCardData(
                                             data = user,
@@ -124,7 +118,10 @@ class HomeFragment : Fragment() {
                                                 currentUser,
                                                 requireView()
                                             ),
-                                            messageBtnListener = messageBtnListener,
+                                            messageBtnListener = genMessageBtnListener(
+                                                currentUser.uid!!,
+                                                user
+                                            ),
                                             isUserShortlisted = isShortlisted
                                         )
                                     )
@@ -152,7 +149,6 @@ class HomeFragment : Fragment() {
             userAuthVM.updateUserData(userVM.currentUserId.value!!, infoToBeUpdated)
             userAuthVM.locationUpdates.removeObservers(viewLifecycleOwner)
         })
-
     }
 
     override fun onPause() {
