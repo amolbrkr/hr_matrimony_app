@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -59,29 +58,25 @@ class ShortlistFragment : Fragment() {
         userVM.currentUserProfile.observe(viewLifecycleOwner, Observer { currentUser ->
             userVM.getProfilesByIds(currentUser.interestedProfiles)
                 .observe(viewLifecycleOwner, Observer {
-                    it.forEach { u ->
+                    it.forEach { user ->
                         val isShortlisted =
                             currentUser.interestedProfiles.contains(
-                                u.uid
+                                user.uid
                             )
 
-                        val messageBtnListener = View.OnClickListener { v ->
-                            Toast.makeText(
-                                context,
-                                "Message button clicked for ${u.displayName}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
                         interestedProfiles.add(
                             ProfileCardData(
-                                data = u,
+                                data = user,
                                 showBtnInterestListener = HomeFragment().genInterestBtnListener(
                                     isShortlisted,
-                                    u.uid!!,
+                                    user.uid!!,
                                     currentUser,
-                                    requireView()
+                                    view!!
                                 ),
-                                messageBtnListener = messageBtnListener,
+                                messageBtnListener = HomeFragment().genMessageBtnListener(
+                                    currentUser.uid!!,
+                                    user
+                                ),
                                 isUserShortlisted = isShortlisted
                             )
                         )
