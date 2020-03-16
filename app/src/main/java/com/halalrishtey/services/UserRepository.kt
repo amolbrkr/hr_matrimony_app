@@ -50,6 +50,84 @@ object UserRepository {
         return res
     }
 
+    fun initConversation(currentUserId: String, targetUser: User): MutableLiveData<Boolean> {
+        val r = MutableLiveData(false)
+
+        val ts = System.currentTimeMillis()
+
+        val convoRef = DatabaseRepository.getDbInstance()
+            .collection("conversations")
+            .document()
+
+        val convoObj: Map<String, java.io.Serializable> = mapOf(
+            "initialTimestamp" to ts,
+            "conversationId" to convoRef.id,
+            "lastMessage" to "",
+            "displayName" to targetUser.displayName,
+            "photoUrl" to targetUser.photoUrl
+        )
+
+        val ref1 = DatabaseRepository.getDbInstance()
+            .collection("users")
+            .document(currentUserId)
+
+        val ref2 = DatabaseRepository.getDbInstance()
+            .collection("users")
+            .document(targetUser.uid!!)
+
+        DatabaseRepository.getDbInstance()
+            .runBatch {
+                it.update(ref1, "conversations", FieldValue.arrayUnion(convoObj))
+                it.update(ref2, "conversations", FieldValue.arrayUnion(convoObj))
+                it.set(convoRef, mapOf("initialTimestamp" to ts))
+            }.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    r.value = true
+                    Log.d(
+                        "UserRepository",
+                        "Successfully initialized conversation with ${targetUser.displayName}"
+                    )
+                } else {
+                    r.value = false
+                    Log.d(
+                        "UserRepository",
+                        "Failed to initialize conversation with ${targetUser.displayName}, Error: ${task.exception?.message}"
+                    )
+                }
+            }
+        return r
+    }
+
+    fun sendMessage(conversationId: String, message: String) {
+        val ts = System.currentTimeMillis()
+
+        DatabaseRepository.getDbInstance()
+            .collection("conversations")
+            .document(conversationId)
+            .update(
+                "messages",
+                FieldValue.arrayUnion(
+                    mapOf(
+                        "text" to message,
+                        "timestamp" to ts,
+                        "readStatus" to false
+                    )
+                )
+            ).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d(
+                        "UserRepository",
+                        "Successfully sent message! conversationId: $conversationId"
+                    )
+                } else {
+                    Log.d(
+                        "UserRepository",
+                        "Failed to send message to $conversationId, error: ${it.exception?.message}"
+                    )
+                }
+            }
+    }
+
     fun getProfilesByIds(listOfIds: ArrayList<String>): MutableLiveData<ArrayList<User>> {
         val res = MutableLiveData<ArrayList<User>>()
         val temp = ArrayList<User>()
