@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.iid.FirebaseInstanceId
 import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
@@ -38,8 +39,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(i)
             this.finish()
         } else {
-            userVM.currentUserId.value = uid
+            //Update registration token for FCM
+            FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val token = it.result?.token
+                        userAuthVM.updateUserData(uid, mapOf("registrationToken" to token))
+                    }
+                }
 
+            userVM.currentUserId.value = uid
             userVM.getUser(uid).observe(this, Observer {
                 Log.d("MainActivity", "PhotoURL: ${it.photoUrl}")
                 if (!it.photoUrl.isBlank() || it.photoUrl.length > 5) {
@@ -78,7 +87,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
