@@ -21,11 +21,11 @@ class AuthRepository {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task: Task<AuthResult> ->
                 if (task.isSuccessful) {
-                    Log.d("AuthService", "Created new user! ${task.result?.user?.email}")
+                    Log.d("AuthRepository", "Created new user! ${task.result?.user?.email}")
                     newUser.uid = task.result?.user?.uid
                     DatabaseRepository.getDbInstance().collection("users")
                         .document(newUser.uid!!).set(newUser).addOnCompleteListener {
-                            Log.d("AuthService", "Added new user to database. ${newUser.email}")
+                            Log.d("AuthRepository", "Added new user to database. ${newUser.email}")
                             if (it.isSuccessful) {
                                 authenticatedUserLiveData.value = AuthData(newUser, null)
                             } else {
@@ -35,7 +35,7 @@ class AuthRepository {
                         }
                 } else {
                     Log.d(
-                        "AuthService",
+                        "AuthRepository",
                         "Failed to create new user! $email ${task.exception?.message}"
                     )
                     authenticatedUserLiveData.value =
@@ -51,7 +51,7 @@ class AuthRepository {
         if (uid != null && userData != null) {
             DatabaseRepository.getDbInstance().collection("users")
                 .document(uid).set(userData).addOnCompleteListener {
-                    Log.d("AuthService", "Added new user to database. ${userData.email}")
+                    Log.d("AuthRepository", "Added new user to database. ${userData.email}")
                     if (it.isSuccessful) {
                         msg.value = "Successfully created!"
                     }
@@ -72,7 +72,7 @@ class AuthRepository {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task: Task<AuthResult> ->
                 if (task.isSuccessful) {
-                    Log.d("AuthService", "Sign in with new user! $email")
+                    Log.d("AuthRepository", "Sign in with new user! $email")
                     userLiveData.value =
                         AuthData(User(task.result?.user!!), null)
 
@@ -81,7 +81,7 @@ class AuthRepository {
                     }
                 } else {
                     Log.d(
-                        "AuthService",
+                        "AuthRepository",
                         "Failed to sign in! $email ${task.exception?.message}"
                     )
                     userLiveData.value = AuthData(null, task.exception?.message)
@@ -91,14 +91,20 @@ class AuthRepository {
         return userLiveData
     }
 
-    fun updateUserData(userId: String, newData: HashMap<String, Any?>) {
+    fun updateUserData(userId: String, newData: Map<String, Any?>) {
         DatabaseRepository.getDbInstance()
             .collection("users").document(userId).update(newData)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Log.d("AuthService", "Succesfully updated user data for $userId")
+                    Log.d(
+                        "AuthRepository",
+                        "Succesfully updated user data for $userId, data: $newData"
+                    )
                 } else {
-                    Log.d("AuthService", "Failed to update data $userId, ${it.exception?.message}")
+                    Log.d(
+                        "AuthRepository",
+                        "Failed to update data $userId, ${it.exception?.message}"
+                    )
                 }
             }
     }
