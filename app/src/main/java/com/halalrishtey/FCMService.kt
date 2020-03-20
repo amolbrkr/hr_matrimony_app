@@ -9,8 +9,7 @@ class FCMService : FirebaseMessagingService() {
 
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
-
-        Log.d("FCMService", "New token: " + p0)
+        Log.d("FCMService", "New token: $p0")
     }
 
     override fun onMessageReceived(p0: RemoteMessage) {
@@ -22,7 +21,7 @@ class FCMService : FirebaseMessagingService() {
                 21,
                 MainActivity::class.java,
                 "push_notif",
-                "You've recieved a message!",
+                p0.notification?.title!!,
                 p0.notification?.body.toString()
             );
         }
