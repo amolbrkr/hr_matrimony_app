@@ -20,6 +20,17 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <service
+            android:name=".FCMService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="TODO">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
