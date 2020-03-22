@@ -1,11 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorAccent">@color/secondaryColor</item>
-    </style>
 
     <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
@@ -43,12 +38,6 @@
         <item name="color">@android:color/white</item>
     </style>
 
-    <style name="SpinnerStyle" parent="android:Widget.Holo.DropDownItem.Spinner">
-        <item name="android:background">
-            @drawable/spinner_background
-        </item>
-    </style>
-
     <style name="MyShapeAppearance">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">24dp</item>
@@ -56,4 +45,13 @@
         <item name="cornerSizeTopRight">24dp</item>
         <item name="cornerSizeBottomRight">24dp</item>
     </style>
+
+    <style name="MaterialTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
