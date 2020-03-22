@@ -23,7 +23,7 @@ class AuthRepository {
                 if (task.isSuccessful) {
                     Log.d("AuthRepository", "Created new user! ${task.result?.user?.email}")
                     newUser.uid = task.result?.user?.uid
-                    DatabaseRepository.getDbInstance().collection("users")
+                    DatabaseService.getDbInstance().collection("users")
                         .document(newUser.uid!!).set(newUser).addOnCompleteListener {
                             Log.d("AuthRepository", "Added new user to database. ${newUser.email}")
                             if (it.isSuccessful) {
@@ -49,7 +49,7 @@ class AuthRepository {
     fun addNewUserToDB(uid: String?, userData: User?): MutableLiveData<String?> {
         val msg = MutableLiveData<String?>()
         if (uid != null && userData != null) {
-            DatabaseRepository.getDbInstance().collection("users")
+            DatabaseService.getDbInstance().collection("users")
                 .document(uid).set(userData).addOnCompleteListener {
                     Log.d("AuthRepository", "Added new user to database. ${userData.email}")
                     if (it.isSuccessful) {
@@ -92,7 +92,7 @@ class AuthRepository {
     }
 
     fun updateUserData(userId: String, newData: Map<String, Any?>) {
-        DatabaseRepository.getDbInstance()
+        DatabaseService.getDbInstance()
             .collection("users").document(userId).update(newData)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
