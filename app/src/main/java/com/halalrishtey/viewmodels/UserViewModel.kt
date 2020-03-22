@@ -22,11 +22,15 @@ class UserViewModel : ViewModel() {
 
     fun getProfilesByIds(listOfIds: ArrayList<String>) = UserRepository.getProfilesByIds(listOfIds)
 
-    fun initInterest(currentUserId: String, targetUserId: String): MutableLiveData<String> {
+    fun initInterest(
+        currentUserId: String,
+        currentUserName: String,
+        targetUserId: String
+    ): MutableLiveData<String> {
         val t = currentUserProfile.value!!
         t.interestedProfiles.add(targetUserId)
         currentUserProfile.value = t
-        return UserRepository.initInterest(currentUserId, targetUserId)
+        return UserRepository.initInterest(currentUserId, currentUserName, targetUserId)
     }
 
     fun removeInterest(currentUserId: String, targetUserId: String): MutableLiveData<String> {
@@ -36,9 +40,9 @@ class UserViewModel : ViewModel() {
         return UserRepository.removeInterest(currentUserId, targetUserId)
     }
 
-    fun initConversation(currentUserId: String, targetUser: User) =
-        UserRepository.initConversation(currentUserId, targetUser)
+    fun initConversation(currentUser: User, targetUser: User) =
+        UserRepository.initConversation(currentUser, targetUser)
 
-    fun sendMessage(conversationId: String, text: String) =
-        UserRepository.sendMessage(conversationId, text)
+    fun sendMessage(conversationId: String, senderId: String, text: String) =
+        UserRepository.sendMessage(conversationId, senderId, text)
 }

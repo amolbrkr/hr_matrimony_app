@@ -2,14 +2,89 @@ package com.halalrishtey.services
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FieldValue
 import com.halalrishtey.CustomUtils
+import com.halalrishtey.models.ConversationItem
+import com.halalrishtey.models.MessageItem
 import com.halalrishtey.models.User
 
 object UserRepository {
-    fun initInterest(currentUserId: String, targetUserId: String): MutableLiveData<String> {
+    private val notifOnCompleteListener = OnCompleteListener { task: Task<Void> ->
+        if (task.isSuccessful)
+            Log.d(
+                "UserRepository",
+                "Created new notification!"
+            )
+        else Log.d(
+            "UserRepository",
+            "Failed to create notification, error: ${task.exception?.message}"
+        )
+    }
+
+    private fun sendInterestNotif(senderId: String, senderName: String, targetId: String) {
+        DatabaseService.getDbInstance()
+            .collection("notifications")
+            .document()
+            .set(
+                mapOf(
+                    "notificationType" to "interest_notification",
+                    "senderId" to senderId,
+                    "senderName" to senderName,
+                    "targetId" to targetId,
+                    "timestamp" to System.currentTimeMillis()
+                )
+            ).addOnCompleteListener(notifOnCompleteListener)
+    }
+
+    private fun sendChatNotif(
+        senderId: String,
+        conversationId: String,
+        message: String
+    ) {
+        DatabaseService.getDbInstance()
+            .collection("notifications")
+            .document()
+            .set(
+                mapOf(
+                    "notificationType" to "chat_notification",
+                    "senderId" to senderId,
+                    "conversationId" to conversationId,
+                    "timestamp" to System.currentTimeMillis(),
+                    "message" to message
+                )
+            ).addOnCompleteListener(notifOnCompleteListener)
+    }
+
+    fun sendGeneralNotifToUser(
+        currentUserId: String,
+        targetUserId: String,
+        title: String,
+        content: String
+    ) {
+        DatabaseService.getDbInstance()
+            .collection("notifications")
+            .document()
+            .set(
+                mapOf(
+                    "notificationType" to "general_notification",
+                    "senderId" to currentUserId,
+                    "targetId" to targetUserId,
+                    "title" to title,
+                    "content" to content,
+                    "timestamp" to System.currentTimeMillis()
+                )
+            ).addOnCompleteListener(notifOnCompleteListener)
+    }
+
+    fun initInterest(
+        currentUserId: String,
+        currentUserName: String,
+        targetUserId: String
+    ): MutableLiveData<String> {
         val result = MutableLiveData<String>()
-        val ref = DatabaseRepository
+        val ref = DatabaseService
             .getDbInstance()
             .collection("users")
             .document(currentUserId)
@@ -17,6 +92,9 @@ object UserRepository {
         ref.update("interestedProfiles", FieldValue.arrayUnion(targetUserId))
             .addOnCompleteListener {
                 if (it.isSuccessful) {
+                    //Send notifcation
+                    sendInterestNotif(currentUserId, currentUserName, targetUserId)
+
                     Log.d(
                         "UserRepo",
                         "Succesfully expressed interest to target: $targetUserId for $currentUserId"
@@ -31,7 +109,7 @@ object UserRepository {
     fun removeInterest(currentUserId: String, targetUserId: String): MutableLiveData<String> {
         val res = MutableLiveData<String>()
 
-        val ref = DatabaseRepository
+        val ref = DatabaseService
             .getDbInstance()
             .collection("users")
             .document(currentUserId)
@@ -50,36 +128,62 @@ object UserRepository {
         return res
     }
 
-    fun initConversation(currentUserId: String, targetUser: User): MutableLiveData<Boolean> {
+    fun initConversation(currentUser: User, targetUser: User): MutableLiveData<Boolean> {
         val r = MutableLiveData(false)
 
         val ts = System.currentTimeMillis()
 
-        val convoRef = DatabaseRepository.getDbInstance()
+        val convoRef = DatabaseService.getDbInstance()
             .collection("conversations")
             .document()
 
-        val convoObj: Map<String, java.io.Serializable> = mapOf(
-            "initialTimestamp" to ts,
-            "conversationId" to convoRef.id,
-            "lastMessage" to "",
-            "displayName" to targetUser.displayName,
-            "photoUrl" to targetUser.photoUrl
-        )
-
-        val ref1 = DatabaseRepository.getDbInstance()
+        val currentRef = DatabaseService.getDbInstance()
             .collection("users")
-            .document(currentUserId)
+            .document(currentUser.uid!!)
 
-        val ref2 = DatabaseRepository.getDbInstance()
+        val targetRef = DatabaseService.getDbInstance()
             .collection("users")
             .document(targetUser.uid!!)
 
-        DatabaseRepository.getDbInstance()
+        DatabaseService.getDbInstance()
             .runBatch {
-                it.update(ref1, "conversations", FieldValue.arrayUnion(convoObj))
-                it.update(ref2, "conversations", FieldValue.arrayUnion(convoObj))
-                it.set(convoRef, mapOf("initialTimestamp" to ts))
+                it.update(
+                    currentRef, "conversations", FieldValue.arrayUnion(
+                        ConversationItem(
+                            convoRef.id,
+                            targetUser.displayName,
+                            targetUser.photoUrl,
+                            lastMessage = "",
+                            initialTimestamp = ts
+                        )
+                    )
+                )
+                it.update(
+                    targetRef, "conversations", FieldValue.arrayUnion(
+                        ConversationItem(
+                            convoRef.id,
+                            currentUser.displayName,
+                            currentUser.photoUrl,
+                            lastMessage = "",
+                            initialTimestamp = ts
+                        )
+                    )
+                )
+
+                //This will be stored in conversations collections
+                it.set(
+                    convoRef,
+                    mapOf(
+                        "initialTimestamp" to ts,
+                        "p1" to currentUser.uid,
+                        "p2" to targetUser.uid,
+                        "p1Name" to currentUser.displayName,
+                        "p2Name" to targetUser.displayName,
+                        "p1PhotoUrl" to currentUser.photoUrl,
+                        "p2PhotoUrl" to targetUser.photoUrl,
+                        "messages" to ArrayList<MessageItem>()
+                    )
+                )
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     r.value = true
@@ -98,23 +202,18 @@ object UserRepository {
         return r
     }
 
-    fun sendMessage(conversationId: String, message: String) {
+    fun sendMessage(conversationId: String, senderId: String, message: String) {
         val ts = System.currentTimeMillis()
 
-        DatabaseRepository.getDbInstance()
+        DatabaseService.getDbInstance()
             .collection("conversations")
             .document(conversationId)
             .update(
                 "messages",
-                FieldValue.arrayUnion(
-                    mapOf(
-                        "text" to message,
-                        "timestamp" to ts,
-                        "readStatus" to false
-                    )
-                )
+                FieldValue.arrayUnion(MessageItem(senderId, message, System.currentTimeMillis()))
             ).addOnCompleteListener {
                 if (it.isSuccessful) {
+                    sendChatNotif(senderId, conversationId, message)
                     Log.d(
                         "UserRepository",
                         "Successfully sent message! conversationId: $conversationId"
@@ -133,7 +232,7 @@ object UserRepository {
         val temp = ArrayList<User>()
 
         listOfIds.forEach { uid ->
-            DatabaseRepository.getDbInstance()
+            DatabaseService.getDbInstance()
                 .collection("users")
                 .document(uid)
                 .get()
@@ -156,7 +255,7 @@ object UserRepository {
     fun getProfileOfUser(userId: String): MutableLiveData<User> {
         val fetchedUser = MutableLiveData<User>()
 
-        DatabaseRepository
+        DatabaseService
             .getDbInstance()
             .collection("users")
             .document(userId)
@@ -174,7 +273,7 @@ object UserRepository {
 
     fun getAllUserProfiles(): MutableLiveData<ArrayList<User>> {
         val listOfUsers = MutableLiveData<ArrayList<User>>()
-        DatabaseRepository
+        DatabaseService
             .getDbInstance()
             .collection("users")
             .get()
