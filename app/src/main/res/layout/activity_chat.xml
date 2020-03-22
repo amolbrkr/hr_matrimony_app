@@ -12,9 +12,27 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primaryColor"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="#FFF" />
+        app:titleTextColor="#FFF">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/chatProfileImgView"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="start"
+            android:layout_margin="8dp"
+            android:src="@drawable/ph_gray" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/chatTitleTextView"
+            style="@android:style/TextAppearance.Material.WindowTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/chatTextView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center_horizontal"
@@ -48,6 +66,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/sendChatBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"

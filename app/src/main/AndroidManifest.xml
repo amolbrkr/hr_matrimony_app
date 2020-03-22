@@ -20,8 +20,6 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ChatActivity"></activity>
-
         <service
             android:name=".FCMService"
             android:enabled="true"
@@ -32,6 +30,9 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".ChatActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
