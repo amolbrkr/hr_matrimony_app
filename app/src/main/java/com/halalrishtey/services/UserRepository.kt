@@ -128,78 +128,120 @@ object UserRepository {
         return res
     }
 
-    fun initConversation(currentUser: User, targetUser: User): MutableLiveData<Boolean> {
-        val r = MutableLiveData(false)
-
+    fun initConversation(currentUser: User, targetUser: User): MutableLiveData<String> {
+        val r = MutableLiveData("")
         val ts = System.currentTimeMillis()
 
-        val convoRef = DatabaseService.getDbInstance()
-            .collection("conversations")
-            .document()
-
-        val currentRef = DatabaseService.getDbInstance()
-            .collection("users")
-            .document(currentUser.uid!!)
-
-        val targetRef = DatabaseService.getDbInstance()
-            .collection("users")
-            .document(targetUser.uid!!)
-
-        DatabaseService.getDbInstance()
-            .runBatch {
-                it.update(
-                    currentRef, "conversations", FieldValue.arrayUnion(
-                        ConversationItem(
-                            convoRef.id,
-                            targetUser.displayName,
-                            targetUser.photoUrl,
-                            lastMessage = "",
-                            initialTimestamp = ts
-                        )
-                    )
-                )
-                it.update(
-                    targetRef, "conversations", FieldValue.arrayUnion(
-                        ConversationItem(
-                            convoRef.id,
-                            currentUser.displayName,
-                            currentUser.photoUrl,
-                            lastMessage = "",
-                            initialTimestamp = ts
-                        )
-                    )
-                )
-
-                //This will be stored in conversations collections
-                it.set(
-                    convoRef,
-                    mapOf(
-                        "initialTimestamp" to ts,
-                        "p1" to currentUser.uid,
-                        "p2" to targetUser.uid,
-                        "p1Name" to currentUser.displayName,
-                        "p2Name" to targetUser.displayName,
-                        "p1PhotoUrl" to currentUser.photoUrl,
-                        "p2PhotoUrl" to targetUser.photoUrl,
-                        "messages" to ArrayList<MessageItem>()
-                    )
-                )
-            }.addOnCompleteListener { task ->
+        DatabaseService.getDbInstance().collection("conversations")
+            .whereEqualTo("p1", currentUser.uid)
+            .whereEqualTo("p2", targetUser.uid)
+            .get()
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    r.value = true
-                    Log.d(
-                        "UserRepository",
-                        "Successfully initialized conversation with ${targetUser.displayName}"
-                    )
+                    if (task.result!!.documents.size > 0) {
+                        val convo = task.result!!.documents[0]
+                        Log.d("UserRepository", "Conversation already existed: ${convo.id}")
+                        r.value = convo.id
+                    } else {
+                        // Conversation does not exists, create a new one
+                        val convoRef = DatabaseService.getDbInstance()
+                            .collection("conversations")
+                            .document()
+
+                        val currentRef = DatabaseService.getDbInstance()
+                            .collection("users")
+                            .document(currentUser.uid!!)
+
+                        val targetRef = DatabaseService.getDbInstance()
+                            .collection("users")
+                            .document(targetUser.uid!!)
+
+                        DatabaseService.getDbInstance()
+                            .runBatch {
+                                it.update(
+                                    currentRef, "conversations", FieldValue.arrayUnion(
+                                        ConversationItem(
+                                            convoRef.id,
+                                            targetUser.displayName,
+                                            targetUser.photoUrl,
+                                            lastMessage = "",
+                                            initialTimestamp = ts
+                                        )
+                                    )
+                                )
+                                it.update(
+                                    targetRef, "conversations", FieldValue.arrayUnion(
+                                        ConversationItem(
+                                            convoRef.id,
+                                            currentUser.displayName,
+                                            currentUser.photoUrl,
+                                            lastMessage = "",
+                                            initialTimestamp = ts
+                                        )
+                                    )
+                                )
+
+                                //This will be stored in conversations collections
+                                it.set(
+                                    convoRef,
+                                    mapOf(
+                                        "initialTimestamp" to ts,
+                                        "p1" to currentUser.uid,
+                                        "p2" to targetUser.uid,
+                                        "p1Name" to currentUser.displayName,
+                                        "p2Name" to targetUser.displayName,
+                                        "p1PhotoUrl" to currentUser.photoUrl,
+                                        "p2PhotoUrl" to targetUser.photoUrl,
+                                        "messages" to ArrayList<MessageItem>()
+                                    )
+                                )
+                            }.addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    r.value = convoRef.id
+                                    Log.d(
+                                        "UserRepository",
+                                        "Successfully initialized conversation with ${targetUser.displayName}"
+                                    )
+                                } else {
+                                    r.value = ""
+                                    Log.d(
+                                        "UserRepository",
+                                        "Failed to initialize conversation with ${targetUser.displayName}, Error: ${task.exception?.message}"
+                                    )
+                                }
+                            }
+                    }
                 } else {
-                    r.value = false
                     Log.d(
-                        "UserRepository",
-                        "Failed to initialize conversation with ${targetUser.displayName}, Error: ${task.exception?.message}"
+                        "HomeFragment",
+                        "Failed to check if conversation already exists: ${task.exception?.message}"
                     )
                 }
             }
         return r
+    }
+
+    fun observeConversation(conversationId: String): MutableLiveData<Map<String, Any>> {
+        val res = MutableLiveData<Map<String, Any>>()
+
+        DatabaseService.getDbInstance()
+            .collection("conversations")
+            .document(conversationId)
+            .addSnapshotListener { snap, e ->
+                if (snap != null && snap.exists()) {
+                    val t = snap.data
+                    res.value = t
+                    Log.d("UserRepository", "Conversation $conversationId : ${t.toString()}")
+                } else {
+                    res.value = null
+                }
+
+                if (e != null) {
+                    Log.d("UserRepository", "Error observing conversation: $e")
+                }
+            }
+
+        return res
     }
 
     fun sendMessage(conversationId: String, senderId: String, message: String) {

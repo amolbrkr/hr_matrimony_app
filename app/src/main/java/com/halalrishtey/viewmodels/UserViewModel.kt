@@ -43,6 +43,9 @@ class UserViewModel : ViewModel() {
     fun initConversation(currentUser: User, targetUser: User) =
         UserRepository.initConversation(currentUser, targetUser)
 
+    fun observeConversation(convsersationId: String) =
+        UserRepository.observeConversation(convsersationId)
+
     fun sendMessage(conversationId: String, senderId: String, text: String) =
         UserRepository.sendMessage(conversationId, senderId, text)
 }
