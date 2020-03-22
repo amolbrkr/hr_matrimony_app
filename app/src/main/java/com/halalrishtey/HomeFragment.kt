@@ -1,6 +1,7 @@
 package com.halalrishtey
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -32,15 +33,17 @@ class HomeFragment : Fragment() {
     private var lastScrollPos: Int = 0
 
     fun genMessageBtnListener(
-        currentUserId: String,
+        currentUser: User,
         targetUser: User
     ): View.OnClickListener {
         return View.OnClickListener {
             //TODO: Properly implement this function
-            userVM.initConversation(currentUserId, targetUser)
-                .observe(viewLifecycleOwner, Observer {
-                    Toast.makeText(context, "Result: $it", Toast.LENGTH_SHORT).show()
-                })
+//            userVM.initConversation(currentUser, targetUser)
+//                .observe(viewLifecycleOwner, Observer {
+//                    Toast.makeText(context, "Result: $it", Toast.LENGTH_SHORT).show()
+//                })
+            val i = Intent(context, ChatActivity::class.java)
+            startActivity(i)
         }
     }
 
@@ -55,6 +58,7 @@ class HomeFragment : Fragment() {
                 v.showInterestBtn.setIconResource(R.drawable.ic_favorite)
                 userVM.initInterest(
                     userVM.currentUserId.value!!,
+                    userVM.currentUserProfile.value?.displayName!!,
                     targetUserId
                 ).observe(viewLifecycleOwner, Observer { msg ->
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT)
@@ -119,7 +123,7 @@ class HomeFragment : Fragment() {
                                                 requireView()
                                             ),
                                             messageBtnListener = genMessageBtnListener(
-                                                currentUser.uid!!,
+                                                currentUser,
                                                 user
                                             ),
                                             isUserShortlisted = isShortlisted

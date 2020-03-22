@@ -74,7 +74,7 @@ class ShortlistFragment : Fragment() {
                                     view!!
                                 ),
                                 messageBtnListener = HomeFragment().genMessageBtnListener(
-                                    currentUser.uid!!,
+                                    currentUser,
                                     user
                                 ),
                                 isUserShortlisted = isShortlisted
