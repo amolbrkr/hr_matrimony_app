@@ -38,12 +38,17 @@ class HomeFragment : Fragment() {
     ): View.OnClickListener {
         return View.OnClickListener {
             //TODO: Properly implement this function
-//            userVM.initConversation(currentUser, targetUser)
-//                .observe(viewLifecycleOwner, Observer {
-//                    Toast.makeText(context, "Result: $it", Toast.LENGTH_SHORT).show()
-//                })
-            val i = Intent(context, ChatActivity::class.java)
-            startActivity(i)
+            userVM.initConversation(currentUser, targetUser)
+                .observe(viewLifecycleOwner, Observer {
+                    if (it.length > 1) {
+                        val i = Intent(context, ChatActivity::class.java)
+                        i.putExtra("conversationId", it)
+                        i.putExtra("senderId", currentUser.uid)
+                        i.putExtra("targetPhotoUrl", targetUser.photoUrl)
+                        i.putExtra("targetName", targetUser.displayName)
+                        startActivity(i)
+                    }
+                })
         }
     }
 
