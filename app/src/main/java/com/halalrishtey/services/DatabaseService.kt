@@ -2,7 +2,7 @@ package com.halalrishtey.services
 
 import com.google.firebase.firestore.FirebaseFirestore
 
-object DatabaseRepository {
+object DatabaseService {
     private val db: FirebaseFirestore by lazy {
         FirebaseFirestore.getInstance()
     }

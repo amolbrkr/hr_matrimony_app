@@ -52,7 +52,7 @@ class UserAuthViewModel(application: Application) : AndroidViewModel(application
 
     fun signOut() = authService.logOut()
 
-    fun updateUserData(userId: String, newData: HashMap<String, Any?>) =
+    fun updateUserData(userId: String, newData: Map<String, Any?>) =
         authService.updateUserData(userId, newData)
 
     fun sendResetPasswordEmail(email: String) = authService.resetPassword(email)
