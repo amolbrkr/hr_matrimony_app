@@ -1,13 +1,17 @@
 package com.halalrishtey
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
+import android.media.AudioAttributes
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -42,7 +46,16 @@ object CustomUtils {
                 channelName,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
+
+            channel.lightColor = Color.WHITE
             channel.enableLights(true)
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build()
+            channel.setSound(Settings.System.DEFAULT_NOTIFICATION_URI, audioAttributes)
+            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            channel.vibrationPattern = longArrayOf(1000, 1000)
             channel.enableVibration(true)
             channel.setShowBadge(true)
 
@@ -53,7 +66,9 @@ object CustomUtils {
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(notifTitle)
             .setContentText(notifText)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+            .setVibrate(longArrayOf(1000, 1000))
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
