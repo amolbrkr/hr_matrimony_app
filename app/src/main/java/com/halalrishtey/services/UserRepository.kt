@@ -29,7 +29,7 @@ object UserRepository {
             .document()
             .set(
                 mapOf(
-                    "notificationType" to "interest_notification",
+                    "notificationType" to "interest",
                     "senderId" to senderId,
                     "senderName" to senderName,
                     "targetId" to targetId,
@@ -48,7 +48,7 @@ object UserRepository {
             .document()
             .set(
                 mapOf(
-                    "notificationType" to "chat_notification",
+                    "notificationType" to "chat",
                     "senderId" to senderId,
                     "conversationId" to conversationId,
                     "timestamp" to System.currentTimeMillis(),
@@ -68,7 +68,7 @@ object UserRepository {
             .document()
             .set(
                 mapOf(
-                    "notificationType" to "general_notification",
+                    "notificationType" to "general",
                     "senderId" to currentUserId,
                     "targetId" to targetUserId,
                     "title" to title,
@@ -133,8 +133,8 @@ object UserRepository {
         val ts = System.currentTimeMillis()
 
         DatabaseService.getDbInstance().collection("conversations")
-            .whereEqualTo("p1", currentUser.uid)
-            .whereEqualTo("p2", targetUser.uid)
+            .whereEqualTo("p1", targetUser.uid)
+            .whereEqualTo("p2", currentUser.uid)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {

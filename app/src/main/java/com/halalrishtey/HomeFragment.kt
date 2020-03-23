@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.models.User
+import com.halalrishtey.services.DatabaseService
 import com.halalrishtey.services.UserRepository
 import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
