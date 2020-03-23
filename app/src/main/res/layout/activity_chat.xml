@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f0fbff"
     tools:context=".ChatActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -27,19 +28,19 @@
             style="@android:style/TextAppearance.Material.WindowTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Halal Rishtey"
             android:textColor="@android:color/white" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/chatTextView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messageRV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center_horizontal"
-        android:text="Chat text will appear here!"
         app:layout_constraintBottom_toTopOf="@id/chatInputLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chatToolbar" />
-
 
     <LinearLayout
         android:id="@+id/chatInputLayout"
