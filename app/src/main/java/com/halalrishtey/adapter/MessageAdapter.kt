@@ -8,6 +8,7 @@ import com.halalrishtey.R
 import com.halalrishtey.models.MessageItem
 import kotlinx.android.synthetic.main.in_message.view.*
 import kotlinx.android.synthetic.main.out_message.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MessageAdapter(private val senderId: String, private val data: List<MessageItem>) :
@@ -27,10 +28,10 @@ class MessageAdapter(private val senderId: String, private val data: List<Messag
 
     override fun onBindViewHolder(holder: MessageVH, position: Int) {
 
+        val dateFormatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
         val cal = Calendar.getInstance()
         cal.timeInMillis = data[position].timestamp
-        val msgTime =
-            "${cal.get(Calendar.HOUR_OF_DAY)}:${cal.get(Calendar.MINUTE)}"
+        val msgTime = dateFormatter.format(cal.time).toString()
 
         if (holder.itemViewType == 0) {
             holder.itemView.inMsgText.text = data[position].content
