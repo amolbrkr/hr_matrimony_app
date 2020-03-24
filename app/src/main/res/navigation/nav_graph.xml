@@ -19,7 +19,7 @@
         android:id="@+id/chatsFragment"
         android:name="com.halalrishtey.ChatsFragment"
         android:label="fragment_chats"
-        tools:layout="@layout/fragment_chats" />
+        tools:layout="@layout/fragment_chatlist" />
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.halalrishtey.SearchFragment"
