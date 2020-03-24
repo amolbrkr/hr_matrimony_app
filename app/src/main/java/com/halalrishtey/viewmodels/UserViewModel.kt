@@ -1,14 +1,24 @@
 package com.halalrishtey.viewmodels
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.halalrishtey.models.User
 import com.halalrishtey.services.UserRepository
 
-class UserViewModel : ViewModel() {
+class UserViewModel(application: Application) : AndroidViewModel(application) {
+
     val currentUserId = MutableLiveData<String>()
     var currentUserProfile = MutableLiveData<User>()
+
+    init {
+        val uid = application.getSharedPreferences("halalrishtey", Context.MODE_PRIVATE)
+            .getString("user_uid", null)
+
+        if (uid != null) currentUserId.value = uid
+    }
 
     fun getUser(uid: String): MutableLiveData<User> {
         return if (uid == currentUserId.value) {
@@ -19,6 +29,8 @@ class UserViewModel : ViewModel() {
             } else currentUserProfile
         } else UserRepository.getProfileOfUser(uid)
     }
+
+    fun observeUser(userId: String) = UserRepository.observeUserProfile(userId)
 
     fun getProfilesByIds(listOfIds: ArrayList<String>) = UserRepository.getProfilesByIds(listOfIds)
 
