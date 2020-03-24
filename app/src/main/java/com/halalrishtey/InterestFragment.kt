@@ -50,6 +50,7 @@ class ShortlistFragment : Fragment() {
             shortlistedProfilesRV.visibility = View.VISIBLE
             shortlistBgImageView.visibility = View.GONE
             shortlistHelperText.visibility = View.GONE
+            interestProgress.visibility = View.VISIBLE
         }
     }
 
@@ -58,6 +59,7 @@ class ShortlistFragment : Fragment() {
         userVM.currentUserProfile.observe(viewLifecycleOwner, Observer { currentUser ->
             userVM.getProfilesByIds(currentUser.interestedProfiles)
                 .observe(viewLifecycleOwner, Observer {
+                    interestProgress.visibility = View.GONE
                     it.forEach { user ->
                         val isShortlisted =
                             currentUser.interestedProfiles.contains(
@@ -70,7 +72,6 @@ class ShortlistFragment : Fragment() {
                                 showBtnInterestListener = HomeFragment().genInterestBtnListener(
                                     isShortlisted,
                                     user.uid!!,
-                                    currentUser,
                                     view!!
                                 ),
                                 messageBtnListener = HomeFragment().genMessageBtnListener(
