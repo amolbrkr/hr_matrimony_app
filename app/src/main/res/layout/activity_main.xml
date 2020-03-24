@@ -6,22 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/primaryColor"
+        android:background="@android:color/white"
+        android:gravity="end"
+        android:elevation="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="#FFF"
-        android:gravity="end">
+        app:titleTextColor="@color/primaryColor">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userImageView"
-            android:src="@drawable/ph_gray"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_gravity="end"
             android:layout_margin="8dp"
-            android:layout_gravity="end" />
+            android:src="@drawable/ph_gray" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
