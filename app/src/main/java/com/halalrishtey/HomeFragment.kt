@@ -3,7 +3,6 @@ package com.halalrishtey
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.models.User
-import com.halalrishtey.services.DatabaseService
 import com.halalrishtey.services.UserRepository
 import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
@@ -38,7 +36,6 @@ class HomeFragment : Fragment() {
         targetUser: User
     ): View.OnClickListener {
         return View.OnClickListener {
-            //TODO: Properly implement this function
             userVM.initConversation(currentUser, targetUser)
                 .observe(viewLifecycleOwner, Observer {
                     if (it.length > 1) {
@@ -56,7 +53,6 @@ class HomeFragment : Fragment() {
     fun genInterestBtnListener(
         isShortlisted: Boolean,
         targetUserId: String,
-        currentUser: User,
         v: View
     ): View.OnClickListener {
         return View.OnClickListener {
@@ -107,6 +103,8 @@ class HomeFragment : Fragment() {
                 .observe(viewLifecycleOwner, Observer { currentUser ->
                     if (currentUser != null) {
                         UserRepository.getAllUserProfiles().observe(viewLifecycleOwner, Observer {
+                            homeProgress.visibility = View.GONE
+                            homeProgressText.visibility = View.GONE
                             usersToShow.clear()
                             it.forEach { user ->
                                 if (user.uid != currentUser.uid && user.gender != currentUser.gender) {
@@ -114,18 +112,12 @@ class HomeFragment : Fragment() {
                                         userVM.currentUserProfile.value?.interestedProfiles?.contains(
                                             user.uid
                                         ) ?: false
-                                    Log.d(
-                                        "HomeFragment",
-                                        "User ${user.uid} is shortlisted by current user: $isShortlisted"
-                                    )
-
                                     usersToShow.add(
                                         ProfileCardData(
                                             data = user,
                                             showBtnInterestListener = genInterestBtnListener(
                                                 isShortlisted,
                                                 user.uid!!,
-                                                currentUser,
                                                 requireView()
                                             ),
                                             messageBtnListener = genMessageBtnListener(
