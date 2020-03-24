@@ -77,11 +77,12 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/showInterestBtn"
-                style="@style/IconOnlyButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_favorite_border"
-                app:iconSize="28dp" />
+                android:layout_marginEnd="8dp"
+                android:text="Show Interest"
+                app:icon="@drawable/ic_favorite_border" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sendMessageBtn"
@@ -90,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="Message"
                 app:icon="@drawable/ic_chat_bubble_outline" />
+
         </LinearLayout>
     </LinearLayout>
 
