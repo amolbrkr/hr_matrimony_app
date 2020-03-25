@@ -48,14 +48,14 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-            userVM.currentUserId.value = uid
+            userVM.currentUid.value = uid
             userVM.getUser(uid).observe(this, Observer {
-                Log.d("MainActivity", "PhotoURL: ${it.photoUrl}")
                 if (!it.photoUrl.isBlank() || it.photoUrl.length > 5) {
                     Picasso.get().load(it.photoUrl)
                         .placeholder(R.drawable.ph_gray)
                         .error(R.drawable.ic_launcher_background)
                         .into(userImageView)
+                    userVM.getUser(uid).removeObservers(this)
                 } else {
                     Log.d("MainActivity", "Cannot get Photo url")
                 }
