@@ -6,21 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.halalrishtey.adapter.ChatListAdapter
-import com.halalrishtey.models.ConversationItem
+import com.halalrishtey.models.ChatListItem
 import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_chatlist.view.*
 
 class ChatsFragment : Fragment() {
 
-    private val userVM: UserViewModel by viewModels()
+    private val userVM: UserViewModel by activityViewModels()
 
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var adapter: ChatListAdapter
-    private lateinit var chatList: ArrayList<ConversationItem>
+    private lateinit var chatList: ArrayList<ChatListItem>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,23 +35,38 @@ class ChatsFragment : Fragment() {
 
         v.chatListRV.layoutManager = layoutManager
         v.chatListRV.adapter = adapter
+        v.chatListRV.addItemDecoration(
+            DividerItemDecoration(
+                v.context,
+                DividerItemDecoration.VERTICAL
+            )
+        );
         return v
     }
 
     override fun onStart() {
         super.onStart()
 
-        userVM.observeUser(userVM.currentUserId.value!!).observe(viewLifecycleOwner, Observer { u ->
+        val ids = userVM.currentUser.value!!.conversations
+        val cUid = userVM.currentUid.value!!
+
+        userVM.getConversationsByIds(ids).observe(viewLifecycleOwner, Observer {
             chatList.clear()
-            u.conversations.forEach {
+            it.forEachIndexed { i, map ->
+                val name =
+                    if (map["p1"] == cUid) map["p2Name"].toString() else map["p1Name"].toString()
+
+                val photoUrl =
+                    if (map["p1"] == cUid) map["p2PhotoUrl"].toString() else map["p1PhotoUrl"].toString()
+
                 chatList.add(
-                    ConversationItem(
-                        it["conversationId"].toString(),
-                        it["senderId"].toString(),
-                        it["displayName"].toString(),
-                        it["photoUrl"].toString(),
-                        it["lastMessage"].toString(),
-                        it["initialTimestamp"].toString().toLong()
+                    ChatListItem(
+                        ids[i],
+                        userVM.currentUid.value!!,
+                        name,
+                        photoUrl,
+                        map["lastMessage"].toString(),
+                        map["lastMessageTime"].toString().toLong()
                     )
                 )
             }

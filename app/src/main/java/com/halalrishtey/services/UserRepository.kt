@@ -6,7 +6,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FieldValue
 import com.halalrishtey.CustomUtils
-import com.halalrishtey.models.ConversationItem
 import com.halalrishtey.models.MessageItem
 import com.halalrishtey.models.User
 
@@ -131,22 +130,23 @@ object UserRepository {
     fun initConversation(currentUser: User, targetUser: User): MutableLiveData<String> {
         val r = MutableLiveData("")
         val ts = System.currentTimeMillis()
+        val idHash = CustomUtils.genCombinedHash(currentUser.uid!!, targetUser.uid!!)
 
         DatabaseService.getDbInstance().collection("conversations")
-            .whereEqualTo("p1", targetUser.uid)
-            .whereEqualTo("p2", currentUser.uid)
+            .document(idHash)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    if (task.result!!.documents.size > 0) {
-                        val convo = task.result!!.documents[0]
-                        Log.d("UserRepository", "Conversation already existed: ${convo.id}")
-                        r.value = convo.id
+                    val doc = task.result
+                    if (doc != null && doc.exists()) {
+                        //Conversation already exists, return it
+                        Log.d("UserRepository", "Conversation already existed: ${doc.id}")
+                        r.value = doc.id
                     } else {
-                        // Conversation does not exists, create a new one
+                        //Create a new conversation between the 2 users
                         val convoRef = DatabaseService.getDbInstance()
                             .collection("conversations")
-                            .document()
+                            .document(idHash)
 
                         val currentRef = DatabaseService.getDbInstance()
                             .collection("users")
@@ -159,26 +159,10 @@ object UserRepository {
                         DatabaseService.getDbInstance()
                             .runBatch {
                                 it.update(
-                                    currentRef, "conversations", FieldValue.arrayUnion(
-                                        ConversationItem(
-                                            convoRef.id,
-                                            targetUser.displayName,
-                                            targetUser.photoUrl,
-                                            lastMessage = "",
-                                            initialTimestamp = ts
-                                        )
-                                    )
+                                    currentRef, "conversations", FieldValue.arrayUnion(convoRef.id)
                                 )
                                 it.update(
-                                    targetRef, "conversations", FieldValue.arrayUnion(
-                                        ConversationItem(
-                                            convoRef.id,
-                                            currentUser.displayName,
-                                            currentUser.photoUrl,
-                                            lastMessage = "",
-                                            initialTimestamp = ts
-                                        )
-                                    )
+                                    targetRef, "conversations", FieldValue.arrayUnion(convoRef.id)
                                 )
 
                                 //This will be stored in conversations collections
@@ -186,6 +170,8 @@ object UserRepository {
                                     convoRef,
                                     mapOf(
                                         "initialTimestamp" to ts,
+                                        "lastMessage" to "",
+                                        "lastMessageTime" to ts,
                                         "p1" to currentUser.uid,
                                         "p2" to targetUser.uid,
                                         "p1Name" to currentUser.displayName,
@@ -195,7 +181,7 @@ object UserRepository {
                                         "messages" to ArrayList<MessageItem>()
                                     )
                                 )
-                            }.addOnCompleteListener { task ->
+                            }.addOnCompleteListener { task1 ->
                                 if (task.isSuccessful) {
                                     r.value = convoRef.id
                                     Log.d(
@@ -206,16 +192,11 @@ object UserRepository {
                                     r.value = ""
                                     Log.d(
                                         "UserRepository",
-                                        "Failed to initialize conversation with ${targetUser.displayName}, Error: ${task.exception?.message}"
+                                        "Failed to initialize conversation, Error: ${task1.exception?.message}"
                                     )
                                 }
                             }
                     }
-                } else {
-                    Log.d(
-                        "HomeFragment",
-                        "Failed to check if conversation already exists: ${task.exception?.message}"
-                    )
                 }
             }
         return r
@@ -231,7 +212,6 @@ object UserRepository {
                 if (snap != null && snap.exists()) {
                     val t = snap.data
                     res.value = t
-                    Log.d("UserRepository", "Conversation $conversationId : ${t.toString()}")
                 } else {
                     res.value = null
                 }
@@ -246,14 +226,19 @@ object UserRepository {
 
     fun sendMessage(conversationId: String, senderId: String, message: String) {
         val ts = System.currentTimeMillis()
+        val msg = MessageItem(senderId, message, System.currentTimeMillis())
 
         DatabaseService.getDbInstance()
             .collection("conversations")
             .document(conversationId)
             .update(
-                "messages",
-                FieldValue.arrayUnion(MessageItem(senderId, message, System.currentTimeMillis()))
-            ).addOnCompleteListener {
+                mapOf(
+                    "lastMessage" to msg.content,
+                    "lastMessageTime" to ts,
+                    "messages" to FieldValue.arrayUnion(msg)
+                )
+            )
+            .addOnCompleteListener {
                 if (it.isSuccessful) {
                     sendChatNotif(senderId, conversationId, message)
                     Log.d(
@@ -267,6 +252,30 @@ object UserRepository {
                     )
                 }
             }
+    }
+
+    fun getConversationsByIds(listOfIds: ArrayList<String>): MutableLiveData<ArrayList<Map<String, Any>>> {
+        val res = MutableLiveData<ArrayList<Map<String, Any>>>()
+        val t = ArrayList<Map<String, Any>>()
+
+        listOfIds.forEach { id ->
+            DatabaseService.getDbInstance()
+                .collection("conversations")
+                .document(id)
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        it.result?.data?.let { it1 -> t.add(it1); res.value = t }
+                    } else {
+                        Log.d(
+                            "UserRepository",
+                            "Cannot get conversation $id, error: ${it.exception?.message}"
+                        )
+                    }
+                }
+        }
+
+        return res
     }
 
     fun getProfilesByIds(listOfIds: ArrayList<String>): MutableLiveData<ArrayList<User>> {
@@ -290,6 +299,25 @@ object UserRepository {
                     }
                 }
         }
+
+        return res
+    }
+
+    fun observeUserProfile(userId: String): MutableLiveData<User> {
+        val res = MutableLiveData<User>()
+
+        DatabaseService.getDbInstance()
+            .collection("users")
+            .document(userId)
+            .addSnapshotListener { snap, e ->
+                if (e != null) {
+                    Log.d("UserRepository", "Error while observing $userId, error: $e")
+                }
+
+                if (snap != null && snap.exists()) {
+                    res.value = CustomUtils.convertToUser(snap)
+                } else res.value = null
+            }
 
         return res
     }
