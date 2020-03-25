@@ -7,29 +7,17 @@
     android:paddingBottom="64dp"
     tools:context=".HomeFragment">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/homeProgressText"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:gravity="center"
-        android:text="Hold on, We're searching profiles for you!"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/homeProgress"
         style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="240dp"
         android:indeterminate="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/homeProgressText"
+        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.05"
         app:mpb_progressStyle="horizontal" />
 

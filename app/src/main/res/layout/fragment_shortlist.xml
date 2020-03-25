@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    app:layout_constraintVertical_chainStyle="packed"
     tools:context=".ShortlistFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,13 +14,12 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/interestProgress"
         style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="240dp"
         android:indeterminate="true"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,13 +32,14 @@
         android:id="@+id/shortlistBgImageView"
         android:layout_width="128dp"
         android:layout_height="121dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="240dp"
         android:contentDescription="Star image"
         android:src="@drawable/star"
         app:layout_constraintBottom_toTopOf="@id/shortlistHelperText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/shortlistHelperText"
@@ -48,6 +49,8 @@
         android:text="If you show interest in someone, they'll show up here!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shortlistBgImageView"
+        app:layout_constraintVertical_chainStyle="packed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
