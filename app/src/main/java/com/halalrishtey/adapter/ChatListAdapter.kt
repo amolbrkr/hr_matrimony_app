@@ -7,14 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.halalrishtey.ChatActivity
+import com.halalrishtey.CustomUtils
 import com.halalrishtey.R
-import com.halalrishtey.models.ConversationItem
+import com.halalrishtey.models.ChatListItem
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.chat_item.view.*
 
 class ChatListAdapter(
     private val context: Context,
-    private val chatList: ArrayList<ConversationItem>
+    private val chatList: ArrayList<ChatListItem>
 ) :
     RecyclerView.Adapter<ChatListAdapter.ChatListVH>() {
 
@@ -27,7 +28,9 @@ class ChatListAdapter(
 
     override fun onBindViewHolder(holder: ChatListVH, position: Int) {
         holder.itemView.chatItemTitleText.text = chatList[position].displayName
-        holder.itemView.chatItemSubtitleText.text = chatList[position].lastMessage
+        holder.itemView.chatItemSubtitleText.text = chatList[position].lastMsg
+        holder.itemView.chatTimeText.text =
+            CustomUtils.genTimeString(chatList[position].lastMsgTime)
 
         if (chatList[position].photoUrl.length > 5)
             Picasso.get().load(chatList[position].photoUrl)
