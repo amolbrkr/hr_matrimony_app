@@ -18,10 +18,25 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.firestore.DocumentSnapshot
 import com.halalrishtey.models.Gender
 import com.halalrishtey.models.User
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 object CustomUtils {
+
+    fun genTimeString(timeInMillis: Long): String {
+        val dateFormatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = timeInMillis
+        return dateFormatter.format(cal.time).toString()
+    }
+
+    fun genCombinedHash(str1: String, str2: String): String {
+        val h = if (str1.length <= str2.length) str1.length / 2 else str2.length / 2
+        val a = listOf(str1, str2).sorted()
+        return a[0].substring(0, h) + a[1].substring(0, h)
+    }
+
     fun displayLocalNotif(
         context: Context,
         notifId: Int,
@@ -78,6 +93,7 @@ object CustomUtils {
     }
 
     fun convertToUser(doc: DocumentSnapshot): User {
+
         return User(
             email = doc.get("email").toString(),
             uid = doc.get("uid").toString(),
@@ -103,8 +119,8 @@ object CustomUtils {
             pincode = doc.get("pincode")?.toString() ?: "Not found",
             isOTPVerified = doc.get("otpverified") as Boolean,
             countryCallingCode = doc.get("countryCallingCode").toString(),
-            interestedProfiles = doc.get("interestedProfiles") as ArrayList<String>
-            //interestCount = it.get("interestCount") as Int
+            interestedProfiles = doc.get("interestedProfiles") as ArrayList<String>,
+            conversations = doc.get("conversations") as ArrayList<String>
         )
     }
 
