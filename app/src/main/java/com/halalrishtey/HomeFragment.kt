@@ -59,8 +59,8 @@ class HomeFragment : Fragment() {
             if (!isShortlisted) {
                 v.showInterestBtn.setIconResource(R.drawable.ic_favorite)
                 userVM.initInterest(
-                    userVM.currentUserId.value!!,
-                    userVM.currentUserProfile.value?.displayName!!,
+                    userVM.currentUid.value!!,
+                    userVM.currentUser.value?.displayName!!,
                     targetUserId
                 ).observe(viewLifecycleOwner, Observer { msg ->
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT)
@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
             } else {
                 v.showInterestBtn.setIconResource(R.drawable.ic_favorite_border)
                 userVM.removeInterest(
-                    userVM.currentUserId.value!!,
+                    userVM.currentUid.value!!,
                     targetUserId
                 ).observe(viewLifecycleOwner, Observer { msg ->
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT)
@@ -99,19 +99,19 @@ class HomeFragment : Fragment() {
         super.onStart()
 
         if (usersToShow.size == 0) {
-            userVM.getUser(userVM.currentUserId.value!!)
+            userVM.getUser(userVM.currentUid.value!!)
                 .observe(viewLifecycleOwner, Observer { currentUser ->
                     if (currentUser != null) {
                         UserRepository.getAllUserProfiles().observe(viewLifecycleOwner, Observer {
                             homeProgress.visibility = View.GONE
-                            homeProgressText.visibility = View.GONE
                             usersToShow.clear()
                             it.forEach { user ->
                                 if (user.uid != currentUser.uid && user.gender != currentUser.gender) {
                                     val isShortlisted =
-                                        userVM.currentUserProfile.value?.interestedProfiles?.contains(
+                                        userVM.currentUser.value?.interestedProfiles?.contains(
                                             user.uid
                                         ) ?: false
+                                    CustomUtils.genCombinedHash(user.uid!!, currentUser.uid!!)
                                     usersToShow.add(
                                         ProfileCardData(
                                             data = user,
@@ -148,7 +148,7 @@ class HomeFragment : Fragment() {
                 "lastSignInAt" to System.currentTimeMillis()
             )
 
-            userAuthVM.updateUserData(userVM.currentUserId.value!!, infoToBeUpdated)
+            userAuthVM.updateUserData(userVM.currentUid.value!!, infoToBeUpdated)
             userAuthVM.locationUpdates.removeObservers(viewLifecycleOwner)
         })
     }

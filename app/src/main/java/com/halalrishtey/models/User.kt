@@ -28,7 +28,6 @@ data class User(
     var dateOfBirth: Date? = null,      //done
     var height: String = "",            //done
     var education: String = "",         //done
-//    var occupation: String = "",        //done
     var workLocation: String = "",        //done
     var annualIncome: Number = 0,       //done
     var organizationName: String = "",      //done
@@ -44,7 +43,7 @@ data class User(
     var countryCallingCode: String = "",     //done
     var interestedProfiles: ArrayList<String> = ArrayList(),
     var registrationToken: String = "",
-    var conversations: ArrayList<ConversationItem> = ArrayList()
+    var conversations: ArrayList<String> = ArrayList()
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)

@@ -42,7 +42,7 @@ class ShortlistFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (userVM.currentUserProfile.value?.interestedProfiles?.size == 0) {
+        if (userVM.currentUser.value?.interestedProfiles?.size == 0) {
             shortlistedProfilesRV.visibility = View.GONE
             shortlistBgImageView.visibility = View.VISIBLE
             shortlistHelperText.visibility = View.VISIBLE
@@ -56,7 +56,7 @@ class ShortlistFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        userVM.currentUserProfile.observe(viewLifecycleOwner, Observer { currentUser ->
+        userVM.currentUser.observe(viewLifecycleOwner, Observer { currentUser ->
             userVM.getProfilesByIds(currentUser.interestedProfiles)
                 .observe(viewLifecycleOwner, Observer {
                     interestProgress.visibility = View.GONE
