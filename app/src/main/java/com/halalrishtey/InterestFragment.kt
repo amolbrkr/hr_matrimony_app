@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -14,6 +15,7 @@ import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_shortlist.*
 import kotlinx.android.synthetic.main.fragment_shortlist.view.*
+import kotlinx.android.synthetic.main.profile_card.view.*
 
 
 class ShortlistFragment : Fragment() {
@@ -24,6 +26,34 @@ class ShortlistFragment : Fragment() {
     private lateinit var interestedProfiles: ArrayList<ProfileCardData>
     private var lastScrollPos: Int = 0
 
+    private fun genInterestBtnListener(
+        isShortlisted: Boolean,
+        targetUserId: String,
+        v: View
+    ): View.OnClickListener {
+        return View.OnClickListener {
+            if (!isShortlisted) {
+                v.showInterestBtn.setIconResource(R.drawable.ic_favorite)
+                userVM.initInterest(
+                    userVM.currentUid.value!!,
+                    userVM.currentUser.value?.displayName!!,
+                    targetUserId
+                ).observe(viewLifecycleOwner, Observer { msg ->
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+                        .show()
+                })
+            } else {
+                v.showInterestBtn.setIconResource(R.drawable.ic_favorite_border)
+                userVM.removeInterest(
+                    userVM.currentUid.value!!,
+                    targetUserId
+                ).observe(viewLifecycleOwner, Observer { msg ->
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+                        .show()
+                })
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +99,7 @@ class ShortlistFragment : Fragment() {
                         interestedProfiles.add(
                             ProfileCardData(
                                 data = user,
-                                showBtnInterestListener = HomeFragment().genInterestBtnListener(
+                                showBtnInterestListener = genInterestBtnListener(
                                     isShortlisted,
                                     user.uid!!,
                                     view!!
