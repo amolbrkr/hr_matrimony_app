@@ -3,6 +3,7 @@ package com.halalrishtey
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +51,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun genInterestBtnListener(
+    private fun genInterestBtnListener(
         isShortlisted: Boolean,
         targetUserId: String,
         v: View
@@ -99,40 +100,39 @@ class HomeFragment : Fragment() {
         super.onStart()
 
         if (usersToShow.size == 0) {
-            userVM.getUser(userVM.currentUid.value!!)
-                .observe(viewLifecycleOwner, Observer { currentUser ->
-                    if (currentUser != null) {
-                        UserRepository.getAllUserProfiles().observe(viewLifecycleOwner, Observer {
-                            homeProgress.visibility = View.GONE
-                            usersToShow.clear()
-                            it.forEach { user ->
-                                if (user.uid != currentUser.uid && user.gender != currentUser.gender) {
-                                    val isShortlisted =
-                                        userVM.currentUser.value?.interestedProfiles?.contains(
-                                            user.uid
-                                        ) ?: false
-                                    CustomUtils.genCombinedHash(user.uid!!, currentUser.uid!!)
-                                    usersToShow.add(
-                                        ProfileCardData(
-                                            data = user,
-                                            showBtnInterestListener = genInterestBtnListener(
-                                                isShortlisted,
-                                                user.uid!!,
-                                                requireView()
-                                            ),
-                                            messageBtnListener = genMessageBtnListener(
-                                                currentUser,
-                                                user
-                                            ),
-                                            isUserShortlisted = isShortlisted
-                                        )
+            userVM.currentUser.observe(viewLifecycleOwner, Observer { currentUser ->
+                if (currentUser != null) {
+                    UserRepository.getAllUserProfiles().observe(viewLifecycleOwner, Observer {
+                        homeProgress.visibility = View.GONE
+                        usersToShow.clear()
+                        it.forEach { user ->
+                            if (user.uid != currentUser.uid && user.gender != currentUser.gender) {
+                                val isShortlisted =
+                                    userVM.currentUser.value?.interestedProfiles?.contains(
+                                        user.uid
+                                    ) ?: false
+                                CustomUtils.genCombinedHash(user.uid!!, currentUser.uid!!)
+                                usersToShow.add(
+                                    ProfileCardData(
+                                        data = user,
+                                        showBtnInterestListener = genInterestBtnListener(
+                                            isShortlisted,
+                                            user.uid!!,
+                                            requireView()
+                                        ),
+                                        messageBtnListener = genMessageBtnListener(
+                                            currentUser,
+                                            user
+                                        ),
+                                        isUserShortlisted = isShortlisted
                                     )
-                                }
+                                )
                             }
-                            adapter.notifyDataSetChanged()
-                        })
-                    }
-                })
+                        }
+                        adapter.notifyDataSetChanged()
+                    })
+                }
+            })
         }
 
         userAuthVM.locationUpdates.observe(viewLifecycleOwner, Observer { loc ->
