@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.halalrishtey.adapter.ChatListAdapter
 import com.halalrishtey.models.ChatListItem
 import com.halalrishtey.viewmodels.UserViewModel
+import kotlinx.android.synthetic.main.fragment_chatlist.*
 import kotlinx.android.synthetic.main.fragment_chatlist.view.*
+import kotlinx.android.synthetic.main.fragment_chatlist.view.chatListProgress
 
 class ChatsFragment : Fragment() {
 
@@ -51,11 +53,11 @@ class ChatsFragment : Fragment() {
         val cUid = userVM.currentUid.value!!
 
         userVM.getConversationsByIds(ids).observe(viewLifecycleOwner, Observer {
+            chatListProgress.visibility = View.GONE
             chatList.clear()
             it.forEachIndexed { i, map ->
                 val name =
                     if (map["p1"] == cUid) map["p2Name"].toString() else map["p1Name"].toString()
-
                 val photoUrl =
                     if (map["p1"] == cUid) map["p2PhotoUrl"].toString() else map["p1PhotoUrl"].toString()
 
