@@ -15,7 +15,6 @@ import com.halalrishtey.models.ChatListItem
 import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_chatlist.*
 import kotlinx.android.synthetic.main.fragment_chatlist.view.*
-import kotlinx.android.synthetic.main.fragment_chatlist.view.chatListProgress
 
 class ChatsFragment : Fragment() {
 
@@ -49,30 +48,29 @@ class ChatsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        val ids = userVM.currentUser.value!!.conversations
-        val cUid = userVM.currentUid.value!!
+        userVM.currentUser.observe(viewLifecycleOwner, Observer { cUser ->
+            userVM.getConversationsByIds(cUser.conversations).observe(viewLifecycleOwner, Observer {
+                chatListProgress.visibility = View.GONE
+                chatList.clear()
+                it.forEachIndexed { i, map ->
+                    val name =
+                        if (map["p1"] == cUser.uid) map["p2Name"].toString() else map["p1Name"].toString()
+                    val photoUrl =
+                        if (map["p1"] == cUser.uid) map["p2PhotoUrl"].toString() else map["p1PhotoUrl"].toString()
 
-        userVM.getConversationsByIds(ids).observe(viewLifecycleOwner, Observer {
-            chatListProgress.visibility = View.GONE
-            chatList.clear()
-            it.forEachIndexed { i, map ->
-                val name =
-                    if (map["p1"] == cUid) map["p2Name"].toString() else map["p1Name"].toString()
-                val photoUrl =
-                    if (map["p1"] == cUid) map["p2PhotoUrl"].toString() else map["p1PhotoUrl"].toString()
-
-                chatList.add(
-                    ChatListItem(
-                        ids[i],
-                        userVM.currentUid.value!!,
-                        name,
-                        photoUrl,
-                        map["lastMessage"].toString(),
-                        map["lastMessageTime"].toString().toLong()
+                    chatList.add(
+                        ChatListItem(
+                            cUser.conversations[i],
+                            cUser.uid!!,
+                            name,
+                            photoUrl,
+                            map["lastMessage"].toString(),
+                            map["lastMessageTime"].toString().toLong()
+                        )
                     )
-                )
-            }
-            adapter.notifyDataSetChanged()
+                }
+                adapter.notifyDataSetChanged()
+            })
         })
     }
 }
