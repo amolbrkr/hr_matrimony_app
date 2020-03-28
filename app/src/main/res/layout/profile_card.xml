@@ -8,7 +8,6 @@
     android:checkable="false"
     android:clickable="true"
     android:focusable="true"
-    android:minHeight="200dp"
     android:textAlignment="center">
 
     <LinearLayout
