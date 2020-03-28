@@ -2,8 +2,11 @@ package com.halalrishtey
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.halalrishtey.adapter.MessageAdapter
@@ -26,6 +29,8 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
         setSupportActionBar(chatToolbar)
+
+        chatToolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_more_vert)
 
         //Get required data from intent
         conversationId = intent.extras?.getString("conversationId")
@@ -62,6 +67,30 @@ class ChatActivity : AppCompatActivity() {
         if (targetPhotoUrl != null && targetPhotoUrl.length > 5) {
             Picasso.get().load(targetPhotoUrl)
                 .into(chatProfileImgView)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.chat_options_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.option_report -> {
+                Log.d("ChatActivity", "Report clicked")
+                ReportDialog().show(this.supportFragmentManager, "ReportDialog")
+                true
+            }
+
+            R.id.option_block -> {
+                BlockDialog().show(this.supportFragmentManager, "BlockDialog")
+                true
+            }
+
+            else -> {
+                true
+            }
         }
     }
 
