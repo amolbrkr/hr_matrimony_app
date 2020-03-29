@@ -37,6 +37,7 @@
         android:layout_margin="24dp"
         android:text="Block"
         android:textColor="@android:color/holo_red_dark"
+        app:rippleColor="@android:color/holo_red_light"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/blockWarnText" />
