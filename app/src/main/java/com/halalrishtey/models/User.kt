@@ -43,7 +43,8 @@ data class User(
     var countryCallingCode: String = "",     //done
     var interestedProfiles: ArrayList<String> = ArrayList(),
     var registrationToken: String = "",
-    var conversations: ArrayList<String> = ArrayList()
+    var conversations: ArrayList<String> = ArrayList(),
+    var blockList: ArrayList<String> = ArrayList()
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)

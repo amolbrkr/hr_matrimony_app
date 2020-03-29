@@ -362,4 +362,46 @@ object UserRepository {
             }
         return listOfUsers
     }
+
+    fun blockUser(currentUserId: String, targetUserId: String): MutableLiveData<String> {
+        val res = MutableLiveData<String>()
+        val cur = DatabaseService.getDbInstance()
+            .collection("users")
+            .document(currentUserId)
+        val target = DatabaseService.getDbInstance()
+            .collection("users")
+            .document(targetUserId)
+
+        DatabaseService.getDbInstance()
+            .runBatch {
+                it.update(cur, "blockList", FieldValue.arrayUnion(targetUserId))
+                it.update(target, "blockList", FieldValue.arrayUnion(currentUserId))
+            }.addOnCompleteListener {
+                if (it.isSuccessful) {
+                    res.value = "Successfully blocked this user!"
+                    Log.d("UserRepository", "$currentUserId has blocked user $targetUserId")
+                } else res.value = it.exception?.message
+            }
+        return res
+    }
+
+    fun reportUser(currentUser: User, targetUser: User, reason: String) {
+        DatabaseService.getDbInstance()
+            .collection("reports")
+            .document()
+            .set(
+                mapOf(
+                    "reportedBy" to mapOf(
+                        "name" to currentUser.displayName,
+                        "uid" to currentUser.uid
+                    ),
+                    "target" to mapOf(
+                        "name" to targetUser.displayName,
+                        "uid" to targetUser.uid
+                    ),
+                    "timestamp" to System.currentTimeMillis(),
+                    "reason" to reason
+                )
+            )
+    }
 }

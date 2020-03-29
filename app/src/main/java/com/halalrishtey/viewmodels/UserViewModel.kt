@@ -23,7 +23,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
             currentUser = observeUser(uid).also {
                 Log.d(
                     "UserViewModel",
-                    "Current user set to: ${currentUser.value?.displayName}"
+                    "Current user set to: ${it.value?.displayName}"
                 )
             }
         }
@@ -67,9 +67,15 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     fun getConversationsByIds(listOfIds: ArrayList<String>) =
         UserRepository.getConversationsByIds(listOfIds)
 
-    fun observeConversation(convsersationId: String) =
-        UserRepository.observeConversation(convsersationId)
+    fun observeConversation(conversationId: String) =
+        UserRepository.observeConversation(conversationId)
 
     fun sendMessage(conversationId: String, senderId: String, text: String) =
         UserRepository.sendMessage(conversationId, senderId, text)
+
+    fun blockUser(currentId: String, targetId: String) =
+        UserRepository.blockUser(currentId, targetId)
+
+    fun reportUser(current: User, target: User, reason: String) =
+        UserRepository.reportUser(current, target, reason)
 }

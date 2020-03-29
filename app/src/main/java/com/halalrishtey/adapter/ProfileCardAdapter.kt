@@ -38,10 +38,9 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
         }
 
         override fun onClick(p0: View?) {
-            //TODO: Implement a proper onClickListener
             Toast.makeText(
                 p0?.context,
-                "${p0?.cardTitleTextView?.text} Card was clicked",
+                "${p0?.cardTitleTextView?.text}'s profile was clicked",
                 Toast.LENGTH_SHORT
             ).show()
         }
