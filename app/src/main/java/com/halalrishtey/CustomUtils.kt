@@ -24,6 +24,15 @@ import java.util.*
 
 object CustomUtils {
 
+    fun filterValidProfiles(currentUser: User, profiles: ArrayList<User>): List<User> {
+        val r = profiles.filter { u -> u.gender != currentUser.gender }
+            .filter { u -> u.uid != currentUser.uid }
+            .filterNot { u -> currentUser.blockList.contains(u.uid) }
+
+        Log.d("CustomUtils", "Valid profiles: $r")
+        return r
+    }
+
     fun genTimeString(timeInMillis: Long): String {
         val dateFormatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
         val cal = Calendar.getInstance()
@@ -93,7 +102,7 @@ object CustomUtils {
     }
 
     fun convertToUser(doc: DocumentSnapshot): User {
-
+        Log.d("CustomUtils", "Converting user: ${doc}")
         return User(
             email = doc.get("email").toString(),
             uid = doc.get("uid").toString(),
@@ -120,7 +129,8 @@ object CustomUtils {
             isOTPVerified = doc.get("otpverified") as Boolean,
             countryCallingCode = doc.get("countryCallingCode").toString(),
             interestedProfiles = doc.get("interestedProfiles") as ArrayList<String>,
-            conversations = doc.get("conversations") as ArrayList<String>
+            conversations = doc.get("conversations") as ArrayList<String>,
+            blockList = doc.get("blockList") as ArrayList<String>
         )
     }
 
