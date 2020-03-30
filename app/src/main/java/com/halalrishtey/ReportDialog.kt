@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_report_dialog.view.*
 
@@ -47,13 +45,7 @@ class ReportDialog(private val currentId: String, private val targetId: String) 
 
         view.reportAndBlockBtn.setOnClickListener {
             userVM.reportUser(currentId, targetId, view.reportSpinner.selectedItem.toString())
-            userVM.blockUser(currentId, targetId).observe(viewLifecycleOwner, Observer {
-                if (it.contains("Successfully")) {
-                    activity?.onBackPressed()
-                } else {
-                    Toast.makeText(context, "Error: $it", Toast.LENGTH_SHORT).show()
-                }
-            })
+            ChatActivity().blockUser(requireContext(), currentId, targetId)
         }
 
         return view

@@ -60,7 +60,6 @@ class ChatActivity : AppCompatActivity() {
         messageRV.layoutManager = linearLayoutManager
         messageRV.adapter = adapter
 
-
         //Setup toolbar and sendChatBtn
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -73,7 +72,7 @@ class ChatActivity : AppCompatActivity() {
 
             if (msg.length > 1 && conversationId != null && currentUserId != null) {
                 Log.d("ChatActivity", "Message sent: $msg")
-                userVM.sendMessage(conversationId!!, currentUserId!!, msg)
+                userVM.sendMessage(conversationId!!, currentUserId!!, targetUserId!!, msg)
 
                 chatTextInp.editText?.setText("")
             }
@@ -118,6 +117,8 @@ class ChatActivity : AppCompatActivity() {
         super.onStart()
 
         if (conversationId != null) {
+            userVM.updateReadStatus(conversationId!!, currentUserId!!)
+
             userVM.observeConversation(conversationId!!).observe(this, Observer {
                 val temp = it["messages"] as ArrayList<Map<String, Any>>
 
