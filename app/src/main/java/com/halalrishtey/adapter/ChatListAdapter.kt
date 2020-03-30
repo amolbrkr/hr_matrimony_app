@@ -39,7 +39,8 @@ class ChatListAdapter(
         holder.itemView.setOnClickListener { v ->
             val i = Intent(context, ChatActivity::class.java)
             i.putExtra("conversationId", chatList[position].conversationId)
-            i.putExtra("senderId", chatList[position].senderId)
+            i.putExtra("currentId", chatList[position].currentId)
+            i.putExtra("targetId", chatList[position].targetId)
             i.putExtra("targetPhotoUrl", chatList[position].photoUrl)
             i.putExtra("targetName", chatList[position].displayName)
             v.context.startActivity(i)
