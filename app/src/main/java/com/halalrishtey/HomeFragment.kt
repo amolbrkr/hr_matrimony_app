@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var usersToShow: ArrayList<ProfileCardData>
     private var lastScrollPos: Int = 0
 
-    fun genMessageBtnListener(
+    private fun genMessageBtnListener(
         currentUser: User,
         targetUser: User
     ): View.OnClickListener {
@@ -41,7 +41,8 @@ class HomeFragment : Fragment() {
                     if (it.length > 1) {
                         val i = Intent(context, ChatActivity::class.java)
                         i.putExtra("conversationId", it)
-                        i.putExtra("senderId", currentUser.uid)
+                        i.putExtra("currentId", currentUser.uid)
+                        i.putExtra("targetId", targetUser.uid)
                         i.putExtra("targetPhotoUrl", targetUser.photoUrl)
                         i.putExtra("targetName", targetUser.displayName)
                         startActivity(i)

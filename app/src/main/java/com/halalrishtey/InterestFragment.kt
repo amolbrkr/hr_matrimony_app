@@ -1,6 +1,7 @@
 package com.halalrishtey
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
+import com.halalrishtey.models.User
 import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_shortlist.*
 import kotlinx.android.synthetic.main.fragment_shortlist.view.*
@@ -52,6 +54,26 @@ class ShortlistFragment : Fragment() {
                         .show()
                 })
             }
+        }
+    }
+
+    private fun genMessageBtnListener(
+        currentUser: User,
+        targetUser: User
+    ): View.OnClickListener {
+        return View.OnClickListener {
+            userVM.initConversation(currentUser, targetUser)
+                .observe(viewLifecycleOwner, Observer {
+                    if (it.length > 1) {
+                        val i = Intent(context, ChatActivity::class.java)
+                        i.putExtra("conversationId", it)
+                        i.putExtra("currentId", currentUser.uid)
+                        i.putExtra("targetId", targetUser.uid)
+                        i.putExtra("targetPhotoUrl", targetUser.photoUrl)
+                        i.putExtra("targetName", targetUser.displayName)
+                        startActivity(i)
+                    }
+                })
         }
     }
 
@@ -104,7 +126,7 @@ class ShortlistFragment : Fragment() {
                                     user.uid!!,
                                     view!!
                                 ),
-                                messageBtnListener = HomeFragment().genMessageBtnListener(
+                                messageBtnListener = genMessageBtnListener(
                                     currentUser,
                                     user
                                 ),
