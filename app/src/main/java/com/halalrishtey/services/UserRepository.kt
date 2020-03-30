@@ -169,6 +169,7 @@ object UserRepository {
                                 it.set(
                                     convoRef,
                                     mapOf(
+                                        "id" to convoRef.id,
                                         "initialTimestamp" to ts,
                                         "lastMessage" to "",
                                         "lastMessageTime" to ts,
@@ -372,10 +373,26 @@ object UserRepository {
             .collection("users")
             .document(targetUserId)
 
+        val convoId = CustomUtils.genCombinedHash(currentUserId, targetUserId)
+
         DatabaseService.getDbInstance()
             .runBatch {
-                it.update(cur, "blockList", FieldValue.arrayUnion(targetUserId))
-                it.update(target, "blockList", FieldValue.arrayUnion(currentUserId))
+                it.update(
+                    cur,
+                    mapOf(
+                        "blockList" to FieldValue.arrayUnion(targetUserId),
+                        "conversations" to FieldValue.arrayRemove(convoId),
+                        "interestedProfiles" to FieldValue.arrayRemove(targetUserId)
+                    )
+                )
+                it.update(
+                    target,
+                    mapOf(
+                        "blockList" to FieldValue.arrayUnion(currentUserId),
+                        "conversations" to FieldValue.arrayRemove(convoId),
+                        "interestedProfiles" to FieldValue.arrayRemove(currentUserId)
+                    )
+                )
             }.addOnCompleteListener {
                 if (it.isSuccessful) {
                     res.value = "Successfully blocked this user!"
@@ -385,20 +402,14 @@ object UserRepository {
         return res
     }
 
-    fun reportUser(currentUser: User, targetUser: User, reason: String) {
+    fun reportUser(currentUserId: String, targetUserId: String, reason: String) {
         DatabaseService.getDbInstance()
             .collection("reports")
             .document()
             .set(
                 mapOf(
-                    "reportedBy" to mapOf(
-                        "name" to currentUser.displayName,
-                        "uid" to currentUser.uid
-                    ),
-                    "target" to mapOf(
-                        "name" to targetUser.displayName,
-                        "uid" to targetUser.uid
-                    ),
+                    "reportedBy" to currentUserId,
+                    "reportTarget" to targetUserId,
                     "timestamp" to System.currentTimeMillis(),
                     "reason" to reason
                 )
