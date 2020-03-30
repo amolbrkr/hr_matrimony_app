@@ -70,8 +70,11 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     fun observeConversation(conversationId: String) =
         UserRepository.observeConversation(conversationId)
 
-    fun sendMessage(conversationId: String, senderId: String, text: String) =
-        UserRepository.sendMessage(conversationId, senderId, text)
+    fun updateReadStatus(convoId: String, currentUserId: String) =
+        UserRepository.updateReadStatus(convoId, currentUserId)
+
+    fun sendMessage(conversationId: String, senderId: String, recieverId: String, text: String) =
+        UserRepository.sendMessage(conversationId, senderId, recieverId, text)
 
     fun blockUser(currentId: String, targetId: String): MutableLiveData<String> {
         val t = currentUser.value!!
