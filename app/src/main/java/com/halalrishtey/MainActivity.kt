@@ -71,6 +71,12 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.option_signout -> {
                 userAuthVM.signOut()
+
+                //Remove content from shared preferences
+                val sharedPreferences =
+                    applicationContext.getSharedPreferences("halalrishtey", Context.MODE_PRIVATE)
+                sharedPreferences.edit().clear().apply()
+
                 val i = Intent(this, WelcomeActivity::class.java)
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(i)
