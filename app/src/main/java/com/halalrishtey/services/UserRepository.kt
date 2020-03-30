@@ -179,7 +179,11 @@ object UserRepository {
                                         "p2Name" to targetUser.displayName,
                                         "p1PhotoUrl" to currentUser.photoUrl,
                                         "p2PhotoUrl" to targetUser.photoUrl,
-                                        "messages" to ArrayList<MessageItem>()
+                                        "messages" to ArrayList<MessageItem>(),
+                                        "readStatus" to mapOf(
+                                            currentUser.uid to false,
+                                            targetUser.uid to false
+                                        )
                                     )
                                 )
                             }.addOnCompleteListener { task1 ->
@@ -225,7 +229,7 @@ object UserRepository {
         return res
     }
 
-    fun sendMessage(conversationId: String, senderId: String, message: String) {
+    fun sendMessage(conversationId: String, senderId: String, recieverId: String, message: String) {
         val ts = System.currentTimeMillis()
         val msg = MessageItem(senderId, message, System.currentTimeMillis())
 
@@ -236,7 +240,11 @@ object UserRepository {
                 mapOf(
                     "lastMessage" to msg.content,
                     "lastMessageTime" to ts,
-                    "messages" to FieldValue.arrayUnion(msg)
+                    "messages" to FieldValue.arrayUnion(msg),
+                    "readStatus" to mapOf(
+                        senderId to false,
+                        recieverId to false
+                    )
                 )
             )
             .addOnCompleteListener {
@@ -252,6 +260,23 @@ object UserRepository {
                         "Failed to send message to $conversationId, error: ${it.exception?.message}"
                     )
                 }
+            }
+    }
+
+    fun updateReadStatus(convoId: String, currentUserId: String) {
+        DatabaseService.getDbInstance()
+            .collection("conversations")
+            .document(convoId)
+            .update("readStatus", mapOf(currentUserId to true))
+            .addOnCompleteListener {
+                if (it.isSuccessful) Log.d(
+                    "UserRepository",
+                    "Successfully updated read status for conversation: $convoId"
+                )
+                else Log.d(
+                    "UserRepository",
+                    "Failed to update read status, error: ${it.exception?.message}"
+                )
             }
     }
 
