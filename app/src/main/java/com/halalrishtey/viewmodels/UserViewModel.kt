@@ -73,9 +73,13 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     fun sendMessage(conversationId: String, senderId: String, text: String) =
         UserRepository.sendMessage(conversationId, senderId, text)
 
-    fun blockUser(currentId: String, targetId: String) =
-        UserRepository.blockUser(currentId, targetId)
+    fun blockUser(currentId: String, targetId: String): MutableLiveData<String> {
+        val t = currentUser.value!!
+        t.blockList.add(targetId)
+        currentUser.value = t
+        return UserRepository.blockUser(currentId, targetId)
+    }
 
-    fun reportUser(current: User, target: User, reason: String) =
+    fun reportUser(current: String, target: String, reason: String) =
         UserRepository.reportUser(current, target, reason)
 }
