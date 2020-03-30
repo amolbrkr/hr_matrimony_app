@@ -1,9 +1,11 @@
 package com.halalrishtey
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,11 +21,23 @@ class ChatActivity : AppCompatActivity() {
 
     private val userVM: UserViewModel by viewModels()
     private var conversationId: String? = null
+    private var currentUserId: String? = null
+    private var targetUserId: String? = null
 
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: MessageAdapter
     private lateinit var messages: ArrayList<MessageItem>
     private var lastScrollPos: Int = 0
+
+    fun blockUser(ctx: Context, currentId: String, targetId: String) {
+        userVM.blockUser(currentId, targetId).observe(this, Observer {
+            if (it.contains("Successfully")) {
+                this.finish()
+            } else {
+                Toast.makeText(ctx, "Error: $it", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +48,14 @@ class ChatActivity : AppCompatActivity() {
 
         //Get required data from intent
         conversationId = intent.extras?.getString("conversationId")
-        val senderId = intent.extras?.getString("senderId")
+        currentUserId = intent.extras?.getString("currentId")
+        targetUserId = intent.extras?.getString("targetId")
         val title = intent.extras?.getString("targetName")
         val targetPhotoUrl = intent.extras?.getString("targetPhotoUrl")
 
         //Setup RV
         messages = ArrayList()
-        adapter = MessageAdapter(senderId!!, messages)
+        adapter = MessageAdapter(currentUserId!!, messages)
         linearLayoutManager = LinearLayoutManager(this)
         messageRV.layoutManager = linearLayoutManager
         messageRV.adapter = adapter
@@ -56,9 +71,9 @@ class ChatActivity : AppCompatActivity() {
             var msg = chatTextInp.editText?.text.toString()
             msg = msg.trim()
 
-            if (msg.length > 1 && conversationId != null && senderId != null) {
+            if (msg.length > 1 && conversationId != null && currentUserId != null) {
                 Log.d("ChatActivity", "Message sent: $msg")
-                userVM.sendMessage(conversationId!!, senderId, msg)
+                userVM.sendMessage(conversationId!!, currentUserId!!, msg)
 
                 chatTextInp.editText?.setText("")
             }
@@ -78,13 +93,18 @@ class ChatActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.option_report -> {
-                Log.d("ChatActivity", "Report clicked")
-                ReportDialog().show(this.supportFragmentManager, "ReportDialog")
+                ReportDialog(
+                    currentUserId!!,
+                    targetUserId!!
+                ).show(this.supportFragmentManager, "ReportDialog")
                 true
             }
 
             R.id.option_block -> {
-                BlockDialog().show(this.supportFragmentManager, "BlockDialog")
+                BlockDialog(
+                    currentUserId!!,
+                    targetUserId!!
+                ).show(this.supportFragmentManager, "BlockDialog")
                 true
             }
 
@@ -102,12 +122,12 @@ class ChatActivity : AppCompatActivity() {
                 val temp = it["messages"] as ArrayList<Map<String, Any>>
 
                 messages.clear()
-                for (item in temp) {
+                temp.map { t ->
                     messages.add(
                         MessageItem(
-                            item["senderId"].toString(),
-                            item["content"].toString(),
-                            item["timestamp"].toString().toLong()
+                            t["senderId"].toString(),
+                            t["content"].toString(),
+                            t["timestamp"].toString().toLong()
                         )
                     )
                 }
