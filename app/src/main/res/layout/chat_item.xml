@@ -44,14 +44,34 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/chatItemSubtitleText"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="Chat subtitle"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/chatItemSubtitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight=".65"
+                android:text="Chat subtitle"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="16sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/chatUnreadBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginHorizontal="4dp"
+                android:background="@drawable/unread_badge_bg"
+                android:padding="4dp"
+                android:text="Unread"
+                android:textAlignment="viewEnd"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
