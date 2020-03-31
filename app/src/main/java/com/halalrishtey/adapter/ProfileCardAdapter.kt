@@ -67,6 +67,8 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
                     .into(view.cardAvatarImageView)
             }
 
+            if (card.data.isIdProofVerified) view.profileVerifiedBadge.visibility = View.VISIBLE
+
             view.cardTitleTextView.text = card.data.displayName
             view.cardSubtitleTextView.text = "${card.data.age} - ${card.data.height}"
 
