@@ -2,6 +2,7 @@ package com.halalrishtey.models
 
 data class ChatListItem(
     val conversationId: String,
+    val readStatus: Boolean,
     val currentId: String,
     val targetId: String,//Put currentUserId in this
     val displayName: String,

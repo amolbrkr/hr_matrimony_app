@@ -32,6 +32,9 @@ class ChatListAdapter(
         holder.itemView.chatTimeText.text =
             CustomUtils.genTimeString(chatList[position].lastMsgTime)
 
+        if (chatList[position].readStatus) holder.itemView.chatUnreadBadge.visibility = View.GONE
+        else holder.itemView.chatUnreadBadge.visibility = View.VISIBLE
+
         if (chatList[position].photoUrl.length > 5)
             Picasso.get().load(chatList[position].photoUrl)
                 .into(holder.itemView.chatProfileImg)

@@ -45,8 +45,8 @@ class ChatListFragment : Fragment() {
         return v
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
 
         userVM.currentUser.observe(viewLifecycleOwner, Observer { cUser ->
             if (cUser.conversations.size == 0) {
@@ -58,8 +58,10 @@ class ChatListFragment : Fragment() {
                     .observe(viewLifecycleOwner, Observer {
                         chatlistText.visibility = View.GONE
                         chatListProgress.visibility = View.GONE
+
                         chatList.clear()
                         it.forEach { map ->
+                            val rs = map["readStatus"] as Map<*, *>
                             val name =
                                 if (map["p1"] == cUser.uid) map["p2Name"].toString() else map["p1Name"].toString()
                             val photoUrl =
@@ -70,6 +72,7 @@ class ChatListFragment : Fragment() {
                             chatList.add(
                                 ChatListItem(
                                     map["id"].toString(),
+                                    rs[cUser.uid!!].toString().toBoolean(),
                                     cUser.uid!!,
                                     targetId,
                                     name,
