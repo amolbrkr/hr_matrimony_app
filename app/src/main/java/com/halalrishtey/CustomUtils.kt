@@ -127,6 +127,7 @@ object CustomUtils {
             countryCode = doc.get("countryCode").toString(),
             pincode = doc.get("pincode")?.toString() ?: "Not found",
             isOTPVerified = doc.get("otpverified") as Boolean,
+            isIdProofVerified = doc.get("idProofVerified").toString().toBoolean(),
             countryCallingCode = doc.get("countryCallingCode").toString(),
             interestedProfiles = doc.get("interestedProfiles") as ArrayList<String>,
             conversations = doc.get("conversations") as ArrayList<String>,
