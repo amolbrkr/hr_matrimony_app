@@ -21,6 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <service
             android:name=".FCMService"
             android:enabled="true"
@@ -31,6 +32,9 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".UserDetailActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ChatActivity"
             android:parentActivityName=".MainActivity" />
