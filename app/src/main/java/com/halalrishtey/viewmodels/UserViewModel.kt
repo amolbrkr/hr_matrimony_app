@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.halalrishtey.CustomUtils
 import com.halalrishtey.models.User
 import com.halalrishtey.services.UserRepository
 
@@ -61,8 +62,12 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         return UserRepository.removeInterest(currentUserId, targetUserId)
     }
 
-    fun initConversation(currentUser: User, targetUser: User) =
-        UserRepository.initConversation(currentUser, targetUser)
+    fun initConversation(current: User, target: User): MutableLiveData<String> {
+        val t = currentUser.value!!
+        t.conversations.add(CustomUtils.genCombinedHash(current.uid!!, target.uid!!))
+        currentUser.value = t
+        return UserRepository.initConversation(current, target)
+    }
 
     fun getConversationsByIds(listOfIds: ArrayList<String>) =
         UserRepository.getConversationsByIds(listOfIds)
