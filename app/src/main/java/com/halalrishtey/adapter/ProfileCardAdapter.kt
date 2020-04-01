@@ -1,12 +1,13 @@
 package com.halalrishtey.adapter
 
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.halalrishtey.R
+import com.halalrishtey.UserDetailActivity
 import com.halalrishtey.models.ProfileCardData
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_card.view.*
@@ -38,11 +39,8 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
         }
 
         override fun onClick(p0: View?) {
-            Toast.makeText(
-                p0?.context,
-                "${p0?.cardTitleTextView?.text}'s profile was clicked",
-                Toast.LENGTH_SHORT
-            ).show()
+            val i = Intent(p0?.context, UserDetailActivity::class.java)
+            p0?.context?.startActivity(i)
         }
 
 
