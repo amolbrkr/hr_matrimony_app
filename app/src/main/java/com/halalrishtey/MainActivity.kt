@@ -69,6 +69,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.option_profile -> {
+                CustomUtils.openUserDetails(this, userVM.currentUser.value!!)
+                return true
+            }
+
             R.id.option_signout -> {
                 userAuthVM.signOut()
 
