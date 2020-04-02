@@ -186,6 +186,8 @@ class PersonalDetailsFragment : Fragment() {
                     }
                 )
 
+                userAuthVM.newUser.value?.education = eduSpinner.selectedItem.toString()
+
                 findNavController().navigate(
                     R.id.action_personalDetailsFragment_to_professionalDetails
                 )
