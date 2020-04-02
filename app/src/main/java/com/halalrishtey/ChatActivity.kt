@@ -91,6 +91,11 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+
             R.id.option_report -> {
                 ReportDialog(
                     currentUserId!!,
