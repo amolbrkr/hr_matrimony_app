@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0fbff"
+    android:background="#E2F6F3"
     tools:context=".ChatActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
