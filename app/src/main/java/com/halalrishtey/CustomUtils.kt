@@ -24,6 +24,12 @@ import java.util.*
 
 object CustomUtils {
 
+    fun openUserDetails(context: Context, userData: User) {
+        val i = Intent(context, UserDetailActivity::class.java)
+        i.putExtra("userData", userData)
+        context.startActivity(i)
+    }
+
     fun filterValidProfiles(currentUser: User, profiles: ArrayList<User>): List<User> {
         val r = profiles.filter { u -> u.gender != currentUser.gender }
             .filter { u -> u.uid != currentUser.uid }
@@ -108,6 +114,7 @@ object CustomUtils {
             uid = doc.get("uid").toString(),
             displayName = doc.get("displayName").toString(),
             age = doc.get("age").toString().toInt(),
+            annualIncome = doc.get("annualIncome") as Number,
             photoUrl = doc.get("photoUrl").toString(),
             idProofUrl = doc.get("idProofUrl").toString(),
             phoneNumber = doc.get("phoneNumber") as Number,
