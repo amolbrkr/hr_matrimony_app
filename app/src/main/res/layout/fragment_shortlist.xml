@@ -29,8 +29,8 @@
 
     <ImageView
         android:id="@+id/shortlistBgImageView"
-        android:layout_width="128dp"
-        android:layout_height="121dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:contentDescription="Star image"
         android:src="@drawable/star"
         app:layout_constraintBottom_toTopOf="@id/shortlistHelperText"

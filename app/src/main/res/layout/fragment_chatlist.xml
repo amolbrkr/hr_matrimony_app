@@ -19,7 +19,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/chatlistText"
-        android:layout_width="160dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="If you message someone, they will show up here!"
         android:textAlignment="center"
