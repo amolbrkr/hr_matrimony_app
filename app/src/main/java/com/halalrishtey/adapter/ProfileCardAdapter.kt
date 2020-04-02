@@ -40,9 +40,9 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
 
         override fun onClick(p0: View?) {
             val i = Intent(p0?.context, UserDetailActivity::class.java)
+            i.putExtra("userData", cardData?.data)
             p0?.context?.startActivity(i)
         }
-
 
         companion object {
             private val KEY = "CARD"
