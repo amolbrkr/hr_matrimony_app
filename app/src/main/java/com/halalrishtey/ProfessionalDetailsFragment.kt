@@ -93,24 +93,24 @@ class ProfessionalDetailsFragment : Fragment() {
                     "Error: ${validateProfessionalDetails()}",
                     Snackbar.LENGTH_SHORT
                 ).show()
-
                 pdRegisterButton.isEnabled = true
             } else {
-                userAuthVM.newUser.value?.workLocation = workLocTextInp.editText?.text.toString()
-                userAuthVM.newUser.value?.organizationName =
-                    orgNameTextInp.editText?.text.toString()
-                userAuthVM.newUser.value?.annualIncome =
-                    Integer.valueOf(incomeTextInp.editText?.text.toString())
-                userAuthVM.newUser.value?.maritalStatus =
-                    maritalStatusSpinner.selectedItem.toString()
-                userAuthVM.newUser.value?.sect = sectSpinner.selectedItem.toString()
-                userAuthVM.newUser.value?.dargah = dargahSpinner.selectedItem.toString()
+                userAuthVM.newUser.value?.apply {
+                    workLocation =
+                        workLocTextInp.editText?.text.toString()
+                    organizationName =
+                        orgNameTextInp.editText?.text.toString()
+                    annualIncome =
+                        Integer.valueOf(incomeTextInp.editText?.text.toString())
+                    maritalStatus =
+                        maritalStatusSpinner.selectedItem.toString()
+                    sect = sectSpinner.selectedItem.toString()
+                    dargah = dargahSpinner.selectedItem.toString()
 
-                val email = userAuthVM.newUser.value!!.email
-                val pw = userAuthVM.pwd.value!!
-
-                Log.d("Auth", "Trying to create user for: $email & $pw")
-
+                    val email = email
+                    val pw = userAuthVM.pwd.value!!
+                    Log.d("ProfessionalDetails", "Trying to create user for: $email & $pw")
+                }
                 findNavController().navigate(R.id.action_professionalDetails_to_OTPVerificationFragment)
             }
         }

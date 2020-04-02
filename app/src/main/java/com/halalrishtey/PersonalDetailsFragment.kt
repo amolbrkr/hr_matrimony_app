@@ -171,22 +171,23 @@ class PersonalDetailsFragment : Fragment() {
 
         pdNextButton.setOnClickListener {
             if (validatePersonalDetails() == null) {
+                userAuthVM.newUser.value?.apply {
+                    displayName =
+                        nameTextInp.editText?.text.toString()
 
-                userAuthVM.newUser.value?.displayName =
-                    nameTextInp.editText?.text.toString()
+                    createdFor = createdForSpinner.selectedItem.toString()
+                    height = heightSpinner.selectedItem.toString()
 
-                userAuthVM.newUser.value?.createdFor = createdForSpinner.selectedItem.toString()
-                userAuthVM.newUser.value?.height = heightSpinner.selectedItem.toString()
+                    gender = Gender.valueOf(
+                        if (maleSelector.isChecked) {
+                            "Male"
+                        } else {
+                            "Female"
+                        }
+                    )
 
-                userAuthVM.newUser.value?.gender = Gender.valueOf(
-                    if (maleSelector.isChecked) {
-                        "Male"
-                    } else {
-                        "Female"
-                    }
-                )
-
-                userAuthVM.newUser.value?.education = eduSpinner.selectedItem.toString()
+                    education = eduSpinner.selectedItem.toString()
+                }
 
                 findNavController().navigate(
                     R.id.action_personalDetailsFragment_to_professionalDetails
@@ -219,7 +220,7 @@ class PersonalDetailsFragment : Fragment() {
                 "Please enter your date of birth"
             }
             userAge < 18 -> {
-                "User must be atleast 18 years old"
+                "User must be at least 18 years old"
             }
             else -> null
         }

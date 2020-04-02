@@ -27,26 +27,28 @@ class ChatListAdapter(
     }
 
     override fun onBindViewHolder(holder: ChatListVH, position: Int) {
-        holder.itemView.chatItemTitleText.text = chatList[position].displayName
-        holder.itemView.chatItemSubtitleText.text = chatList[position].lastMsg
-        holder.itemView.chatTimeText.text =
-            CustomUtils.genTimeString(chatList[position].lastMsgTime)
+        holder.itemView.apply {
+            chatItemTitleText.text = chatList[position].displayName
+            chatItemSubtitleText.text = chatList[position].lastMsg
+            chatTimeText.text = CustomUtils.genTimeString(chatList[position].lastMsgTime)
 
-        if (chatList[position].readStatus) holder.itemView.chatUnreadBadge.visibility = View.GONE
-        else holder.itemView.chatUnreadBadge.visibility = View.VISIBLE
+            if (chatList[position].readStatus) chatUnreadBadge.visibility = View.GONE
+            else chatUnreadBadge.visibility = View.VISIBLE
 
-        if (chatList[position].photoUrl.length > 5)
-            Picasso.get().load(chatList[position].photoUrl)
-                .into(holder.itemView.chatProfileImg)
+            if (chatList[position].photoUrl.length > 5)
+                Picasso.get().load(chatList[position].photoUrl).into(chatProfileImg)
 
-        holder.itemView.setOnClickListener { v ->
-            val i = Intent(context, ChatActivity::class.java)
-            i.putExtra("conversationId", chatList[position].conversationId)
-            i.putExtra("currentId", chatList[position].currentId)
-            i.putExtra("targetId", chatList[position].targetId)
-            i.putExtra("targetPhotoUrl", chatList[position].photoUrl)
-            i.putExtra("targetName", chatList[position].displayName)
-            v.context.startActivity(i)
+            setOnClickListener { v ->
+                val i = Intent(context, ChatActivity::class.java)
+                i.apply {
+                    putExtra("conversationId", chatList[position].conversationId)
+                    putExtra("currentId", chatList[position].currentId)
+                    putExtra("targetId", chatList[position].targetId)
+                    putExtra("targetName", chatList[position].displayName)
+                    putExtra("targetPhotoUrl", chatList[position].photoUrl)
+                    v.context.startActivity(this)
+                }
+            }
         }
     }
 
