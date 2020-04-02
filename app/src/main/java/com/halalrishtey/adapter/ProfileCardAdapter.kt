@@ -1,13 +1,12 @@
 package com.halalrishtey.adapter
 
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.halalrishtey.CustomUtils
 import com.halalrishtey.R
-import com.halalrishtey.UserDetailActivity
 import com.halalrishtey.models.ProfileCardData
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_card.view.*
@@ -39,9 +38,8 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
         }
 
         override fun onClick(p0: View?) {
-            val i = Intent(p0?.context, UserDetailActivity::class.java)
-            i.putExtra("userData", cardData?.data)
-            p0?.context?.startActivity(i)
+            if (p0 != null && cardData != null)
+                CustomUtils.openUserDetails(p0.context, cardData!!.data)
         }
 
         companion object {
