@@ -7,15 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".UserDetailActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <include
         android:id="@+id/userDetailToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/white"
-        android:elevation="2dp"
-        android:gravity="end"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/primaryColor" />
+        layout="@layout/main_toolbar" />
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,17 +22,36 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/userMainImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:contentDescription="Main profile image"
-                android:foregroundGravity="center"
-                android:maxHeight="450dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ph_gray"
-                app:layout_constraintTop_toBottomOf="@id/userDetailToolbar" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/userMainImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Main profile image"
+                    android:foregroundGravity="center"
+                    android:maxHeight="450dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ph_gray" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/editProfileFAB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:backgroundTint="@color/primaryColor"
+                    android:contentDescription="Edit Profile Button"
+                    android:src="@drawable/ic_edit"
+                    android:foregroundTint="#FFF"
+                    app:fabSize="mini"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/userIntroLayout"
@@ -110,8 +124,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:textColor="#333"
-                    android:text="This user has not written anything about them." />
+                    android:text="This user has not written anything about them."
+                    android:textColor="#333" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -130,16 +144,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight=".50"
-                        android:textColor="#333"
-                        android:text="This is some random text, lets see what happens" />
+                        android:text="This is some random text, lets see what happens"
+                        android:textColor="#333" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/detail2Text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight=".50"
-                        android:textColor="#333"
-                        android:text="This is some random text, lets see what happens" />
+                        android:text="This is some random text, lets see what happens"
+                        android:textColor="#333" />
 
                 </LinearLayout>
             </LinearLayout>
