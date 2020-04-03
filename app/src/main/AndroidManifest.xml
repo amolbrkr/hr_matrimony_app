@@ -32,6 +32,11 @@
             </intent-filter>
         </service>
 
+        <!-- TODO: Change parent activity to property parent -->
+        <activity
+            android:name=".EditProfileActivity"
+            android:parentActivityName=".MainActivity" />
+
         <activity
             android:name=".UserDetailActivity"
             android:parentActivityName=".MainActivity" />
