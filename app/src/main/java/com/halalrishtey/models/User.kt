@@ -11,6 +11,12 @@ enum class Gender {
     Female
 }
 
+enum class ProfilePicVisibility {
+    OnlyMe,
+    Public,
+    Interests
+}
+
 @Parcelize
 data class User(
     val email: String,      //done //Must be first
@@ -44,7 +50,15 @@ data class User(
     var interestedProfiles: ArrayList<String> = ArrayList(),
     var registrationToken: String = "",
     var conversations: ArrayList<String> = ArrayList(),
-    var blockList: ArrayList<String> = ArrayList()
+    var blockList: ArrayList<String> = ArrayList(),
+    var bio: String = "",
+    var numberOfSiblings: String = "",
+    var fathersName: String = "",
+    var mothersName: String = "",
+    var fathersJob: String = "",
+    var mothersJob: String = "",
+    var hobbies: String = "",
+    var profilePicVisibility: ProfilePicVisibility = ProfilePicVisibility.Public
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)
