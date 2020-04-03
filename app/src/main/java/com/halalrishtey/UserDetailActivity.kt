@@ -3,23 +3,30 @@ package com.halalrishtey
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.halalrishtey.models.User
+import com.halalrishtey.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_user_detail.*
 
 class UserDetailActivity : AppCompatActivity() {
+    private val userVM by viewModels<UserViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_detail)
-        setSupportActionBar(userDetailToolbar)
+        setSupportActionBar(userDetailToolbar as Toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val user = intent?.extras?.get("userData") as User
         Log.d("UserDetail", "Received user data of ${user.displayName} from MainActivity.")
+
+        if (userVM.currentUid.value == user.uid)
+            editProfileFAB.visibility = View.VISIBLE
 
         if (user.photoUrl.length > 10) {
             Picasso.get().load(user.photoUrl).into(userMainImage)
