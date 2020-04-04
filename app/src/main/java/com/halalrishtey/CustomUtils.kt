@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.firestore.DocumentSnapshot
 import com.halalrishtey.models.Gender
+import com.halalrishtey.models.ProfilePicVisibility
 import com.halalrishtey.models.User
 import java.text.SimpleDateFormat
 import java.util.*
@@ -138,7 +139,12 @@ object CustomUtils {
             countryCallingCode = doc.get("countryCallingCode").toString(),
             interestedProfiles = doc.get("interestedProfiles") as ArrayList<String>,
             conversations = doc.get("conversations") as ArrayList<String>,
-            blockList = doc.get("blockList") as ArrayList<String>
+            blockList = doc.get("blockList") as ArrayList<String>,
+            organizationName = doc.get("organizationName").toString(),
+            profilePicVisibility = ProfilePicVisibility.valueOf(
+                doc.get("profilePicVisibility").toString()
+            ),
+            numberOfSiblings = doc.get("numberOfSiblings").toString()
         )
     }
 
