@@ -20,13 +20,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
         if (uid != null) {
             currentUid.value = uid
-            Log.d("UserViewModel", "currentUid set to: ${currentUid.value}")
-            currentUser = observeUser(uid).also {
-                Log.d(
-                    "UserViewModel",
-                    "Current user set to: ${it.value?.displayName}"
-                )
-            }
+            currentUser = observeUser(uid)
         }
     }
 
