@@ -35,7 +35,7 @@
         <!-- TODO: Change parent activity to property parent -->
         <activity
             android:name=".EditProfileActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".UserDetailActivity" />
 
         <activity
             android:name=".UserDetailActivity"
