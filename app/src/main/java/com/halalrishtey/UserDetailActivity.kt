@@ -1,5 +1,6 @@
 package com.halalrishtey
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -27,6 +28,13 @@ class UserDetailActivity : AppCompatActivity() {
 
         if (userVM.currentUid.value == user.uid)
             editProfileFAB.visibility = View.VISIBLE
+        else editProfileFAB.visibility = View.GONE
+
+
+        editProfileFAB.setOnClickListener {
+            val i = Intent(this, EditProfileActivity::class.java)
+            startActivity(i)
+        }
 
         if (user.photoUrl.length > 10) {
             Picasso.get().load(user.photoUrl).into(userMainImage)
