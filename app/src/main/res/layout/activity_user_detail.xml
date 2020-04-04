@@ -11,6 +11,15 @@
         android:id="@+id/userDetailToolbar"
         layout="@layout/main_toolbar" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_share"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="#FFF" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,9 +52,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:padding="8dp"
-                    android:backgroundTint="@color/secondaryColor"
                     android:contentDescription="Edit Profile Button"
+                    android:padding="8dp"
                     android:src="@drawable/ic_edit"
                     app:fabSize="mini"
                     app:layout_constraintRight_toRightOf="parent"
