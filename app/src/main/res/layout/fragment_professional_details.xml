@@ -34,7 +34,7 @@
         android:layout_margin="8dp"
         android:hint="Organization Name"
         app:layout_constraintTop_toBottomOf="@id/workLocTextInp"
-        app:startIconDrawable="@drawable/ic_work">
+        app:startIconDrawable="@drawable/ic_account_balance">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
