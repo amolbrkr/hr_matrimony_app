@@ -33,8 +33,8 @@
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/chatListProgress"
         style="@style/Widget.MaterialProgressBar.ProgressBar.Small"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:indeterminate="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
