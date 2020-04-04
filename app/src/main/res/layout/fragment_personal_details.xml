@@ -8,7 +8,6 @@
     android:padding="16dp"
     tools:context=".PersonalDetailsFragment">
 
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/pdTitleText"
         android:layout_width="match_parent"
