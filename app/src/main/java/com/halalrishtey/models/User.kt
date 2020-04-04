@@ -53,11 +53,10 @@ data class User(
     var blockList: ArrayList<String> = ArrayList(),
     var bio: String = "",
     var numberOfSiblings: String = "",
-    var fathersName: String = "",
-    var mothersName: String = "",
+//    var fathersName: String = "",
+//    var mothersName: String = "",
     var fathersJob: String = "",
     var mothersJob: String = "",
-    var hobbies: String = "",
     var profilePicVisibility: ProfilePicVisibility = ProfilePicVisibility.Public
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
