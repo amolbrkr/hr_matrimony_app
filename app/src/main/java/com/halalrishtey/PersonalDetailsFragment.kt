@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.halalrishtey.adapter.SpinnerAdapters
 import com.halalrishtey.models.Gender
 import com.halalrishtey.viewmodels.SharedViewModel
 import com.halalrishtey.viewmodels.UserAuthViewModel
@@ -38,6 +38,8 @@ class PersonalDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val adapters = SpinnerAdapters(requireContext())
+
         sharedVM.bundleFromUploadImageFragment.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { bundle ->
@@ -49,88 +51,13 @@ class PersonalDetailsFragment : Fragment() {
                 }
             })
 
-        eduSpinner.adapter = ArrayAdapter<String>(
-            requireContext(),
-            R.layout.dropdown_menu_popup_item,
-            arrayOf(
-                "Highest Education",
-                "Doctor",
-                "Engineer",
-                "Professional Degree",
-                "Islamic Degree",
-                "Post Graduate",
-                "Graduate",
-                "Under Graduate",
-                "Intermediate",
-                "Pre School/SSC"
-            )
-        )
+        eduSpinner.adapter = adapters.highestEducationAdapter
         eduSpinner.setSelection(0)
 
-        createdForSpinner.adapter =
-            ArrayAdapter(
-                requireContext(),
-                R.layout.dropdown_menu_popup_item,
-                arrayOf(
-                    "Creating account for",
-                    "Myself",
-                    "Relative",
-                    "Son",
-                    "Daughter",
-                    "Brother",
-                    "Sister"
-                )
-            )
+        createdForSpinner.adapter = adapters.createdForAdapter
         createdForSpinner.setSelection(0)
 
-        heightSpinner.adapter = ArrayAdapter<String>(
-            requireContext(),
-            R.layout.dropdown_menu_popup_item,
-            arrayOf(
-                "Height",
-                "7 ft 4 in",
-                "7 ft 3 in",
-                "7 ft 2 in",
-                "7 ft 1 in",
-                "7 ft 0 in",
-                "6 ft 11 in",
-                "6 ft 10 in",
-                "6 ft 9 in",
-                "6 ft 8 in",
-                "6 ft 7 in",
-                "6 ft 6 in",
-                "6 ft 5 in",
-                "6 ft 4 in",
-                "6 ft 3 in",
-                "6 ft 2 in",
-                "6 ft 1 in",
-                "6 ft 0 in",
-                "5 ft 11 in",
-                "5 ft 10 in",
-                "5 ft 9 in",
-                "5 ft 8 in",
-                "5 ft 7 in",
-                "5 ft 6 in",
-                "5 ft 5 in",
-                "5 ft 4 in",
-                "5 ft 3 in",
-                "5 ft 2 in",
-                "5 ft 1 in",
-                "5 ft 0 in",
-                "4 ft 11 in",
-                "4 ft 10 in",
-                "4 ft 9 in",
-                "4 ft 8 in",
-                "4 ft 7 in",
-                "4 ft 6 in",
-                "4 ft 5 in",
-                "4 ft 4 in",
-                "4 ft 3 in",
-                "4 ft 2 in",
-                "4 ft 1 in",
-                "4 ft 0 in"
-            )
-        )
+        heightSpinner.adapter = adapters.heightAdapter
         heightSpinner.setSelection(0)
 
         val cal: Calendar = Calendar.getInstance()

@@ -5,12 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.halalrishtey.adapter.SpinnerAdapters
 import com.halalrishtey.viewmodels.SharedViewModel
 import com.halalrishtey.viewmodels.UserAuthViewModel
 import kotlinx.android.synthetic.main.fragment_professional_details.*
@@ -34,6 +34,7 @@ class ProfessionalDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val adapters = SpinnerAdapters(requireContext())
         sharedVM.bundleFromUploadImageFragment.observe(viewLifecycleOwner, Observer { bundle ->
             val uploadedImgUrl = bundle.getString("uploadedImageUrl", "Not Uploaded")
             if (uploadedImgUrl != "Not Uploaded" && sharedVM.uploadImageRequester.value == "ProfessionalDetailsFragment") {
@@ -41,42 +42,13 @@ class ProfessionalDetailsFragment : Fragment() {
             }
         })
 
-        maritalStatusSpinner.adapter = ArrayAdapter<String>(
-            requireContext(),
-            R.layout.dropdown_menu_popup_item,
-            arrayOf(
-                "Marital Status",
-                "Never Married",
-                "Divorced",
-                "Widowed",
-                "Annulled"
-            )
-        )
+        maritalStatusSpinner.adapter = adapters.maritalStatusAdapter
         maritalStatusSpinner.setSelection(0)
 
-        sectSpinner.adapter = ArrayAdapter<String>(
-            requireContext(),
-            R.layout.dropdown_menu_popup_item,
-            arrayOf(
-                "Maslak/Sect",
-                "Hanafi",
-                "Maliki",
-                "Shafa'i",
-                "Hanbali"
-            )
-        )
+        sectSpinner.adapter = adapters.sectAdapter
         sectSpinner.setSelection(0)
 
-        dargahSpinner.adapter = ArrayAdapter<String>(
-            requireContext(),
-            R.layout.dropdown_menu_popup_item,
-            arrayOf(
-                "Dargah/Fateha",
-                "Yes",
-                "No",
-                "Neutral"
-            )
-        )
+        dargahSpinner.adapter = adapters.dargahAdapter
         dargahSpinner.setSelection(0)
 
         uploadAdhar_Button.setOnClickListener {
