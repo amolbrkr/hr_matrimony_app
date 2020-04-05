@@ -9,8 +9,6 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
         findNavController(R.id.auth_nav_host_fragment)
-
-
     }
 }
 

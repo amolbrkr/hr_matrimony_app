@@ -109,7 +109,7 @@ object CustomUtils {
     }
 
     fun convertToUser(doc: DocumentSnapshot): User {
-        Log.d("CustomUtils", "Converting user: ${doc}")
+
         return User(
             email = doc.get("email").toString(),
             uid = doc.get("uid").toString(),
