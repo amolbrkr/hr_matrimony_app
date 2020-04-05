@@ -10,6 +10,16 @@
         android:id="@+id/editToolbar"
         layout="@layout/main_toolbar" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/epSaveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Save Changes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,11 +44,11 @@
                     android:src="@drawable/ph_gray" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/epProfilePicFAB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:backgroundTint="@color/secondaryColor"
                     android:contentDescription="Change or upload profile picture"
                     android:src="@drawable/ic_edit"
                     app:fabSize="mini"
@@ -58,7 +68,7 @@
                 android:id="@+id/epSubText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Female, 23 Years, 7000219968"
+                android:text="personal info"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="14sp" />
 
@@ -66,7 +76,7 @@
                 android:id="@+id/epUidText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hys91vggjhfIVCgf6K3v5XCF8xC2"
+                android:text="uid"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="12sp" />
 
@@ -90,8 +100,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Profile picture visiblilty" />
+                android:layout_marginHorizontal="16dp"
+                android:text="Profile picture visiblilty"
+                android:textSize="14sp" />
 
             <RadioGroup
                 android:id="@+id/profileVisRadios"
