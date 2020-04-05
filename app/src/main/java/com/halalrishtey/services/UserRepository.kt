@@ -389,6 +389,35 @@ object UserRepository {
         return listOfUsers
     }
 
+    fun updateUserData(uid: String, newUserData: User): MutableLiveData<String> {
+        val res = MutableLiveData<String>(null)
+        DatabaseService.getDbInstance()
+            .collection("users")
+            .document(uid)
+            .set(newUserData)
+            .addOnCompleteListener {
+                if (it.isSuccessful)
+                    res.value = "Successfully updated profile data!"
+                else
+                    res.value = "Error: ${it.exception?.message}"
+            }
+        return res
+    }
+
+    fun updateUserData(uid: String, newData: Map<String, Any>): MutableLiveData<String> {
+        val res = MutableLiveData<String>()
+        DatabaseService.getDbInstance()
+            .collection("users")
+            .document(uid)
+            .update(newData)
+            .addOnCompleteListener {
+                if (it.isSuccessful)
+                    res.value = "Successfully updated profile data!"
+                else res.value = "Error: ${it.exception?.message}"
+            }
+        return res
+    }
+
     fun blockUser(currentUserId: String, targetUserId: String): MutableLiveData<String> {
         val res = MutableLiveData<String>()
         val cur = DatabaseService.getDbInstance()

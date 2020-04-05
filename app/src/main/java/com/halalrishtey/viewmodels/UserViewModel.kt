@@ -75,6 +75,14 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     fun sendMessage(conversationId: String, senderId: String, recieverId: String, text: String) =
         UserRepository.sendMessage(conversationId, senderId, recieverId, text)
 
+    fun updateUserData(userId: String, newUserData: User): MutableLiveData<String> {
+        currentUser.value = newUserData
+        return UserRepository.updateUserData(userId, newUserData)
+    }
+
+    fun updateUserData(userId: String, newData: Map<String, Any>) =
+        UserRepository.updateUserData(userId, newData)
+
     fun blockUser(currentId: String, targetId: String): MutableLiveData<String> {
         val t = currentUser.value!!
         t.blockList.add(targetId)
