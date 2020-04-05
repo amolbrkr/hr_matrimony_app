@@ -1,7 +1,6 @@
 package com.halalrishtey
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,12 +8,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import com.halalrishtey.adapter.SpinnerAdapters
 import com.halalrishtey.models.ProfilePicVisibility
+import com.halalrishtey.models.User
 import com.halalrishtey.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
 class EditProfileActivity : AppCompatActivity() {
     private val userVM by viewModels<UserViewModel>()
+    private lateinit var userData: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +29,46 @@ class EditProfileActivity : AppCompatActivity() {
         epProfilePicFAB.setOnClickListener {
             Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show()
         }
+
+        epSaveBtn.setOnClickListener {
+            if (validateData() == null) {
+                val temp = userVM.currentUser.value
+
+                userData.apply {
+                    bio = epBioTextInp.editText?.text.toString()
+                    profilePicVisibility = when {
+                        publicSelector.isChecked -> ProfilePicVisibility.Public
+                        interestSelector.isChecked -> ProfilePicVisibility.Interests
+                        else -> ProfilePicVisibility.OnlyMe
+                    }
+                    height = epHeightSpinner.selectedItem.toString()
+                    maritalStatus = epMaritalStatusSpinner.selectedItem.toString()
+                    education = epEduSpinner.selectedItem.toString()
+                    workLocation = epWorkLocText.editText?.text.toString()
+                    organizationName = epOrgNameText.editText?.text.toString()
+                    annualIncome = epIncomeText.editText?.text.toString().toLong()
+                    numberOfSiblings = epSiblingText.editText?.text.toString()
+                    fathersJob = fOccText.editText?.text.toString()
+                    mothersJob = mOccText.editText?.text.toString()
+                    sect = epSectSpinner.selectedItem.toString()
+                    dargah = epDargahSpinner.selectedItem.toString()
+                }
+
+                userVM.updateUserData(temp?.uid!!, temp).observe(this, Observer { res ->
+                    Toast.makeText(this, res, Toast.LENGTH_SHORT).show()
+                    finish()
+                })
+            }
+        }
     }
 
     override fun onStart() {
         super.onStart()
         val adapters = SpinnerAdapters(this)
 
-        Log.d("EditProfile", "Current user: ${userVM.currentUser.value}")
         userVM.currentUser.observe(this, Observer {
+            userData = it
+
             if (it.photoUrl.length > 10) Picasso.get().load(it.photoUrl).into(avatarImage)
 
             epNameText.text = it.displayName
@@ -71,5 +104,9 @@ class EditProfileActivity : AppCompatActivity() {
             epDargahSpinner.adapter = adapters.dargahAdapter
             epDargahSpinner.setSelection(adapters.dargahAdapter.getPosition(it.dargah))
         })
+    }
+
+    private fun validateData(): String? {
+        return null
     }
 }
