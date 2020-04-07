@@ -1,5 +1,6 @@
 package com.halalrishtey
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -53,6 +54,7 @@ object CustomUtils {
         return a[0].substring(0, h) + a[1].substring(0, h)
     }
 
+    @SuppressLint("WrongConstant")
     fun displayLocalNotif(
         context: Context,
         notifId: Int,
@@ -75,7 +77,7 @@ object CustomUtils {
             val channel = NotificationChannel(
                 channelId,
                 channelName,
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_MAX
             )
 
             channel.lightColor = Color.WHITE
@@ -94,12 +96,13 @@ object CustomUtils {
         }
 
         val builder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_favorite)
+            .setColor(Color.RED)
             .setContentTitle(notifTitle)
             .setContentText(notifText)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-            .setVibrate(longArrayOf(1000, 1000))
+            .setVibrate(longArrayOf(500, 700))
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
