@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="8dp"
     tools:context=".HomeFragment">
 
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
@@ -18,11 +19,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:mpb_progressStyle="circular" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/homeSearchInp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:endIconCheckable="true"
+        app:endIconContentDescription="Filter your search"
+        app:endIconDrawable="@drawable/ic_filter_list"
+        app:endIconMode="custom"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:startIconCheckable="false"
+        app:startIconDrawable="@drawable/ic_search">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Search"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/profileRV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/homeSearchInp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
