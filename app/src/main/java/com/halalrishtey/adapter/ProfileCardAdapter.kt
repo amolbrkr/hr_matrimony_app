@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.halalrishtey.CustomUtils
 import com.halalrishtey.R
 import com.halalrishtey.models.ProfileCardData
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_card.view.*
 
@@ -57,6 +58,8 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
 
             if (card.data.photoUrl.length > 5) {
                 Picasso.get().load(card.data.photoUrl)
+                    .resize(450, 450)
+                    .centerCrop()
                     .into(view.cardImageView)
 
                 Picasso.get().load(card.data.photoUrl)
