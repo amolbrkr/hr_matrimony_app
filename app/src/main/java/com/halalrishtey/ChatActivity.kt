@@ -120,10 +120,8 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
         if (conversationId != null) {
             userVM.updateReadStatus(conversationId!!, currentUserId!!)
-
             userVM.observeConversation(conversationId!!).observe(this, Observer {
                 val temp = it["messages"] as ArrayList<Map<String, Any>>
 
@@ -138,6 +136,7 @@ class ChatActivity : AppCompatActivity() {
                     )
                 }
                 adapter.notifyDataSetChanged()
+                messageRV.scrollToPosition(messages.size - 1)
             })
         }
     }
