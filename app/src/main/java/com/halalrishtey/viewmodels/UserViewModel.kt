@@ -44,7 +44,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         targetUserId: String
     ): MutableLiveData<String> {
         val t = currentUser.value!!
-        t.interestedProfiles.add(targetUserId)
+        if (!t.interestedProfiles.contains(targetUserId)) t.interestedProfiles.add(targetUserId)
         currentUser.value = t
         return UserRepository.initInterest(currentUserId, currentUserName, targetUserId)
     }
@@ -58,7 +58,8 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     fun initConversation(current: User, target: User): MutableLiveData<String> {
         val t = currentUser.value!!
-        t.conversations.add(CustomUtils.genCombinedHash(current.uid!!, target.uid!!))
+        val h = CustomUtils.genCombinedHash(current.uid!!, target.uid!!)
+        if (!t.conversations.contains(h)) t.conversations.add(h)
         currentUser.value = t
         return UserRepository.initConversation(current, target)
     }
