@@ -16,21 +16,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/primaryColor">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/chatProfileImgView"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_gravity="start"
-            android:layout_margin="8dp"
-            android:src="@drawable/ph_gray" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/chatTitleTextView"
-            style="@android:style/TextAppearance.Material.WindowTitle"
+        <LinearLayout
+            android:id="@+id/chatToolbarLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Halal Rishtey"
-            android:textColor="@color/primaryColor" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/chatProfileImgView"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="start"
+                android:layout_marginHorizontal="8dp"
+                android:src="@drawable/ph_gray" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/chatTitleTextView"
+                style="@android:style/TextAppearance.Material.WindowTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Halal Rishtey"
+                android:textColor="@color/primaryColor" />
+        </LinearLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -53,18 +61,19 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/chatTextInp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".70"
-            android:hint="Type a message"
-            app:hintAnimationEnabled="false">
+            app:hintAnimationEnabled="false"
+            app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionSend"
-                android:inputType="textImeMultiLine" />
+                android:hint="Type a message"
+                android:inputType="text|textMultiLine"
+                android:maxLines="8" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -73,8 +82,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:backgroundTint="@color/primaryColor"
+            android:paddingBottom="4dp"
             android:src="@drawable/ic_send"
-            app:fabSize="auto"
+            app:fabCustomSize="48dp"
             app:tint="#FFF" />
 
     </LinearLayout>
