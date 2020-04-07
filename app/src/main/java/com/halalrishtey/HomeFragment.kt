@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.models.User
@@ -86,6 +87,13 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        val searchFilterDialog = BottomSheetDialog(requireContext())
+        searchFilterDialog.setContentView(R.layout.search_filter_sheet)
+
+        view.homeSearchInp.setEndIconOnClickListener {
+            searchFilterDialog.show()
+//            Toast.makeText(context, "Hi there!", Toast.LENGTH_SHORT).show()
+        }
         usersToShow = ArrayList()
         adapter = CardDataRVAdapter(usersToShow)
         linearLayoutManager = LinearLayoutManager(context)
