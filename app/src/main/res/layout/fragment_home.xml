@@ -24,6 +24,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:visibility="gone"
         app:endIconCheckable="true"
         app:endIconContentDescription="Filter your search"
         app:endIconDrawable="@drawable/ic_filter_list"

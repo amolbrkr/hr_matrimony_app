@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -16,6 +17,7 @@ import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainActivity : AppCompatActivity() {
     private val userVM: UserViewModel by viewModels()
@@ -64,6 +66,16 @@ class MainActivity : AppCompatActivity() {
 
         userImageView.setOnClickListener {
             toolbar.showOverflowMenu()
+        }
+
+        Log.d(
+            "MainAcitivyt",
+            "Current dest: ${findNavController(R.id.nav_host_fragment).currentDestination?.label}"
+        );
+        toggleSearchBtn.setOnClickListener {
+            if (homeSearchInp.visibility == View.VISIBLE)
+                homeSearchInp.visibility = View.GONE
+            else homeSearchInp.visibility = View.VISIBLE
         }
     }
 

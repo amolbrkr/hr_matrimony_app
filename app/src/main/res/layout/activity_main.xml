@@ -16,14 +16,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/primaryColor">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userImageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_margin="8dp"
-            android:src="@drawable/ph_gray" />
+            android:layout_marginStart="100dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/toggleSearchBtn"
+                style="@style/IconOnlyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/primaryColor"
+                app:icon="@drawable/ic_search" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userImageView"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ph_gray" />
+
+        </LinearLayout>
     </com.google.android.material.appbar.MaterialToolbar>
 
     <fragment
