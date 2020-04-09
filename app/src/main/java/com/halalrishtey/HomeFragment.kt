@@ -11,19 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.button.MaterialButton
 import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.models.User
 import com.halalrishtey.services.UserRepository
 import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
-import it.sephiroth.android.library.rangeseekbar.RangeSeekBar
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.profile_card.view.*
-import kotlinx.android.synthetic.main.search_filter_sheet.view.*
 
 
 class HomeFragment : Fragment() {
@@ -90,29 +86,6 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val searchFilterSheet = inflater.inflate(R.layout.search_filter_sheet, null)
-
-        searchFilterSheet.ageRangeSeeker.setOnRangeSeekBarChangeListener(object :
-            RangeSeekBar.OnRangeSeekBarChangeListener {
-            override fun onProgressChanged(p0: RangeSeekBar?, p1: Int, p2: Int, p3: Boolean) {
-                searchFilterSheet.ageText.text = "Age    ${18 + p1} - ${18 + p2}"
-            }
-
-            override fun onStartTrackingTouch(p0: RangeSeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(p0: RangeSeekBar?) {
-            }
-
-        })
-
-        val searchFilterDialog = BottomSheetDialog(requireContext())
-        searchFilterDialog.setContentView(searchFilterSheet)
-
-        view.homeSearchInp.setEndIconOnClickListener {
-            searchFilterDialog.show()
-        }
-
         usersToShow = ArrayList()
         adapter = CardDataRVAdapter(usersToShow)
         linearLayoutManager = LinearLayoutManager(context)
@@ -153,7 +126,6 @@ class HomeFragment : Fragment() {
                                 )
                             )
                         }
-
                         adapter.notifyDataSetChanged()
                     })
                 }
