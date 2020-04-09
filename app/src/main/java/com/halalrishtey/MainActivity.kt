@@ -67,16 +67,20 @@ class MainActivity : AppCompatActivity() {
             toolbar.showOverflowMenu()
         }
 
-        if (findNavController(R.id.nav_host_fragment).currentDestination?.label == "fragment_home")
-            Log.d(
-                "MainAcitivyt",
-                "Current dest: ${findNavController(R.id.nav_host_fragment).currentDestination?.label}"
-            );
 
         toggleSearchBtn.setOnClickListener {
-            if (homeSearchInp.visibility == View.VISIBLE)
-                homeSearchInp.visibility = View.GONE
-            else homeSearchInp.visibility = View.VISIBLE
+            val navController = findNavController(R.id.nav_host_fragment)
+
+            if (navController.currentDestination?.label == "fragment_home") {
+                if (homeSearchInp.visibility == View.VISIBLE)
+                    homeSearchInp.visibility = View.GONE
+                else homeSearchInp.visibility = View.VISIBLE
+            } else {
+                navController.navigate(R.id.homeFragment)
+                if (homeSearchInp.visibility == View.VISIBLE)
+                    homeSearchInp.visibility = View.GONE
+                else homeSearchInp.visibility = View.VISIBLE
+            }
         }
     }
 
