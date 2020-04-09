@@ -17,7 +17,6 @@ import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainActivity : AppCompatActivity() {
     private val userVM: UserViewModel by viewModels()
@@ -68,16 +67,22 @@ class MainActivity : AppCompatActivity() {
             toolbar.showOverflowMenu()
         }
 
-        Log.d(
-            "MainAcitivyt",
-            "Current dest: ${findNavController(R.id.nav_host_fragment).currentDestination?.label}"
-        );
+        if (findNavController(R.id.nav_host_fragment).currentDestination?.label == "fragment_home")
+            Log.d(
+                "MainAcitivyt",
+                "Current dest: ${findNavController(R.id.nav_host_fragment).currentDestination?.label}"
+            );
+
         toggleSearchBtn.setOnClickListener {
             if (homeSearchInp.visibility == View.VISIBLE)
                 homeSearchInp.visibility = View.GONE
             else homeSearchInp.visibility = View.VISIBLE
         }
     }
+
+//        homeSearchInp.setEndIconOnClickListener {
+//            searchFilterDialog.show()
+//        }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
