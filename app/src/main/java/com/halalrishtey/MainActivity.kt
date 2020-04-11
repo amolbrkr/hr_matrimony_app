@@ -9,10 +9,12 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.iid.FirebaseInstanceId
+import com.halalrishtey.viewmodels.SearchViewModel
 import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
@@ -21,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private val userVM: UserViewModel by viewModels()
     private val userAuthVM: UserAuthViewModel by viewModels()
+    private val searchVM: SearchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         toolbar.overflowIcon = null
 
-        bottom_navigation.setupWithNavController(findNavController(R.id.nav_host_fragment))
+        val navController = findNavController(R.id.nav_host_fragment)
+        bottom_navigation.setupWithNavController(navController)
 
         val uid = applicationContext.getSharedPreferences("halalrishtey", Context.MODE_PRIVATE)
             .getString("user_uid", null)
@@ -67,26 +71,32 @@ class MainActivity : AppCompatActivity() {
             toolbar.showOverflowMenu()
         }
 
+        homeSearchInp.setEndIconOnClickListener {
+            SearchSheetDialog().show(supportFragmentManager, "filter_dialog")
+        }
+
+        homeSearchInp.editText?.doOnTextChanged { text, start, count, after ->
+            Log.d("MainActivity", "Search Query: $text, $count, $start")
+
+            if (navController.currentDestination?.label != "fragment_home") {
+                navController.navigate(R.id.homeFragment)
+            }
+
+            if (count > 2)
+                searchVM.query.value = text.toString()
+        }
 
         toggleSearchBtn.setOnClickListener {
-            val navController = findNavController(R.id.nav_host_fragment)
-
-            if (navController.currentDestination?.label == "fragment_home") {
-                if (homeSearchInp.visibility == View.VISIBLE)
-                    homeSearchInp.visibility = View.GONE
-                else homeSearchInp.visibility = View.VISIBLE
-            } else {
+            if (navController.currentDestination?.label != "fragment_home") {
                 navController.navigate(R.id.homeFragment)
-                if (homeSearchInp.visibility == View.VISIBLE)
-                    homeSearchInp.visibility = View.GONE
-                else homeSearchInp.visibility = View.VISIBLE
             }
+
+            if (homeSearchInp.visibility == View.VISIBLE)
+                homeSearchInp.visibility = View.GONE
+            else homeSearchInp.visibility = View.VISIBLE
+
         }
     }
-
-//        homeSearchInp.setEndIconOnClickListener {
-//            searchFilterDialog.show()
-//        }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
