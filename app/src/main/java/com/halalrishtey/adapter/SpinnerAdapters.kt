@@ -45,7 +45,7 @@ class SpinnerAdapters(context: Context) {
         context,
         R.layout.dropdown_menu_popup_item,
         arrayOf(
-            "Highest Education",
+            "Qualification",
             "Doctor",
             "Engineer",
             "Professional Degree",
