@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.halalrishtey.CustomUtils
 import com.halalrishtey.R
 import com.halalrishtey.models.ProfileCardData
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_card.view.*
 
@@ -27,6 +26,11 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
     }
 
     override fun getItemCount() = items.size
+
+    fun updateDataSet(newItems: ArrayList<ProfileCardData>) {
+        items = newItems
+        notifyDataSetChanged()
+    }
 
     class CardDataViewHolder constructor(
         v: View
@@ -64,6 +68,8 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
 
                 Picasso.get().load(card.data.photoUrl)
                     .into(view.cardAvatarImageView)
+            } else {
+
             }
 
             if (card.data.isIdProofVerified) view.profileVerifiedBadge.visibility = View.VISIBLE
