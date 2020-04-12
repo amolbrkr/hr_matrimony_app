@@ -75,15 +75,18 @@ class MainActivity : AppCompatActivity() {
             SearchSheetDialog().show(supportFragmentManager, "filter_dialog")
         }
 
-        homeSearchInp.editText?.doOnTextChanged { text, start, count, after ->
-            Log.d("MainActivity", "Search Query: $text, $count, $start")
+        searchVM.query.value?.let {
+            homeSearchInp.editText?.setText(it)
+        }
+
+        homeSearchInp.editText?.doOnTextChanged { text, _, count, _ ->
+            Log.d("MainActivity", "Search Query: $text")
 
             if (navController.currentDestination?.label != "fragment_home") {
                 navController.navigate(R.id.homeFragment)
             }
 
-            if (count > 2)
-                searchVM.query.value = text.toString()
+            searchVM.query.value = text.toString()
         }
 
         toggleSearchBtn.setOnClickListener {
