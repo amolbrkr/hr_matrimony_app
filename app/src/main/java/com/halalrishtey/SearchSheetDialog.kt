@@ -1,5 +1,6 @@
 package com.halalrishtey
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,7 @@ class SearchSheetDialog : BottomSheetDialogFragment() {
     private var location: String = ""
     private var eduSpinnerVal: String = "Qualification"
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = LayoutInflater.from(requireContext()).inflate(R.layout.search_filter_sheet, null)
 
@@ -36,6 +38,12 @@ class SearchSheetDialog : BottomSheetDialogFragment() {
             eduSpinnerVal = it.highestEdu
         }
 
+        view.ageText.text = "Age - ${minAge + 18} to ${maxAge + 18}"
+        view.heightText.text =
+            "Height - ${Math.round(minHeight / 30.48 * 10) / 100} feet to ${Math.round(
+                maxHeight / 30.48 * 10
+            ) / 100} feet"
+
         view.ageRangeSeeker.setProgress(minAge, maxAge)
         view.ageRangeSeeker.setOnRangeSeekBarChangeListener(object :
             RangeSeekBar.OnRangeSeekBarChangeListener {
@@ -43,7 +51,7 @@ class SearchSheetDialog : BottomSheetDialogFragment() {
                 minAge = p1 + 18
                 maxAge = p2 + 18
 
-                view.ageText.text = "Age    $minAge - $maxAge"
+                view.ageText.text = "Age - $minAge to $maxAge"
             }
 
             override fun onStartTrackingTouch(p0: RangeSeekBar?) {}
@@ -58,8 +66,8 @@ class SearchSheetDialog : BottomSheetDialogFragment() {
                 maxHeight = 137 + p2
 
                 view.heightText.text =
-                    "Height    ${Math.round(minHeight / 30.48 * 10) / 10} feet - ${Math.round(
-                        maxHeight / 30.48 * 10
+                    "Height - ${Math.round(minHeight / 30.48 * 100) / 10} feet to ${Math.round(
+                        maxHeight / 30.48 * 100
                     ) / 10} feet"
             }
 
