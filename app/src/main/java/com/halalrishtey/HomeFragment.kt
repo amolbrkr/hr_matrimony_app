@@ -15,6 +15,7 @@ import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.models.User
 import com.halalrishtey.services.UserRepository
+import com.halalrishtey.viewmodels.SearchViewModel
 import com.halalrishtey.viewmodels.UserAuthViewModel
 import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.profile_card.view.*
 class HomeFragment : Fragment() {
     private val userVM: UserViewModel by activityViewModels()
     private val userAuthVM: UserAuthViewModel by activityViewModels()
+    private val searchVM: SearchViewModel by activityViewModels()
 
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var adapter: CardDataRVAdapter
@@ -129,6 +131,14 @@ class HomeFragment : Fragment() {
                         adapter.notifyDataSetChanged()
                     })
                 }
+            })
+
+            searchVM.query.observe(viewLifecycleOwner, Observer {
+                adapter.updateDataSet(searchVM.applySearchFilters(usersToShow))
+            })
+
+            searchVM.filters.observe(viewLifecycleOwner, Observer {
+                adapter.updateDataSet(searchVM.applySearchFilters(usersToShow))
             })
         }
 
