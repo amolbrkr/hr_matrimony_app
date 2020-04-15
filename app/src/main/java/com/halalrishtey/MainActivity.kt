@@ -122,6 +122,11 @@ class MainActivity : AppCompatActivity() {
                 this.finish()
                 return true
             }
+            R.id.option_about -> {
+                val i = Intent(this, AboutActivity::class.java)
+                startActivity(i)
+                return true
+            }
 
             R.id.option_exit -> {
                 return true
