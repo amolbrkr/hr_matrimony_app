@@ -82,6 +82,10 @@ class ChatActivity : AppCompatActivity() {
             Picasso.get().load(targetPhotoUrl)
                 .into(chatProfileImgView)
         }
+
+        chatToolbarLayout.setOnClickListener {
+            CustomUtils.openUserDetails(this, targetUserId!!)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
