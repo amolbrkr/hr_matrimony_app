@@ -1,10 +1,7 @@
 package com.halalrishtey
 
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -30,10 +27,8 @@ class UserDetailActivity : AppCompatActivity() {
         Log.d("UserDetail", "Received user data of ${user.displayName} from MainActivity.")
 
         if (userVM.currentUid.value == user.uid) {
-            shareProfileFAB.visibility = View.VISIBLE
             editProfileFAB.visibility = View.VISIBLE
         } else {
-            shareProfileFAB.visibility = View.GONE
             editProfileFAB.visibility = View.GONE
         }
 
@@ -49,29 +44,8 @@ class UserDetailActivity : AppCompatActivity() {
             startActivity(i)
         }
 
-        shareProfileFAB.setOnClickListener {
-            val i = Intent().apply {
-                action = Intent.ACTION_SEND
-                if (user.photoUrl.length > 10) {
-                    val d = userMainImage.drawable as BitmapDrawable
-                    val bmp = d.bitmap
-                    val path = MediaStore.Images.Media.insertImage(
-                        contentResolver,
-                        bmp,
-                        user.displayName + "_main",
-                        null
-                    )
-                    val uri = Uri.parse(path)
-                    putExtra(Intent.EXTRA_STREAM, uri)
-                }
-
-                putExtra(
-                    Intent.EXTRA_TEXT,
-                    "Check out ${user.displayName}'s profile on Halal Rishtey App!\n\n Get the app now from #"
-                )
-                type = "*/*"
-            }
-            startActivity(i)
+        profileOptionsFAB.setOnClickListener {
+            ProfileOptionsSheet(user).show(supportFragmentManager, "profile_options")
         }
 
         if (user.isIdProofVerified) userVerfiedBadge.visibility = View.VISIBLE

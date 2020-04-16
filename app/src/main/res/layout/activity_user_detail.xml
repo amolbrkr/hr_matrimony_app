@@ -12,11 +12,11 @@
         layout="@layout/main_toolbar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/shareProfileFAB"
+        android:id="@+id/profileOptionsFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:src="@drawable/ic_share"
+        android:src="@drawable/ic_face"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="#FFF" />
