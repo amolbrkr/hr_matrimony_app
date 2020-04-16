@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:foregroundTint="#000"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -14,8 +15,8 @@
 
         <ImageView
             android:id="@+id/showIntIcon"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_favorite_border"
             android:tint="@android:color/darker_gray" />
 
@@ -36,8 +37,8 @@
         android:padding="8dp">
 
         <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_chat_bubble_outline"
             android:tint="@android:color/darker_gray" />
 
@@ -58,8 +59,8 @@
         android:padding="8dp">
 
         <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_phone"
             android:tint="@android:color/darker_gray" />
 
@@ -80,8 +81,8 @@
         android:padding="8dp">
 
         <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_share"
             android:tint="@android:color/darker_gray" />
 
