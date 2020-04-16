@@ -46,6 +46,26 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
         }
     }
 
+    private fun genMessageBtnListener(
+        currentUser: User,
+        targetUser: User
+    ): View.OnClickListener {
+        return View.OnClickListener {
+            userVM.initConversation(currentUser, targetUser)
+                .observe(viewLifecycleOwner, Observer {
+                    if (it.length > 1) {
+                        val i = Intent(context, ChatActivity::class.java)
+                        i.putExtra("conversationId", it)
+                        i.putExtra("currentId", currentUser.uid)
+                        i.putExtra("targetId", targetUser.uid)
+                        i.putExtra("targetPhotoUrl", targetUser.photoUrl)
+                        i.putExtra("targetName", targetUser.displayName)
+                        startActivity(i)
+                    }
+                })
+        }
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val v = layoutInflater.inflate(R.layout.profile_options_sheet, null)
 
@@ -78,6 +98,8 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
             ) ?: false
 
         v.showInterestOpt.setOnClickListener(genInterestBtnListener(isShortlisted, user.uid!!, v))
+
+        v.messageOpt.setOnClickListener(genMessageBtnListener(userVM.currentUser.value!!, user))
 
         val d = BottomSheetDialog(requireContext())
         d.setContentView(v)
