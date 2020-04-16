@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.option_profile -> {
-                CustomUtils.openUserDetails(this, userVM.currentUser.value!!)
+                CustomUtils.openUserDetails(this, userVM.currentUid.value!!)
                 return true
             }
 

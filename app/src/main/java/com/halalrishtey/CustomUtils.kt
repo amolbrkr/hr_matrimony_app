@@ -26,9 +26,9 @@ import java.util.*
 
 object CustomUtils {
 
-    fun openUserDetails(context: Context, userData: User) {
+    fun openUserDetails(context: Context, userId: String) {
         val i = Intent(context, UserDetailActivity::class.java)
-        i.putExtra("userData", userData)
+        i.putExtra("userId", userId)
         context.startActivity(i)
     }
 

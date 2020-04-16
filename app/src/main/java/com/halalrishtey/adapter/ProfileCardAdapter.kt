@@ -44,7 +44,7 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
 
         override fun onClick(p0: View?) {
             if (p0 != null && cardData != null)
-                CustomUtils.openUserDetails(p0.context, cardData!!.data)
+                CustomUtils.openUserDetails(p0.context, cardData!!.data.uid!!)
         }
 
         companion object {
