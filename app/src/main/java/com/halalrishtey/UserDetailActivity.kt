@@ -29,12 +29,8 @@ class UserDetailActivity : AppCompatActivity() {
             userVM.getUser(userId).observe(this, Observer { user ->
 
 
-                if (userVM.currentUid.value == user.uid) {
+                if (userVM.currentUid.value == user.uid)
                     editProfileFAB.visibility = View.VISIBLE
-                } else {
-                    editProfileFAB.visibility = View.GONE
-                }
-
 
                 if (user.photoUrl.length > 10) {
                     Picasso.get().load(user.photoUrl).into(userMainImage)
