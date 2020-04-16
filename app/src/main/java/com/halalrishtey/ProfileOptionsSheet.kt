@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -67,7 +68,7 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val v = layoutInflater.inflate(R.layout.profile_options_sheet, null)
+        val v = LayoutInflater.from(requireContext()).inflate(R.layout.profile_options_sheet, null)
 
         v.shareProfileOpt.setOnClickListener {
 
