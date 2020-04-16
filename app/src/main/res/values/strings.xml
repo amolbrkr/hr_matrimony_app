@@ -26,5 +26,5 @@
     <string name="report_warn_text">Are you sure that you want to report this user? Please select you reason for reporting.</string>
     <string name="block_warn_text">You will be unable to chat with this user or see their profile.</string>
     <string name="hr_about">Halal Rishtey is a dowry-free matrimony platform wholeheartedly focused on providing excellent marriage related services in accordance with the traditions and guidelines of Islamic Community!</string>
-    <string name="dev_info">This app is designed and developed by Amol Borkar under the management and supervision of Ramandeep Singh Sethi (Director and founder of HacksInfo Digital Pvt Ltd). For further information you can contact us at: amolborkar5@gmail.com or hacksinfo.com</string>
+    <string name="dev_info">This app is a product of HacksInfo Digital, designed and developed by Amol Borkar. For more information you can reach us at info@hacksinfo.org  </string>
 </resources>
