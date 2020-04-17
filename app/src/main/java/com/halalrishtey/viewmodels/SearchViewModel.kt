@@ -62,7 +62,7 @@ class SearchViewModel : ViewModel() {
 
             if (it.highestEdu != "Qualification")
                 r =
-                    r.filter { u -> u.data.education == it.highestEdu } as ArrayList<ProfileCardData>
+                    r.filter { u -> u.data.qualification == it.highestEdu } as ArrayList<ProfileCardData>
         }
 
         Log.d("SearchViewModel", "Applying filters removed ${listOfUsers.size - r.size} profiles!")

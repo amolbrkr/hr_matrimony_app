@@ -52,7 +52,7 @@ class UserDetailActivity : AppCompatActivity() {
                 userNameText.text = user.displayName
                 userSubText.text = "${user.gender}, ${user.age} Years"
                 detail1Text.text =
-                    "Works at: ${user.workLocation} \nEducation: ${user.education} \nOrganization: ${user.organizationName}"
+                    "Works at: ${user.workLocation} \nEducation: ${user.qualification} \nOrganization: ${user.organizationName}"
                 detail2Text.text =
                     "Income: ${user.annualIncome} per anum \nMaritial Status: ${user.maritalStatus} \nSect: ${user.sect}"
             })
