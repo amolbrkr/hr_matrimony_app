@@ -69,7 +69,8 @@ class CardDataRVAdapter(private var items: List<ProfileCardData>) :
                 Picasso.get().load(card.data.photoUrl)
                     .into(view.cardAvatarImageView)
             } else {
-
+                view.cardImageView.setImageResource(R.drawable.ph_gray)
+                view.cardAvatarImageView.setImageResource(R.drawable.ph_gray)
             }
 
             if (card.data.isIdProofVerified) view.profileVerifiedBadge.visibility = View.VISIBLE
