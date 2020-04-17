@@ -6,6 +6,22 @@ import com.halalrishtey.R
 
 class SpinnerAdapters(context: Context) {
 
+    val incomeAdapter = ArrayAdapter(
+        context,
+        R.layout.dropdown_menu_popup_item,
+        arrayOf(
+            "Annual Income",
+            "1 - 2 Lakh",
+            "2 - 5 Lakh",
+            "5 - 10 Lakh",
+            "10 - 15 Lakh",
+            "15 - 20 Lakh",
+            "20 - 35 Lakh",
+            "35 - 50 Lakh",
+            "50 Lakh & Above"
+        )
+    )
+
     val dargahAdapter = ArrayAdapter<String>(
         context,
         R.layout.dropdown_menu_popup_item,
