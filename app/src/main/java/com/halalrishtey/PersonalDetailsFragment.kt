@@ -113,7 +113,7 @@ class PersonalDetailsFragment : Fragment() {
                         }
                     )
 
-                    education = eduSpinner.selectedItem.toString()
+                    qualification = eduSpinner.selectedItem.toString()
                 }
 
                 findNavController().navigate(

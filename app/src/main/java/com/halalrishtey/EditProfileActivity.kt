@@ -42,13 +42,12 @@ class EditProfileActivity : AppCompatActivity() {
                     }
                     height = epHeightSpinner.selectedItem.toString()
                     maritalStatus = epMaritalStatusSpinner.selectedItem.toString()
-                    education = epEduSpinner.selectedItem.toString()
+                    qualification = epEduSpinner.selectedItem.toString()
                     workLocation = epWorkLocText.editText?.text.toString()
                     organizationName = epOrgNameText.editText?.text.toString()
-                    annualIncome = epIncomeText.editText?.text.toString().toLong()
-                    numberOfSiblings = epSiblingText.editText?.text.toString()
+                    annualIncome = epIncomeSpinner.selectedItem.toString()
+                    fathersName = fNameText.editText?.text.toString()
                     fathersJob = fOccText.editText?.text.toString()
-                    mothersJob = mOccText.editText?.text.toString()
                     sect = epSectSpinner.selectedItem.toString()
                     dargah = epDargahSpinner.selectedItem.toString()
                 }
@@ -88,14 +87,16 @@ class EditProfileActivity : AppCompatActivity() {
             epMaritalStatusSpinner.setSelection(adapters.maritalStatusAdapter.getPosition(it.maritalStatus))
 
             epEduSpinner.adapter = adapters.highestEducationAdapter
-            epEduSpinner.setSelection(adapters.highestEducationAdapter.getPosition(it.education))
+            epEduSpinner.setSelection(adapters.highestEducationAdapter.getPosition(it.qualification))
 
             epWorkLocText.editText?.setText(it.workLocation)
             epOrgNameText.editText?.setText(it.organizationName)
-            epIncomeText.editText?.setText(it.annualIncome.toString())
-            epSiblingText.editText?.setText(it.numberOfSiblings)
+
+            epIncomeSpinner.adapter = adapters.incomeAdapter
+            epIncomeSpinner.setSelection((adapters.highestEducationAdapter.getPosition(it.annualIncome)))
+
+            fNameText.editText?.setText(it.fathersName)
             fOccText.editText?.setText(it.fathersJob)
-            mOccText.editText?.setText(it.mothersJob)
 
             epSectSpinner.adapter = adapters.sectAdapter
             epSectSpinner.setSelection(adapters.sectAdapter.getPosition(it.sect))

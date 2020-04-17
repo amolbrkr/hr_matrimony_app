@@ -51,6 +51,9 @@ class ProfessionalDetailsFragment : Fragment() {
         dargahSpinner.adapter = adapters.dargahAdapter
         dargahSpinner.setSelection(0)
 
+        incomeSpinner.adapter = adapters.incomeAdapter
+        incomeSpinner.setSelection(0)
+
         uploadAdhar_Button.setOnClickListener {
             sharedVM.uploadImageRequester.value = "ProfessionalDetailsFragment"
             findNavController().navigate(R.id.action_professionalDetails_to_uploadImageFragment)
@@ -72,8 +75,7 @@ class ProfessionalDetailsFragment : Fragment() {
                         workLocTextInp.editText?.text.toString()
                     organizationName =
                         orgNameTextInp.editText?.text.toString()
-                    annualIncome =
-                        Integer.valueOf(incomeTextInp.editText?.text.toString())
+                    annualIncome = incomeSpinner.selectedItem.toString()
                     maritalStatus =
                         maritalStatusSpinner.selectedItem.toString()
                     sect = sectSpinner.selectedItem.toString()
@@ -106,7 +108,7 @@ class ProfessionalDetailsFragment : Fragment() {
             workLocTextInp.editText?.text.isNullOrBlank() -> {
                 "Please tells where you work"
             }
-            incomeTextInp.editText?.text.isNullOrBlank() -> {
+            incomeSpinner.selectedItemPosition == 0 -> {
                 "Please enter your annual income"
             }
             orgNameTextInp.editText?.text.isNullOrBlank() -> {
