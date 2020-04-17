@@ -119,7 +119,7 @@ object CustomUtils {
             uid = doc.get("uid").toString(),
             displayName = doc.get("displayName").toString(),
             age = doc.get("age").toString().toInt(),
-            annualIncome = doc.get("annualIncome") as Number,
+            annualIncome = doc.get("annualIncome").toString(),
             photoUrl = doc.get("photoUrl").toString(),
             idProofUrl = doc.get("idProofUrl").toString(),
             phoneNumber = doc.get("phoneNumber") as Number,
@@ -129,7 +129,7 @@ object CustomUtils {
             lastSignInAt = System.currentTimeMillis(),
             address = doc.get("address")?.toString() ?: "Not found",
             height = doc.get("height").toString(),
-            education = doc.get("education").toString(),
+            qualification = doc.get("qualification").toString(),
             workLocation = doc.get("workLocation").toString(),
             sect = doc.get("sect").toString(),
             dargah = doc.get("dargah").toString(),
@@ -150,7 +150,10 @@ object CustomUtils {
                 doc.get("profilePicVisibility").toString()
             ),
             bio = doc.get("bio")?.toString() ?: "",
-            numberOfSiblings = doc.get("numberOfSiblings").toString(),
+            fathersName = doc.get("fathersName").toString(),
+            fathersJob = doc.get("fathersJob").toString(),
+            numBrothers = doc.get("numBrothers").toString(),
+            numSisters = doc.get("numSisters").toString(),
             registrationToken = doc.get("registrationToken").toString(),
             dateOfBirth = DateFormat.getInstance().parse(doc.get("dateOfBirth").toString())
         )
