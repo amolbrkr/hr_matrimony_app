@@ -50,6 +50,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chatToolbar">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/heart_bg"
+            android:alpha="0.5"
+            android:scaleType="centerCrop" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/messageRV"
