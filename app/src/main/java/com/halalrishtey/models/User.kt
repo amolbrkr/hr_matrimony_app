@@ -33,9 +33,9 @@ data class User(
     var address: String = "",       //done
     var dateOfBirth: Date? = null,      //done
     var height: String = "",            //done
-    var education: String = "",         //done
+    var qualification: String = "",         //done
     var workLocation: String = "",        //done
-    var annualIncome: Number = 0,       //done
+    var annualIncome: String = "",       //done
     var organizationName: String = "",      //done
     var sect: String = "",      //done
     var dargah: String = "",        //done
@@ -52,11 +52,10 @@ data class User(
     var conversations: ArrayList<String> = ArrayList(),
     var blockList: ArrayList<String> = ArrayList(),
     var bio: String = "",
-    var numberOfSiblings: String = "",
-//    var fathersName: String = "",
-//    var mothersName: String = "",
+    var numBrothers: String = "",
+    var numSisters: String = "",
+    var fathersName: String = "",
     var fathersJob: String = "",
-    var mothersJob: String = "",
     var profilePicVisibility: ProfilePicVisibility = ProfilePicVisibility.Public
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
