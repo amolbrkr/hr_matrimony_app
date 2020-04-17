@@ -8,17 +8,16 @@
 
     <include
         android:id="@+id/editToolbar"
-        layout="@layout/main_toolbar" />
+        layout="@layout/main_toolbar">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/epSaveBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Save Changes"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/epSaveBtn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Save" />
+    </include>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -86,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:hint="Your Bio"
+                android:hint="Describe Yourself"
                 app:counterEnabled="true"
                 app:counterMaxLength="200"
                 app:startIconDrawable="@drawable/ic_face">
@@ -188,28 +187,22 @@
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/epIncomeSpinner"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:minHeight="48dp" />
+
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/epIncomeText"
+                android:id="@+id/epNumBroText"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:hint="Annual Income"
-                app:startIconDrawable="@drawable/ic_attach_money">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/epSiblingText"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:hint="Number of Siblings"
+                android:hint="Number of Brothers"
                 app:startIconDrawable="@drawable/ic_people">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -219,12 +212,27 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fOccText"
+                android:id="@+id/epNumSisText"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:hint="Father's Profession"
+                android:hint="Number of Sisters"
+                app:startIconDrawable="@drawable/ic_people">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fNameText"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="Father's Name"
                 app:startIconDrawable="@drawable/ic_face">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -234,12 +242,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/mOccText"
+                android:id="@+id/fOccText"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:hint="Mother's Profession"
+                android:hint="Father's Profession"
                 app:startIconDrawable="@drawable/ic_face">
 
                 <com.google.android.material.textfield.TextInputEditText

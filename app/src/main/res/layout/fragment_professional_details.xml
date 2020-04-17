@@ -42,21 +42,14 @@
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/incomeTextInp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/incomeSpinner"
+        style="@style/Widget.AppCompat.Spinner.DropDown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="Annual Income"
-        app:layout_constraintTop_toBottomOf="@id/orgNameTextInp"
-        app:startIconDrawable="@drawable/ic_attach_money">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:minHeight="48dp"
+        app:layout_constraintTop_toBottomOf="@id/orgNameTextInp" />
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/maritalStatusSpinner"
@@ -65,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:minHeight="48dp"
-        app:layout_constraintTop_toBottomOf="@id/incomeTextInp" />
+        app:layout_constraintTop_toBottomOf="@id/incomeSpinner" />
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/sectSpinner"
