@@ -33,7 +33,8 @@ class UserDetailActivity : AppCompatActivity() {
                     editProfileFAB.visibility = View.VISIBLE
 
                 if (user.photoUrl.length > 10) {
-                    Picasso.get().load(user.photoUrl).into(userMainImage)
+                    Picasso.get().load(user.photoUrl).resize(450, 450)
+                        .centerCrop().into(userMainImage)
                     Picasso.get().load(user.photoUrl).into(userAvatarImage)
                 }
 
