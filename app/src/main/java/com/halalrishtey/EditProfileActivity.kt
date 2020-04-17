@@ -29,7 +29,6 @@ class EditProfileActivity : AppCompatActivity() {
         epProfilePicFAB.setOnClickListener {
             Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show()
         }
-
         epSaveBtn.setOnClickListener {
             if (validateData() == null) {
                 val temp = userVM.currentUser.value
