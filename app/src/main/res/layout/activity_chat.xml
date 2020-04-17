@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E2F6F3"
+    android:background="#FFE2EC"
     tools:context=".ChatActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -42,15 +42,23 @@
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/messageRV"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingVertical="16dp"
         app:layout_constraintBottom_toTopOf="@id/chatInputLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chatToolbar" />
+        app:layout_constraintTop_toBottomOf="@id/chatToolbar">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/messageRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/chatInputLayout"
