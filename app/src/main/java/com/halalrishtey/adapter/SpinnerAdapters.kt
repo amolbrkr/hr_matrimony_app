@@ -6,6 +6,22 @@ import com.halalrishtey.R
 
 class SpinnerAdapters(context: Context) {
 
+    val numBroAdapter = ArrayAdapter(
+        context,
+        R.layout.dropdown_menu_popup_item,
+        arrayOf(
+            "Number of Brothers", "0", "1", "2", "3", "4", "5"
+        )
+    )
+
+    val numSisAdapter = ArrayAdapter(
+        context,
+        R.layout.dropdown_menu_popup_item,
+        arrayOf(
+            "Number of Sisters", "0", "1", "2", "3", "4", "5"
+        )
+    )
+
     val incomeAdapter = ArrayAdapter(
         context,
         R.layout.dropdown_menu_popup_item,
