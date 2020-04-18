@@ -10,7 +10,7 @@ data class UploadResult(
     var errorMsg: String?
 )
 
-object StorageRepository {
+object StorageService {
     private val storageReference by lazy {
         FirebaseStorage.getInstance()
     }
