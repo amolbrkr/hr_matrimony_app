@@ -14,6 +14,7 @@ import com.halalrishtey.viewmodels.SearchParams
 import com.halalrishtey.viewmodels.SearchViewModel
 import it.sephiroth.android.library.rangeseekbar.RangeSeekBar
 import kotlinx.android.synthetic.main.search_filter_sheet.view.*
+import java.text.DecimalFormat
 
 class SearchSheetDialog : BottomSheetDialogFragment() {
     private val searchVM: SearchViewModel by activityViewModels()
@@ -39,10 +40,10 @@ class SearchSheetDialog : BottomSheetDialogFragment() {
         }
 
         view.ageText.text = "Age - ${minAge + 18} to ${maxAge + 18}"
+        val df = DecimalFormat("0.00")
+
         view.heightText.text =
-            "Height - ${Math.round(minHeight / 30.48 * 10) / 100} feet to ${Math.round(
-                maxHeight / 30.48 * 10
-            ) / 100} feet"
+            "Height - ${df.format(minHeight / 30.48)} feet to ${df.format(maxHeight / 30.48)} feet"
 
         view.ageRangeSeeker.setProgress(minAge, maxAge)
         view.ageRangeSeeker.setOnRangeSeekBarChangeListener(object :
@@ -66,16 +67,16 @@ class SearchSheetDialog : BottomSheetDialogFragment() {
                 maxHeight = 137 + p2
 
                 view.heightText.text =
-                    "Height - ${Math.round(minHeight / 30.48 * 100) / 10} feet to ${Math.round(
+                    "Height - ${Math.round(minHeight / 30.48 * 100) / 100} feet to ${Math.round(
                         maxHeight / 30.48 * 100
-                    ) / 10} feet"
+                    ) / 100} feet"
             }
 
             override fun onStartTrackingTouch(p0: RangeSeekBar?) {}
             override fun onStopTrackingTouch(p0: RangeSeekBar?) {}
         })
 
-        view.searchLocInp.editText?.doOnTextChanged { text, start, count, after ->
+        view.searchLocInp.editText?.doOnTextChanged { text, _, count, _ ->
             if (count > 2)
                 location = text.toString()
         }
@@ -91,10 +92,10 @@ class SearchSheetDialog : BottomSheetDialogFragment() {
 
         view.applyFilterBtn.setOnClickListener {
             searchVM.filters.value = SearchParams(
-                minAge = minAge - 18,
-                maxAge = maxAge - 18,
-                minHeight = minHeight - 137,
-                maxHeight = maxHeight - 137,
+                minAge = minAge,
+                maxAge = maxAge,
+                minHeight = minHeight,
+                maxHeight = maxHeight,
                 location = location,
                 highestEdu = view.searchEduSpinner.selectedItem.toString()
             )
