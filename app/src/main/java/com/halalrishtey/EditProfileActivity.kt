@@ -1,19 +1,32 @@
 package com.halalrishtey
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.FieldValue
+import com.halalrishtey.adapter.ProfileImagesAdapter
 import com.halalrishtey.adapter.SpinnerAdapters
 import com.halalrishtey.models.ProfilePicVisibility
 import com.halalrishtey.models.User
+import com.halalrishtey.services.StorageService
 import com.halalrishtey.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
 class EditProfileActivity : AppCompatActivity() {
+    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var adapter: ProfileImagesAdapter
+    private lateinit var userImages: ArrayList<String>
+
     private val userVM by viewModels<UserViewModel>()
     private lateinit var userData: User
 
@@ -26,9 +39,27 @@ class EditProfileActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = "Edit Profile"
 
+        userImages = ArrayList()
+        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        adapter = ProfileImagesAdapter(userImages)
+
+        profileImgRV.layoutManager = layoutManager
+        profileImgRV.adapter = adapter
+
+        addNewImgBtn.setOnClickListener {
+            if (userVM.currentUser.value!!.photoList.size < 8) {
+                val i = Intent()
+                i.type = "image/*"
+                i.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(i, 1)
+            } else Snackbar.make(it, "You can only upload up to 7 images.", Snackbar.LENGTH_SHORT)
+                .show()
+        }
+
         epProfilePicFAB.setOnClickListener {
             Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show()
         }
+
         epSaveBtn.setOnClickListener {
             if (validateData() == null) {
                 val temp = userVM.currentUser.value
@@ -66,6 +97,11 @@ class EditProfileActivity : AppCompatActivity() {
 
         userVM.currentUser.observe(this, Observer {
             userData = it
+
+            //Update recyclerview to show user uploaded images
+            userImages.clear()
+            userImages.addAll(it.photoList)
+            adapter.notifyDataSetChanged()
 
             if (it.photoUrl.length > 10) Picasso.get().load(it.photoUrl).into(avatarImage)
 
@@ -108,5 +144,28 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun validateData(): String? {
         return null
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+
+            StorageService.uploadImgToStorage(data.data!!).observe(this, Observer {
+                if (it.errorMsg != null)
+                    Toast.makeText(this, it.errorMsg, Toast.LENGTH_SHORT).show()
+                else {
+                    userVM.updateUserData(
+                        userVM.currentUid.value!!,
+                        mapOf("photoList" to FieldValue.arrayUnion(it.fileUrl!!))
+                    ).observe(this, Observer { s ->
+                        Log.d("EditProfile", s)
+                    })
+
+                    userImages.add(it.fileUrl!!)
+                    adapter.notifyDataSetChanged()
+                }
+            })
+        }
     }
 }
