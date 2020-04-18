@@ -69,7 +69,7 @@ class PersonalDetailsFragment : Fragment() {
 
                 val date = "$dayOfMonth / ${monthOfYear + 1} / $year"
                 userAuthVM.newUser.value?.dateOfBirth =
-                    GregorianCalendar(year, monthOfYear + 1, dayOfMonth).time
+                    GregorianCalendar(year, monthOfYear + 1, dayOfMonth).timeInMillis
 
                 //Calculate and set age of user
                 userAge = 2020 - year

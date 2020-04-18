@@ -20,7 +20,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.halalrishtey.models.Gender
 import com.halalrishtey.models.ProfilePicVisibility
 import com.halalrishtey.models.User
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -145,6 +144,7 @@ object CustomUtils {
             interestedProfiles = doc.get("interestedProfiles") as ArrayList<String>,
             conversations = doc.get("conversations") as ArrayList<String>,
             blockList = doc.get("blockList") as ArrayList<String>,
+            photoList = doc.get("photoList") as ArrayList<String>,
             organizationName = doc.get("organizationName").toString(),
             profilePicVisibility = ProfilePicVisibility.valueOf(
                 doc.get("profilePicVisibility").toString()
@@ -155,7 +155,7 @@ object CustomUtils {
             numBrothers = doc.get("numBrothers").toString(),
             numSisters = doc.get("numSisters").toString(),
             registrationToken = doc.get("registrationToken").toString(),
-            dateOfBirth = DateFormat.getInstance().parse(doc.get("dateOfBirth").toString())
+            dateOfBirth = doc.get("dateOfBirth").toString().toLong()
         )
     }
 
