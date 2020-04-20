@@ -2,7 +2,6 @@ package com.halalrishtey
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -41,7 +40,17 @@ class EditProfileActivity : AppCompatActivity() {
 
         userImages = ArrayList()
         layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        adapter = ProfileImagesAdapter(userImages)
+
+        fun removeImageFromDB(imageUrl: String) {
+            userVM.updateUserData(
+                userVM.currentUid.value!!,
+                mapOf("photoList" to FieldValue.arrayRemove(imageUrl))
+            ).observe(this, Observer {
+                Toast.makeText(this, "Picture Deleted!", Toast.LENGTH_SHORT).show()
+            })
+        }
+
+        adapter = ProfileImagesAdapter(userImages, ::removeImageFromDB)
 
         profileImgRV.layoutManager = layoutManager
         profileImgRV.adapter = adapter
