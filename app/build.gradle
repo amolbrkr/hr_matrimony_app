@@ -37,6 +37,9 @@ android {
 dependencies {
     def nav_version = "2.2.1"
 
+    //For guestures and zoom in Images
+    implementation 'com.alexvasilkov:gesture-views:2.6.0'
+
     //Range slider
     implementation 'com.github.sephiroth74:RangeSeekBar:1.1.0'
 
