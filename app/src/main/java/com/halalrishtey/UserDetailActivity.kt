@@ -40,10 +40,6 @@ class UserDetailActivity : AppCompatActivity() {
                 userImages.clear()
                 userImages.addAll(user.photoList)
                 adapter.notifyDataSetChanged()
-                Log.d(
-                    "UserDetail",
-                    "Update userimages, count: ${user.photoList} ${adapter.itemCount}"
-                )
 
                 if (userVM.currentUid.value == user.uid)
                     editProfileFAB.visibility = View.VISIBLE
