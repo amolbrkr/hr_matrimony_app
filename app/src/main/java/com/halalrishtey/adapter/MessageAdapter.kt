@@ -20,6 +20,7 @@ class MessageAdapter(private val senderId: String, private val data: List<Messag
 
         val inflatedView = if (viewType == 0)
             inflater.inflate(R.layout.in_message, parent, false)
+        else if (viewType == 2) inflater.inflate(R.layout.meetup_prompt, parent, false)
         else inflater.inflate(R.layout.out_message, parent, false)
 
         return MessageVH(inflatedView)
@@ -38,6 +39,9 @@ class MessageAdapter(private val senderId: String, private val data: List<Messag
     }
 
     override fun getItemViewType(position: Int): Int {
+        //On every multiple of a value show meetup prompt
+        if (position % 10 == 0) return 2
+
         return if (data[position].senderId == senderId) 1 else 0
     }
 
