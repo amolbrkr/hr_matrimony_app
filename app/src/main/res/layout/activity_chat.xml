@@ -45,7 +45,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/chatInputLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chatToolbar">
@@ -53,9 +52,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/heart_bg"
-            android:alpha="0.5"
-            android:scaleType="centerCrop" />
+            android:alpha="0.25"
+            android:scaleType="centerCrop"
+            android:src="@drawable/heart_bg" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/messageRV"
@@ -64,43 +63,45 @@
             android:paddingVertical="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
-    </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/chatInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/chatTextInp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/chatInputLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".70"
-            app:hintAnimationEnabled="false"
-            app:hintEnabled="false">
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/chatTextInp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Type a message"
-                android:inputType="text|textMultiLine"
-                android:maxLines="8" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:background="@android:color/white"
+                android:layout_weight=".70"
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/sendChatBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:backgroundTint="@color/primaryColor"
-            android:paddingBottom="4dp"
-            android:src="@drawable/ic_send"
-            app:fabCustomSize="48dp"
-            app:tint="#FFF" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Type a message"
+                    android:inputType="text|textMultiLine"
+                    android:maxLines="8" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/sendChatBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:backgroundTint="@color/primaryColor"
+                android:paddingBottom="4dp"
+                android:src="@drawable/ic_send"
+                app:fabCustomSize="48dp"
+                app:tint="#FFF" />
+
+        </LinearLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
