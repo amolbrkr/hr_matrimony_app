@@ -27,4 +27,5 @@
     <string name="block_warn_text">You will be unable to chat with this user or see their profile.</string>
     <string name="hr_about">Halal Rishtey is a dowry-free matrimony platform wholeheartedly focused on providing excellent marriage related services in accordance with the traditions and guidelines of Islamic Community!</string>
     <string name="dev_info">This app is a product of HacksInfo Digital, designed and developed by Amol Borkar. For more information you can reach us at info@hacksinfo.org  </string>
+    <string name="meetup_tnc_content">Before you proceed for scheduling meetup, we ask you to keep things Halal. Meeting should be done between families under parents/guardians. Make your meeting successful in the way of honesty. We\'re against dowry help us to make dowry free society by not demanding dowry. \n\nPlease adhere to sensible Islamic etiquette, not doing so will lead to a permanent ban from our service.</string>
 </resources>
