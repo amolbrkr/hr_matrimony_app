@@ -1,11 +1,9 @@
 package com.halalrishtey
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -28,16 +26,6 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var adapter: MessageAdapter
     private lateinit var messages: ArrayList<MessageItem>
     private var lastScrollPos: Int = 0
-
-    fun blockUser(ctx: Context, currentId: String, targetId: String) {
-        userVM.blockUser(currentId, targetId).observe(this, Observer {
-            if (it.contains("Successfully")) {
-                this.finish()
-            } else {
-                Toast.makeText(ctx, "Error: $it", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
