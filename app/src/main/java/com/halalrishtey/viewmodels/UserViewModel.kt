@@ -87,6 +87,16 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     fun blockUser(currentId: String, targetId: String): MutableLiveData<String> {
         val t = currentUser.value!!
         t.blockList.add(targetId)
+
+        //Remove from interest section
+        if (t.interestedProfiles.contains(targetId))
+            t.interestedProfiles.remove(targetId)
+
+        //Remove from Chat list
+        val convoId = CustomUtils.genCombinedHash(currentId, targetId)
+        if (t.conversations.contains(convoId))
+            t.conversations.remove(convoId)
+
         currentUser.value = t
         return UserRepository.blockUser(currentId, targetId)
     }
