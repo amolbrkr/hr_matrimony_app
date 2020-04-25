@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".UserImagesActivity"></activity>
+        <activity android:name=".ScheduleMeetupActivity"></activity>
+        <activity android:name=".UserImagesActivity" />
 
         <service
             android:name=".FCMService"
