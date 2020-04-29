@@ -1,21 +1,26 @@
 package com.halalrishtey.adapter
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.halalrishtey.CustomUtils
 import com.halalrishtey.R
+import com.halalrishtey.ScheduleMeetupActivity
 import com.halalrishtey.models.MessageItem
 import kotlinx.android.synthetic.main.in_message.view.*
 import kotlinx.android.synthetic.main.meetup_prompt.view.*
 import kotlinx.android.synthetic.main.meetup_tnc.view.*
 import kotlinx.android.synthetic.main.out_message.view.*
 
-class MessageAdapter(private val senderId: String, private val data: List<MessageItem>) :
+class MessageAdapter(
+    private val senderId: String,
+    private val data: List<MessageItem>
+) :
     RecyclerView.Adapter<MessageAdapter.MessageVH>() {
+    private var targetId: String? = null
 
     class MessageVH(v: View) : RecyclerView.ViewHolder(v)
 
@@ -45,11 +50,15 @@ class MessageAdapter(private val senderId: String, private val data: List<Messag
                         LayoutInflater.from(holder.itemView.context)
                             .inflate(R.layout.meetup_tnc, null)
                     dialogView.meetupCntBtn.setOnClickListener {
-                        Toast.makeText(
+                        //Open ScheduleMeetupActivity
+                        val i = Intent(
                             holder.itemView.context,
-                            "Continue to meetup scheduling.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            ScheduleMeetupActivity::class.java
+                        ).apply {
+                            putExtra("currentId", senderId)
+                            putExtra("targetId", targetId)
+                        }
+                        holder.itemView.context.startActivity(i)
                     }
                     val builder = AlertDialog.Builder(holder.itemView.context)
                     builder.setView(dialogView)
@@ -66,7 +75,10 @@ class MessageAdapter(private val senderId: String, private val data: List<Messag
 
     override fun getItemViewType(position: Int): Int {
         //On every multiple of a value show meetup prompt
-        if (position != 0 && position % 10 == 0) return 2
+        if (data[position].senderId != senderId)
+            targetId = data[position].senderId
+
+        if (position != 0 && position % 10 == 0 && targetId != null) return 2
 
         return if (data[position].senderId == senderId) 1 else 0
     }
