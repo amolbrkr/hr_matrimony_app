@@ -37,6 +37,9 @@ android {
 dependencies {
     def nav_version = "2.2.1"
 
+    //Places API
+    implementation 'com.google.android.libraries.places:places:2.2.0'
+
     //For guestures and zoom in Images
     implementation 'com.alexvasilkov:gesture-views:2.6.0'
 
