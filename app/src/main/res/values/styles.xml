@@ -25,6 +25,11 @@
         <item name="shapeAppearanceOverlay">@style/MyShapeAppearance</item>
     </style>
 
+    <style name="CTAButtonInvertedStyle" parent="@style/CTAButtonStyle">
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="backgroundTint">#FFF</item>
+    </style>
+
     <style name="IconOnlyButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
         <item name="iconPadding">0dp</item>
         <item name="android:paddingTop">8dp</item>
