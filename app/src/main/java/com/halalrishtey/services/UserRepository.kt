@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FieldValue
 import com.halalrishtey.CustomUtils
+import com.halalrishtey.models.MeetupItem
 import com.halalrishtey.models.MessageItem
 import com.halalrishtey.models.User
 
@@ -468,5 +469,19 @@ object UserRepository {
                     "reason" to reason
                 )
             )
+    }
+
+    fun schedMeetup(meetup: MeetupItem): MutableLiveData<String> {
+        val r = MutableLiveData<String>()
+        val ref = DatabaseService.getDbInstance()
+            .collection("meetups")
+            .document()
+        meetup.meetupId = ref.id
+        ref.set(meetup).addOnCompleteListener {
+            if (it.isSuccessful)
+                r.value = "Scheduled meetup with ${meetup.targetName}!"
+            else r.value = "Error while creating meetup: ${it.exception?.message}"
+        }
+        return r
     }
 }

@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.halalrishtey.CustomUtils
+import com.halalrishtey.models.MeetupItem
 import com.halalrishtey.models.User
 import com.halalrishtey.services.UserRepository
 
@@ -103,4 +104,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     fun reportUser(current: String, target: String, reason: String) =
         UserRepository.reportUser(current, target, reason)
+
+    fun schedMeetup(meetup: MeetupItem): MutableLiveData<String> =
+        UserRepository.schedMeetup(meetup)
 }
