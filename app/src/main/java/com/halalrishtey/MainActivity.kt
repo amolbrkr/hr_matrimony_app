@@ -13,6 +13,9 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.firebase.iid.FirebaseInstanceId
 import com.halalrishtey.viewmodels.SearchViewModel
 import com.halalrishtey.viewmodels.UserAuthViewModel
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private val userVM: UserViewModel by viewModels()
     private val userAuthVM: UserAuthViewModel by viewModels()
     private val searchVM: SearchViewModel by viewModels()
+    lateinit var placesClient: PlacesClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +103,10 @@ class MainActivity : AppCompatActivity() {
             else homeSearchInp.visibility = View.VISIBLE
 
         }
+
+        //Init places API
+        Places.initialize(applicationContext, "AIzaSyCsDLdcuW_HeLU0Uus4ppE4M8-uwZhED-k")
+        placesClient = Places.createClient(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
