@@ -17,5 +17,7 @@ data class MeetupItem(
     val timestamp: Long,
     val status: MeetupStatus = MeetupStatus.Scheduled,
     val date: Long,
-    val location: String = ""
+    val locLat: Double = 0.0,
+    val locLong: Double = 0.0,
+    val address: String = ""
 )
