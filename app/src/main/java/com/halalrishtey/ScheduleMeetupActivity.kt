@@ -15,10 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.bold
 import androidx.lifecycle.Observer
-import com.google.android.gms.common.api.Status
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.halalrishtey.models.MeetupItem
 import com.halalrishtey.models.User
 import com.halalrishtey.viewmodels.UserViewModel
@@ -124,28 +120,39 @@ class ScheduleMeetupActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        val autocompleteFragment =
-            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment?
-
-        autocompleteFragment!!.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
-        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-            override fun onPlaceSelected(p0: Place) {
-                meetupLoc = p0.address.toString()
-                Log.d("ScheduleMeetup", "Selected place: ${p0.name}")
-            }
-
-            override fun onError(p0: Status) {
-                Log.d("ScheduleMeetup", "Error: ${p0.statusMessage}")
-            }
-
-        })
+//        val autocompleteFragment =
+//            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment?
+//
+//        autocompleteFragment!!.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
+//        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+//            override fun onPlaceSelected(p0: Place) {
+//                meetupLoc = p0.address.toString()
+//                Log.d("ScheduleMeetup", "Selected place: ${p0.name}")
+//            }
+//
+//            override fun onError(p0: Status) {
+//                Log.d("ScheduleMeetup", "Error: ${p0.statusMessage}")
+//            }
+//
+//        })
 
         smConfirmBtn.setOnClickListener {
             if (userData?.size == 2) {
-                val meetupLoc =
+                val meetupAddr =
                     if (smLocSpinner.selectedItemPosition != 3)
                         smLocSpinner.selectedItem.toString()
                     else smLocInp.editText?.text.toString()
+
+                val meetupLat = when (smLocSpinner.selectedItemPosition) {
+                    1 -> userData!![0].locationLat
+                    2 -> userData!![1].locationLat
+                    else -> 0.0
+                }
+                val meetupLong = when (smLocSpinner.selectedItemPosition) {
+                    1 -> userData!![0].locationLong
+                    2 -> userData!![1].locationLong
+                    else -> 0.0
+                }
 
                 val m = MeetupItem(
                     sourceId = userData!![0].uid!!,
@@ -156,7 +163,9 @@ class ScheduleMeetupActivity : AppCompatActivity() {
                     targetPhoto = userData!![1].photoUrl,
                     timestamp = System.currentTimeMillis(),
                     date = meetupDate.time,
-                    location = meetupLoc
+                    address = meetupAddr,
+                    locLat = meetupLat,
+                    locLong = meetupLong
                 )
 
                 userVM.schedMeetup(m).observe(this, Observer {

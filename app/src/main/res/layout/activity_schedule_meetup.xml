@@ -74,11 +74,16 @@
         app:layout_constraintTop_toBottomOf="@id/smLocSpinner"
         tools:layout_editor_absoluteX="24dp">
 
-        <fragment
-            android:id="@+id/autocomplete_fragment"
-            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+
+        <!--        <fragment-->
+        <!--            android:id="@+id/autocomplete_fragment"-->
+        <!--            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content" />-->
 
     </com.google.android.material.textfield.TextInputLayout>
 
