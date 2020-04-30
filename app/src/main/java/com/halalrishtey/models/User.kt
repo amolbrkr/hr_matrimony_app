@@ -49,6 +49,7 @@ data class User(
     var registrationToken: String = "",
     var conversations: ArrayList<String> = ArrayList(),
     var blockList: ArrayList<String> = ArrayList(),
+    var meetupList: ArrayList<String> = ArrayList(),
     var bio: String = "",
     var numBrothers: String = "",
     var numSisters: String = "",
