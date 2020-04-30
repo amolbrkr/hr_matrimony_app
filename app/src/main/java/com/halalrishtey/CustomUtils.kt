@@ -154,6 +154,7 @@ object CustomUtils {
             fathersJob = doc.get("fathersJob").toString(),
             numBrothers = doc.get("numBrothers").toString(),
             numSisters = doc.get("numSisters").toString(),
+            meetupList = doc.get("meetupList") as ArrayList<String>,
             registrationToken = doc.get("registrationToken").toString(),
             dateOfBirth = doc.get("dateOfBirth").toString().toLong()
         )
