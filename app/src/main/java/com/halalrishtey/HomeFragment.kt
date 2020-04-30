@@ -147,11 +147,16 @@ class HomeFragment : Fragment() {
                 CustomUtils.convertCoordsToAddr(requireContext(), loc.latitude, loc.longitude)
             } else null
 
+            var addrLines = ""
+            for (i in 0 until addr?.maxAddressLineIndex!!) {
+                addrLines += addr.getAddressLine(i) + " "
+            }
+
             val infoToBeUpdated: HashMap<String, Any?> = hashMapOf(
-                "pincode" to addr?.postalCode,
-                "locationLat" to addr?.latitude,
-                "locationLong" to addr?.longitude,
-                "address" to addr?.getAddressLine(0),
+                "pincode" to addr.postalCode,
+                "locationLat" to addr.latitude,
+                "locationLong" to addr.longitude,
+                "address" to addrLines,
                 "lastSignInAt" to System.currentTimeMillis()
             )
 
