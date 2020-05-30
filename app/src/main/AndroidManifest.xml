@@ -22,8 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ScheduleMeetupActivity"></activity>
-        <activity android:name=".UserImagesActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCsDLdcuW_HeLU0Uus4ppE4M8-uwZhED-k" />
 
         <service
             android:name=".FCMService"
@@ -35,6 +37,12 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".PlansActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".MeetupDetailActivity" />
+        <activity android:name=".ScheduleMeetupActivity" />
+        <activity android:name=".UserImagesActivity" />
         <activity
             android:name=".AboutActivity"
             android:parentActivityName=".MainActivity" />
