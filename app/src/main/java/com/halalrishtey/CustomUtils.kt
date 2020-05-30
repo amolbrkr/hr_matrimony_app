@@ -18,8 +18,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.firestore.DocumentSnapshot
 import com.halalrishtey.models.Gender
+import com.halalrishtey.models.PlanItem
 import com.halalrishtey.models.ProfilePicVisibility
 import com.halalrishtey.models.User
+import org.w3c.dom.Document
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,6 +45,13 @@ object CustomUtils {
 
     fun genTimeString(timeInMillis: Long): String {
         val dateFormatter = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = timeInMillis
+        return dateFormatter.format(cal.time).toString()
+    }
+
+    fun genDateString(timeInMillis: Long): String {
+        val dateFormatter = SimpleDateFormat("dd.MM.yyyy hh:mm a", Locale.getDefault())
         val cal = Calendar.getInstance()
         cal.timeInMillis = timeInMillis
         return dateFormatter.format(cal.time).toString()
@@ -157,6 +166,19 @@ object CustomUtils {
             meetupList = doc.get("meetupList") as ArrayList<String>,
             registrationToken = doc.get("registrationToken").toString(),
             dateOfBirth = doc.get("dateOfBirth").toString().toLong()
+        )
+    }
+
+    fun convertToPlan(d: DocumentSnapshot): PlanItem {
+        return PlanItem(
+            id = d["id"].toString(),
+            actualPrice = d["actualPrice"].toString(),
+            chatCount = d["chatCount"].toString().toInt(),
+            dcCount = d["dcCount"].toString().toInt(),
+            discountPrice = d["discountPrice"].toString().toInt(),
+            meetupCount = d["meetupCount"].toString().toInt(),
+            name = d["name"].toString(),
+            validity = d["validity"].toString().toInt()
         )
     }
 
