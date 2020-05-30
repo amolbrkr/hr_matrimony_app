@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.halalrishtey.CustomUtils
 import com.halalrishtey.models.MeetupItem
+import com.halalrishtey.models.MeetupStatus
 import com.halalrishtey.models.User
 import com.halalrishtey.services.UserRepository
 
@@ -105,6 +106,18 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     fun reportUser(current: String, target: String, reason: String) =
         UserRepository.reportUser(current, target, reason)
 
-    fun schedMeetup(meetup: MeetupItem): MutableLiveData<String> =
-        UserRepository.schedMeetup(meetup)
+    fun schedMeetup(meetup: MeetupItem): MutableLiveData<String> {
+        val t = currentUser.value!!
+        t.meetupList.add(meetup.meetupId)
+        currentUser.value = t
+        return UserRepository.schedMeetup(meetup)
+    }
+
+    fun getMeetupsFromIds(meetupIds: ArrayList<String>) =
+        UserRepository.getMeetupsFromIds(meetupIds)
+
+    fun updateMeetupStatus(meetupId: String, newStatus: MeetupStatus) =
+        UserRepository.updateMeetupStatus(meetupId, newStatus)
+
+    fun getPlans() = UserRepository.getAllPlans()
 }
