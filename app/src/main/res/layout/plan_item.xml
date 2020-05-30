@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/pNameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:text="Plan Name"
+            android:textColor="@color/primaryColor"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/pAPText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3999"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/pDPText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1499 for 4 Months"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/pBuyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:text="Buy" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
