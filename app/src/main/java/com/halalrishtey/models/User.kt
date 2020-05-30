@@ -32,6 +32,7 @@ data class User(
     var dateOfBirth: Long = 0,      //done
     var height: String = "",            //done
     var qualification: String = "",         //done
+    var qualDetails: String = "",
     var workLocation: String = "",        //done
     var annualIncome: String = "",       //done
     var organizationName: String = "",      //done
@@ -52,11 +53,14 @@ data class User(
     var meetupList: ArrayList<String> = ArrayList(),
     var bio: String = "",
     var numBrothers: String = "",
+    var isSuspended: Boolean = false,
     var numSisters: String = "",
     var fathersName: String = "",
     var fathersJob: String = "",
     var profilePicVisibility: ProfilePicVisibility = ProfilePicVisibility.Public,
-    var photoList: ArrayList<String> = ArrayList()
+    var photoList: ArrayList<String> = ArrayList(),
+    var currentPlan: String = "",
+    var planStart: Long = 0
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)
