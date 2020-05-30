@@ -38,6 +38,7 @@ class UserDetailActivity : AppCompatActivity() {
         if (userId != null) {
             userVM.getUser(userId).observe(this, Observer { user ->
                 userImages.clear()
+                userImages.add(user.photoUrl)
                 userImages.addAll(user.photoList)
                 adapter.notifyDataSetChanged()
 
