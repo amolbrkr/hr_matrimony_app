@@ -5,8 +5,8 @@
         android:title="My Profile" />
 
     <item
-        android:id="@+id/option_settings"
-        android:title="Settings" />
+        android:id="@+id/option_plans"
+        android:title="Subscriptions" />
 
     <item
         android:id="@+id/option_about"
