@@ -5,11 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".MeetupFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/meetupRV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Meetup Fragment" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>
