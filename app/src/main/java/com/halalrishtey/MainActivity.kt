@@ -14,7 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.firebase.iid.FirebaseInstanceId
 import com.halalrishtey.viewmodels.SearchViewModel
@@ -60,6 +59,14 @@ class MainActivity : AppCompatActivity() {
             userVM.currentUid.value = uid
             userVM.getUser(uid).observe(this, Observer {
                 if (!it.photoUrl.isBlank() || it.photoUrl.length > 5) {
+                    if (it.isSuspended) {
+                        suspendedInfo.visibility = View.VISIBLE
+                        toolbar.visibility = View.GONE
+                        bottom_navigation.visibility = View.GONE
+                    } else {
+                        suspendedInfo.visibility = View.GONE
+                    }
+
                     Picasso.get().load(it.photoUrl)
                         .placeholder(R.drawable.ph_gray)
                         .error(R.drawable.ic_launcher_background)
@@ -69,6 +76,15 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MainActivity", "Cannot get Photo url")
                 }
             })
+        }
+
+        closeInfoBtn.setOnClickListener {
+            infoLayout.visibility = View.GONE
+        }
+
+        browsePlanBtn.setOnClickListener {
+            val i = Intent(this, PlansActivity::class.java)
+            startActivity(i)
         }
 
         userImageView.setOnClickListener {
@@ -113,6 +129,12 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.option_profile -> {
                 CustomUtils.openUserDetails(this, userVM.currentUid.value!!)
+                return true
+            }
+
+            R.id.option_plans -> {
+                val i = Intent(this, PlansActivity::class.java)
+                startActivity(i)
                 return true
             }
 
