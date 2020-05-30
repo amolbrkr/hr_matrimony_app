@@ -6,9 +6,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FieldValue
 import com.halalrishtey.CustomUtils
-import com.halalrishtey.models.MeetupItem
-import com.halalrishtey.models.MessageItem
-import com.halalrishtey.models.User
+import com.halalrishtey.models.*
 
 object UserRepository {
     private val notifOnCompleteListener = OnCompleteListener { task: Task<Void> ->
@@ -476,12 +474,91 @@ object UserRepository {
         val ref = DatabaseService.getDbInstance()
             .collection("meetups")
             .document()
+        val currentRef = DatabaseService.getDbInstance()
+            .collection("users")
+            .document(meetup.sourceId)
+
+        val targetRef = DatabaseService.getDbInstance()
+            .collection("users")
+            .document(meetup.targetId)
+
         meetup.meetupId = ref.id
-        ref.set(meetup).addOnCompleteListener {
-            if (it.isSuccessful)
-                r.value = "Scheduled meetup with ${meetup.targetName}!"
-            else r.value = "Error while creating meetup: ${it.exception?.message}"
+
+        DatabaseService.getDbInstance()
+            .runBatch {
+                ref.set(meetup)
+                currentRef.update("meetupList", FieldValue.arrayUnion(meetup.meetupId))
+                targetRef.update("meetupList", FieldValue.arrayUnion(meetup.meetupId))
+            }.addOnCompleteListener {
+                r.value = if (it.isSuccessful)
+                    "Meetup scheduled with ${meetup.targetName}"
+                else "Error: ${it.exception?.message}"
+            }
+        return r
+    }
+
+    fun updateMeetupStatus(meetupId: String, newStatus: MeetupStatus): MutableLiveData<String> {
+        val r = MutableLiveData<String>(null)
+        DatabaseService.getDbInstance()
+            .collection("meetups")
+            .document(meetupId)
+            .update("status", newStatus)
+            .addOnCompleteListener {
+                r.value = if (it.isSuccessful) "Meetup status updated!"
+                else "Error: ${it.exception?.message}"
+            }
+        return r
+    }
+
+    fun getMeetupsFromIds(meetupIds: ArrayList<String>): MutableLiveData<ArrayList<MeetupItem>> {
+        val r = MutableLiveData<ArrayList<MeetupItem>>()
+        val t = ArrayList<MeetupItem>()
+
+        meetupIds.forEach { id ->
+            DatabaseService.getDbInstance()
+                .collection("meetups")
+                .document(id)
+                .get()
+                .addOnSuccessListener {
+                    val d = it.data!!
+                    val m = MeetupItem(
+                        meetupId = d["meetupId"].toString(),
+                        sourceId = d["sourceId"].toString(),
+                        sourcePhoto = d["sourcePhoto"].toString(),
+                        sourceName = d["sourcePhoto"].toString(),
+                        targetName = d["targetName"].toString(),
+                        targetId = d["targetId"].toString(),
+                        targetPhoto = d["targetPhoto"].toString(),
+                        timestamp = d["timestamp"].toString().toLong(),
+                        address = d["address"].toString(),
+                        isApproved = d["isApproved"].toString().toBoolean(),
+                        date = d["date"].toString().toLong(),
+                        locLat = d["locLat"].toString().toDouble(),
+                        locLong = d["locLong"].toString().toDouble()
+                    )
+                    t.add(m)
+                    r.value = t
+                }
         }
         return r
+    }
+
+    fun getAllPlans(): MutableLiveData<ArrayList<PlanItem>> {
+        val r = MutableLiveData<ArrayList<PlanItem>>()
+
+        DatabaseService.getDbInstance()
+            .collection("plans")
+            .get()
+            .addOnCompleteListener { it ->
+                if (it.isSuccessful) {
+                    val temp = ArrayList<PlanItem>()
+                    it.result?.documents?.forEach { doc ->
+                        temp.add(CustomUtils.convertToPlan(doc))
+                        r.value = temp
+                    }
+                }
+            }
+
+        return r;
     }
 }
