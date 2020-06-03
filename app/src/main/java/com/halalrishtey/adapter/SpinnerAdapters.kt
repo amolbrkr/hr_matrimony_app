@@ -53,11 +53,12 @@ class SpinnerAdapters(context: Context) {
         context,
         R.layout.dropdown_menu_popup_item,
         arrayOf(
-            "Maslak/Sect",
-            "Hanafi",
-            "Maliki",
-            "Shafa'i",
-            "Hanbali"
+            "Maslak / Sect",
+            "Ahle Sunnatul Jama’at (Sunni)",
+            "Tabligh Jama’at",
+            "Ahle Hadees Jama’at",
+            "Shia",
+            "Others"
         )
     )
 
@@ -78,15 +79,13 @@ class SpinnerAdapters(context: Context) {
         R.layout.dropdown_menu_popup_item,
         arrayOf(
             "Qualification",
-            "Doctor",
-            "Engineer",
-            "Professional Degree",
-            "Islamic Degree",
-            "Post Graduate",
-            "Graduate",
+            "Pre School / SSC",
             "Under Graduate",
-            "Intermediate",
-            "Pre School/SSC"
+            "Graduate",
+            "Post Graduate",
+            "Professional Graduate",
+            "Medical Professional Graduate",
+            "Islamic Degree"
         )
     )
 
