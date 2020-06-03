@@ -60,32 +60,10 @@
         android:label="Personal Details"
         tools:layout="@layout/fragment_personal_details">
         <action
-            android:id="@+id/action_personalDetailsFragment_to_professionalDetails"
-            app:destination="@id/professionalDetails"
-            app:enterAnim="@anim/anim_slide_in_left"
-            app:exitAnim="@anim/anim_slide_out_left"
-            app:popEnterAnim="@anim/anim_slide_in_right"
-            app:popExitAnim="@anim/anim_slide_out_right"
-            app:popUpTo="@+id/personalDetailsFragment" />
-        <action
             android:id="@+id/action_personalDetailsFragment_to_uploadImageFragment"
             app:destination="@id/uploadImageFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/professionalDetails"
-        android:name="com.halalrishtey.ProfessionalDetailsFragment"
-        android:label="Professional Details"
-        tools:layout="@layout/fragment_professional_details">
         <action
-            android:id="@+id/action_professionalDetails_to_uploadImageFragment"
-            app:destination="@id/uploadImageFragment"
-            app:popUpTo="@+id/professionalDetails" />
-        <argument
-            android:name="aadharImgUrl"
-            app:argType="string"
-            app:nullable="true" />
-        <action
-            android:id="@+id/action_professionalDetails_to_OTPVerificationFragment"
+            android:id="@+id/action_personalDetailsFragment_to_OTPVerificationFragment"
             app:destination="@id/OTPVerificationFragment" />
     </fragment>
     <fragment
@@ -94,12 +72,16 @@
         android:label="fragment_upload_image"
         tools:layout="@layout/fragment_upload_image">
         <action
-            android:id="@+id/action_uploadImageFragment_to_professionalDetails"
-            app:destination="@id/professionalDetails" />
+            android:id="@+id/action_uploadImageFragment_to_personalDetailsFragment"
+            app:destination="@id/personalDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/OTPVerificationFragment"
         android:name="com.halalrishtey.OTPVerificationFragment"
         android:label="fragment_otpverification"
-        tools:layout="@layout/fragment_otpverification" />
+        tools:layout="@layout/fragment_otpverification">
+        <action
+            android:id="@+id/action_OTPVerificationFragment_to_personalDetailsFragment"
+            app:destination="@id/personalDetailsFragment" />
+    </fragment>
 </navigation>
