@@ -13,10 +13,10 @@
         android:title="About" />
 
     <item
-        android:id="@+id/option_signout"
-        android:title="Sign Out" />
+        android:id="@+id/option_tos"
+        android:title="Terms Of Service" />
 
     <item
-        android:id="@+id/option_exit"
-        android:title="Exit" />
+        android:id="@+id/option_signout"
+        android:title="Sign Out" />
 </menu>
