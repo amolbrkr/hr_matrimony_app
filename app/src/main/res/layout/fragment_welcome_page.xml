@@ -9,6 +9,8 @@
         android:id="@+id/welcome_page_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitEnd" />
+        android:scaleY="1.1"
+        android:scaleX="1.1"
+        android:scaleType="fitXY" />
 
 </FrameLayout>

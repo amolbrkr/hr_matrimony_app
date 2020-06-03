@@ -15,17 +15,21 @@
         android:id="@+id/swipeNextText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#EEE"
+        android:textSize="18dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="700dp"
-        android:text="Swipe left -->" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="120dp"
+        android:text="Swipe left to continue" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/getStartedBtn"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="600dp"
+        android:layout_marginBottom="100dp"
         android:backgroundTint="#FFF"
         android:text="Get Started"
         android:textColor="@color/primaryColor"
