@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.halalrishtey.adapter.SpinnerAdapters
@@ -40,12 +41,18 @@ class PersonalDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val adapters = SpinnerAdapters(requireContext())
 
+        sharedVM.bundleFromUploadImageFragment.observe(viewLifecycleOwner, Observer { bundle ->
+            val uploadedImgUrl = bundle.getString("uploadedImageUrl", "Not Uploaded")
+            if (uploadedImgUrl != "Not Uploaded" && sharedVM.uploadImageRequester.value == "Img2") {
+                userAuthVM.newUser.value?.idProofUrl = uploadedImgUrl
+            }
+        })
+
         sharedVM.bundleFromUploadImageFragment.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { bundle ->
+            viewLifecycleOwner, Observer { bundle ->
                 val photoUrl = bundle.getString("uploadedImageUrl", "Not Uploaded")
 
-                if (photoUrl != "Not Uploaded" && sharedVM.uploadImageRequester.value == "PersonalDetailsFragment") {
+                if (photoUrl != "Not Uploaded" && sharedVM.uploadImageRequester.value == "Img1") {
                     Picasso.get().load(photoUrl).into(profileImageView)
                     userAuthVM.newUser.value?.photoUrl = photoUrl
                 }
@@ -59,6 +66,11 @@ class PersonalDetailsFragment : Fragment() {
 
         heightSpinner.adapter = adapters.heightAdapter
         heightSpinner.setSelection(0)
+
+        uploadIdBtn.setOnClickListener {
+            sharedVM.uploadImageRequester.value = "Img2"
+            findNavController().navigate(R.id.action_personalDetailsFragment_to_uploadImageFragment)
+        }
 
         val cal: Calendar = Calendar.getInstance()
         val onDateSetListener =
@@ -92,7 +104,7 @@ class PersonalDetailsFragment : Fragment() {
         }
 
         profileImageView.setOnClickListener {
-            sharedVM.uploadImageRequester.value = "PersonalDetailsFragment"
+            sharedVM.uploadImageRequester.value = "Img1"
             findNavController().navigate(R.id.action_personalDetailsFragment_to_uploadImageFragment)
         }
 
@@ -117,7 +129,7 @@ class PersonalDetailsFragment : Fragment() {
                 }
 
                 findNavController().navigate(
-                    R.id.action_personalDetailsFragment_to_professionalDetails
+                    R.id.action_personalDetailsFragment_to_OTPVerificationFragment
                 )
             } else {
                 Snackbar.make(view, "Error: ${validatePersonalDetails()}", Snackbar.LENGTH_SHORT)

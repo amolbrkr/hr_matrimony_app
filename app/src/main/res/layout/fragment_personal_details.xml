@@ -1,148 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_vertical"
-    android:padding="16dp"
     tools:context=".PersonalDetailsFragment">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/pdTitleText"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="Personal details"
-        android:textColor="@color/primaryColor"
-        android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+        android:layout_gravity="center_vertical"
+        android:padding="16dp">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/pdSubtitleText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Please add your details below"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/pdTitleText" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profileImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:src="@drawable/add_user"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pdSubtitleText" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/addProfilePicText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Add a profile picture"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileImageView" />
-
-    <RadioGroup
-        android:id="@+id/genderRadioGrp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:checkedButton="@+id/maleSelector"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addProfilePicText">
-
-        <RadioButton
-            android:id="@+id/maleSelector"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/pdBackBtn"
+            style="@style/IconOnlyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="128dp"
-            android:text="Male" />
+            app:icon="@drawable/ic_arrow_back"
+            app:iconTint="#000"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioButton
-            android:id="@+id/femaleSelector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Female" />
-    </RadioGroup>
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/createdForSpinner"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:minHeight="48dp"
-        app:layout_constraintTop_toBottomOf="@id/genderRadioGrp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nameTextInp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Full name"
-        app:layout_constraintTop_toBottomOf="@id/createdForSpinner"
-        app:startIconDrawable="@drawable/ic_face"
-        tools:layout_editor_absoluteX="24dp">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/pdTitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Personal details"
+            android:textColor="@color/primaryColor"
+            android:textSize="24sp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/setDobBtn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:minHeight="48dp"
-        android:text="Date of Birth"
-        android:textColor="@color/primaryColor"
-        app:layout_constraintTop_toBottomOf="@id/nameTextInp" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/pdSubtitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Please add your details below"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/pdTitleText" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/heightSpinner"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:minHeight="48dp"
-        app:layout_constraintTop_toBottomOf="@id/setDobBtn" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/add_user"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pdSubtitleText" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/eduSpinner"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:minHeight="48dp"
-        app:layout_constraintTop_toBottomOf="@id/heightSpinner" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/addProfilePicText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Add a profile picture"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileImageView" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/pdNextButton"
-        style="@style/CTAButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#FFF"
-        android:text="Next"
-        android:textAllCaps="false"
-        android:textColor="@color/primaryColor"
-        android:theme="@style/Widget.MaterialComponents.Button"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/eduSpinner" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <RadioGroup
+            android:id="@+id/genderRadioGrp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:checkedButton="@+id/maleSelector"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/addProfilePicText">
+
+            <RadioButton
+                android:id="@+id/maleSelector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="128dp"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/femaleSelector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female" />
+        </RadioGroup>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/createdForSpinner"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:minHeight="48dp"
+            app:layout_constraintTop_toBottomOf="@id/genderRadioGrp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameTextInp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="Full name"
+            app:layout_constraintTop_toBottomOf="@id/createdForSpinner"
+            app:startIconDrawable="@drawable/ic_face"
+            tools:layout_editor_absoluteX="24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/setDobBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:minHeight="48dp"
+            android:text="Date of Birth"
+            android:textColor="@color/primaryColor"
+            app:layout_constraintTop_toBottomOf="@id/nameTextInp" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/heightSpinner"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:minHeight="48dp"
+            app:layout_constraintTop_toBottomOf="@id/setDobBtn" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/eduSpinner"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:minHeight="48dp"
+            app:layout_constraintTop_toBottomOf="@id/heightSpinner" />
+
+        <LinearLayout
+            android:id="@+id/idProofLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/eduSpinner">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:maxHeight="200dp"
+                android:layout_weight="0.4"
+                android:contentDescription="Uploaded ID Proof"
+                android:src="@drawable/ph_gray" />
+
+            <LinearLayout
+                android:layout_margin="8dp"
+                android:minWidth="64dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.6"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/uploadIdBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:text="Upload ID Proof" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_warning" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/pdNextButton"
+            style="@style/CTAButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#FFF"
+            android:text="Register"
+            android:textAllCaps="false"
+            android:textColor="@color/primaryColor"
+            android:theme="@style/Widget.MaterialComponents.Button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/idProofLayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 
