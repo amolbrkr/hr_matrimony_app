@@ -7,11 +7,21 @@
     android:padding="16dp"
     tools:context=".RegisterFragment">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/registerBackBtn"
+        style="@style/IconOnlyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_arrow_back"
+        app:iconTint="#000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/registerTitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="48dp"
         android:gravity="center"
         android:text="Register"
         android:textColor="@color/primaryColor"
@@ -32,11 +42,11 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/darker_gray"
         android:text="To verifty that its really you we'll send an One Time Password (OTP) to the phone number you provide us!"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/registerSubtitleText"
-        app:layout_constraintBottom_toTopOf="@id/registerEmailTextInp" />
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@id/registerEmailTextInp"
+        app:layout_constraintTop_toBottomOf="@id/registerSubtitleText" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/registerEmailTextInp"

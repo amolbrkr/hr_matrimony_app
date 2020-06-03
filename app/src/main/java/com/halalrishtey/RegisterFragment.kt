@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.halalrishtey.models.User
 import com.halalrishtey.viewmodels.UserAuthViewModel
+import kotlinx.android.synthetic.main.fragment_personal_details.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import java.util.*
 
@@ -46,6 +47,10 @@ class RegisterFragment : Fragment() {
 
         goToLoginBtn.setOnClickListener {
             findNavController().navigateUp()
+        }
+
+        registerBackBtn.setOnClickListener {
+            activity?.onBackPressed()
         }
 
         registerBtn.setOnClickListener {
