@@ -58,6 +58,10 @@ class MeetupDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(this, "Thanks for your feedback.", Toast.LENGTH_SHORT).show()
             }
 
+            mdBackBtn.setOnClickListener {
+                this.finish()
+            }
+
             mCompleteBtn.setOnClickListener {
                 userVM.updateMeetupStatus(data!!.meetupId, MeetupStatus.Done)
                     .observe(this, Observer {

@@ -543,6 +543,20 @@ object UserRepository {
         return r
     }
 
+    fun meetupFeedback(meetupId: String, feedback: String): MutableLiveData<String> {
+        val r = MutableLiveData<String>()
+        DatabaseService.getDbInstance()
+            .collection("meetups")
+            .document(meetupId)
+            .update(mapOf(feedback to feedback))
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d("MeetupFragment", "Successfully added feedback!")
+                }
+            }
+        return r;
+    }
+
     fun getAllPlans(): MutableLiveData<ArrayList<PlanItem>> {
         val r = MutableLiveData<ArrayList<PlanItem>>()
 
