@@ -29,6 +29,10 @@ class PasswordResetFragment : Fragment() {
         resetPw_button.setOnClickListener {
             val email = resetPwEmail_editText.editText?.text.toString()
 
+            prBackBtn.setOnClickListener {
+                activity?.onBackPressed()
+            }
+
             resetPwEmail_editText.error = if (userAuthVM.validateEmail(email) != null) {
                 userAuthVM.validateEmail(email)
             } else {
