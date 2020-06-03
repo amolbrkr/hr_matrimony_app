@@ -67,6 +67,12 @@ class WelcomeFragment : Fragment() {
 private const val ARG_RES_ID = "image_res_id"
 private val imageResources =
     listOf(R.mipmap.welcome_0, R.mipmap.welcome_1, R.mipmap.welcome_2, R.mipmap.welcome_3)
+private val imgDesc = listOf(
+    "Find your soulmate on India's first Dowry-free Matrimonial App",
+    "Dowry FREE, Always!",
+    "Aadhar Verified Profiles",
+    "Secure & Trustable!"
+)
 
 class WelcomeViewPagerAdapter(fragment: Fragment) :
     FragmentStateAdapter(fragment) {
@@ -76,6 +82,7 @@ class WelcomeViewPagerAdapter(fragment: Fragment) :
         val fragment = WelcomePageFragment()
         fragment.arguments = Bundle().apply {
             putInt(ARG_RES_ID, imageResources[position])
+            putString("imgDesc", imgDesc[position])
         }
 
         return fragment

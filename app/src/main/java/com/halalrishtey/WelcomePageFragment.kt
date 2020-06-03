@@ -22,6 +22,7 @@ class WelcomePageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.takeIf { it.containsKey(ARG_RES_ID) }?.apply {
             welcome_page_imageView.setImageResource(getInt(ARG_RES_ID))
+            welcome_page_imageView.contentDescription = getString("imgDesc")
         }
     }
 }
