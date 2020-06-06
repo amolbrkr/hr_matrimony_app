@@ -45,6 +45,8 @@ class PersonalDetailsFragment : Fragment() {
             val uploadedImgUrl = bundle.getString("uploadedImageUrl", "Not Uploaded")
             if (uploadedImgUrl != "Not Uploaded" && sharedVM.uploadImageRequester.value == "Img2") {
                 userAuthVM.newUser.value?.idProofUrl = uploadedImgUrl
+
+                Picasso.get().load(uploadedImgUrl).into(idProofImg)
             }
         })
 
