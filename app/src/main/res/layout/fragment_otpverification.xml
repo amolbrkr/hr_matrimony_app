@@ -24,28 +24,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Once you recieve the OTP please enter it below"
+        android:layout_marginHorizontal="16dp"
+        android:text="You will be logged in once we detect the OTP, if you don't recieve the SMS click the button below to resend it."
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/otpTitleText" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/otpTextInp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-        android:layout_width="match_parent"
+    <com.mukesh.OtpView
+        android:id="@+id/otp_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="64dp"
-        android:hint="OTP"
-        app:layout_constraintBottom_toTopOf="@id/timeRemainingText"
-        app:layout_constraintTop_toBottomOf="@id/otpSubtitleText">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginTop="80dp"
+        android:inputType="number"
+        android:itemBackground="#EEE"
+        android:textColor="@color/primaryColor"
+        app:itemCount="6"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/otpSubtitleText"
+        app:lineColor="@color/primaryDarkColor"
+        app:viewType="line" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/timeRemainingText"
@@ -56,8 +54,8 @@
         android:text="Time Remaining: "
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/otpVerifyLayout"
-        app:layout_constraintTop_toBottomOf="@+id/otpTextInp" />
+        app:layout_constraintBottom_toTopOf="@id/resendOtpBtn"
+        app:layout_constraintTop_toBottomOf="@+id/otp_view" />
 
 
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
@@ -74,29 +72,14 @@
         app:layout_constraintTop_toBottomOf="@id/timeRemainingText"
         app:mpb_progressStyle="horizontal" />
 
-    <LinearLayout
-        android:id="@+id/otpVerifyLayout"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/resendOtpBtn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="64dp"
+        android:text="Resend OTP"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/otpProgress">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/resendOtpBtn"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="Resend OTP" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/verifyOtpBtn"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Verify" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/otp_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
