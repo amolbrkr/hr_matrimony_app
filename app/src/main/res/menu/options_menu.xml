@@ -14,7 +14,11 @@
 
     <item
         android:id="@+id/option_tos"
-        android:title="Terms Of Service" />
+        android:title="Terms and Condition" />
+
+    <item
+        android:id="@+id/option_pp"
+        android:title="Privacy Policy" />
 
     <item
         android:id="@+id/option_signout"

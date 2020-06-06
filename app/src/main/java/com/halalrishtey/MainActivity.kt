@@ -159,6 +159,20 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
 
+            R.id.option_pp -> {
+                val i = Intent(this, PolicyActivity::class.java)
+                i.putExtra("type", "pp")
+                startActivity(i)
+                return true
+            }
+
+            R.id.option_tos -> {
+                val i = Intent(this, PolicyActivity::class.java)
+                i.putExtra("type", "tos")
+                startActivity(i)
+                return true
+            }
+
             else -> {
                 return true
             }
