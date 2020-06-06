@@ -43,10 +43,15 @@ class OTPVerificationFragment : Fragment() {
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(p0: PhoneAuthCredential) {
                 if (p0.smsCode != null) {
-                    Log.d("OTP", p0.smsCode!!)
-
                     userAuthVM.newUser.value?.isOTPVerified = true
-                    otpTextInp.editText?.setText(p0.smsCode)
+                    otp_view.setText(p0.smsCode)
+
+                    timeRemainingText.text = "OTP Received"
+                    Toast.makeText(
+                        context,
+                        "Horray! Thanks for verifying...",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                     val email = userAuthVM.newUser.value!!.email
                     val pw = userAuthVM.pwd.value!!
@@ -63,12 +68,6 @@ class OTPVerificationFragment : Fragment() {
                             sharedPref?.putString("user_uid", authData.data.uid)
                             sharedPref?.commit()
 
-                            Toast.makeText(
-                                context,
-                                "Successfully Created: ${authData.data.uid}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
                             val i = Intent(
                                 activity, MainActivity::class.java
                             )
@@ -77,10 +76,10 @@ class OTPVerificationFragment : Fragment() {
                             activity?.finish()
                         } else {
                             Snackbar.make(
-                                    requireView(),
-                                    "Error: ${authData.errorMessage}",
-                                    Snackbar.LENGTH_LONG
-                                )
+                                requireView(),
+                                "Error: ${authData.errorMessage}",
+                                Snackbar.LENGTH_LONG
+                            )
                                 .show()
                         }
                     })
@@ -106,22 +105,12 @@ class OTPVerificationFragment : Fragment() {
 
                 //Assign resending token
                 forceResendingToken = p1
-
-                timeRemainingText.text = "Time Remaining: 60 Seconds"
-                val h = Handler()
-                var count = 60
-                val r = object : Runnable {
-                    override fun run() {
-                        count--
-                        timeRemainingText?.text = "Time Remaining: $count Seconds"
-                        if (count > 0) h.postDelayed(this, 1000)
-                    }
-                }
-                h.postDelayed(r, 1000)
+                startCounter()
             }
         }
 
         resendOtpBtn.setOnClickListener {
+            this.startCounter()
             PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNum,
                 60,
@@ -139,5 +128,19 @@ class OTPVerificationFragment : Fragment() {
             requireActivity(),
             callbacks
         )
+    }
+
+    fun startCounter() {
+        timeRemainingText.text = "Time Remaining: 60 Seconds"
+        val h = Handler()
+        var count = 60
+        val r = object : Runnable {
+            override fun run() {
+                count--
+                timeRemainingText?.text = "Time Remaining: $count Seconds"
+                if (count > 0) h.postDelayed(this, 1000)
+            }
+        }
+        h.postDelayed(r, 1000)
     }
 }

@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/secondaryColor</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:actionOverflowButtonStyle">@style/CustomActionOverflowButtonStyle</item>
+        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>
     </style>
 
