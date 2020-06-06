@@ -38,11 +38,16 @@
         </service>
 
         <activity
+            android:name=".PolicyActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".PlansActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".MeetupDetailActivity" />
         <activity android:name=".ScheduleMeetupActivity" />
-        <activity android:name=".UserImagesActivity" />
+        <activity
+            android:name=".UserImagesActivity"
+            android:parentActivityName=".EditProfileActivity" />
         <activity
             android:name=".AboutActivity"
             android:parentActivityName=".MainActivity" />
