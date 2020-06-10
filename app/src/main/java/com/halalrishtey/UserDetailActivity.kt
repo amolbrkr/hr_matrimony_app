@@ -1,8 +1,8 @@
 package com.halalrishtey
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +20,7 @@ class UserDetailActivity : AppCompatActivity() {
 
     private val userVM by viewModels<UserViewModel>()
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_detail)
@@ -59,12 +60,29 @@ class UserDetailActivity : AppCompatActivity() {
                 }
 
                 if (user.isIdProofVerified) userVerfiedBadge.visibility = View.VISIBLE
+
                 userNameText.text = user.displayName
                 userSubText.text = "${user.gender}, ${user.age} Years"
-                detail1Text.text =
-                    "Works at: ${user.workLocation} \nEducation: ${user.qualification} \nOrganization: ${user.organizationName}"
-                detail2Text.text =
-                    "Income: ${user.annualIncome} per anum \nMaritial Status: ${user.maritalStatus} \nSect: ${user.sect}"
+
+                if (user.qualification.isNotBlank())
+                    detail1Text.text =
+                        "Qualification: ${user.qualification} \n${user.qualDetails}"
+
+                if (user.qualification.isNotBlank())
+                    detail2Text.text = "Works at: ${user.organizationName} \n${user.annualIncome}"
+
+                if (user.fathersName.isNotBlank() && user.fathersJob.isNotBlank())
+                    fd1Text.text = "Father: ${user.fathersName} \nProfession: ${user.fathersJob}"
+
+                if (user.numBrothers.isNotBlank())
+                    fd2Text.text =
+                        "Number of Brothers: ${user.numBrothers} \nNumber of Sister: ${user.numSisters}"
+
+                if (user.dargah.isNotBlank())
+                    od1Text.text = "Dargah: ${user.dargah}"
+
+                if (user.sect.isNotBlank())
+                    od2Text.text = "Sect: ${user.sect}"
             })
         }
     }
