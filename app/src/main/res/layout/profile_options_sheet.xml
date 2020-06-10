@@ -18,7 +18,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_favorite_border"
-            android:tint="@android:color/darker_gray" />
+            android:tint="@color/primaryColor" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,10 +37,10 @@
         android:padding="8dp">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:src="@drawable/ic_chat_bubble_outline"
-            android:tint="@android:color/darker_gray" />
+            android:tint="@color/primaryColor" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,13 +62,35 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_phone"
-            android:tint="@android:color/darker_gray" />
+            android:tint="@color/primaryColor" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="Direct Contact"
+            android:textSize="16sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/meetupOpt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start|center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_location_on"
+            android:tint="@color/primaryColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Schedule Meetup"
             android:textSize="16sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -84,7 +106,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_share"
-            android:tint="@android:color/darker_gray" />
+            android:tint="@color/primaryColor" />
 
         <TextView
             android:layout_width="wrap_content"
