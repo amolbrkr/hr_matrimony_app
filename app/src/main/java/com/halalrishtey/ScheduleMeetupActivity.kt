@@ -55,7 +55,9 @@ class ScheduleMeetupActivity : AppCompatActivity() {
             userVM.getProfilesByIds(arrayListOf(currentId!!, targetId!!)).observe(this, Observer {
                 userData = it
                 val i = it.size - 1
-                Picasso.get().load(it[i].photoUrl).into(smUserImg1)
+
+                if (it[i].photoUrl.length > 5)
+                    Picasso.get().load(it[i].photoUrl).into(smUserImg1)
 
                 smTitleText.text = SpannableStringBuilder().append("Meetup with ")
                     .bold { append(it[i].displayName) }.append(", select a date")
@@ -72,7 +74,8 @@ class ScheduleMeetupActivity : AppCompatActivity() {
                         )
                     )
                 } else {
-                    Picasso.get().load(it[i].photoUrl).into(smUserImg2)
+                    if (it[i].photoUrl.length > 5)
+                        Picasso.get().load(it[i].photoUrl).into(smUserImg2)
                 }
             })
         }
