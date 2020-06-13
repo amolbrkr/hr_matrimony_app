@@ -24,9 +24,11 @@ class ProfileImagesAdapter(
     }
 
     override fun onBindViewHolder(holder: pImageVH, position: Int) {
-        Picasso.get().load(images[position]).resize(100, 100)
-            .centerCrop()
-            .into(holder.itemView.pImage)
+        if (images[position].length > 10) {
+            Picasso.get().load(images[position]).resize(100, 100)
+                .centerCrop()
+                .into(holder.itemView.pImage)
+        }
 
         holder.itemView.deleteImageBtn.setOnClickListener {
             deleteCallback(images[position])
