@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     app:layout_constraintVertical_chainStyle="packed"
-    tools:context=".ShortlistFragment">
+    tools:context=".InterestsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shortlistedProfilesRV"
