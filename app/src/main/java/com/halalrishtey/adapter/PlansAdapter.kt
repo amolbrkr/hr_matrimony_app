@@ -24,6 +24,8 @@ class PlansAdapter(
     override fun onBindViewHolder(holder: PlansVH, position: Int) {
         holder.itemView.apply {
             pNameText.text = planList[position].name
+            pDetailText.text =
+                "Messages: ${planList[position].chatCount}, Direct Contacts: ${planList[position].dcCount} \nMeetups: ${planList[position].meetupCount}"
             pAPText.text = "₹" + planList[position].actualPrice
             pAPText.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             pDPText.text =
