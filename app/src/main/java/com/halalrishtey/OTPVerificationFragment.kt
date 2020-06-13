@@ -18,11 +18,13 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.halalrishtey.viewmodels.UserAuthViewModel
+import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_otpverification.*
 import java.util.concurrent.TimeUnit
 
 class OTPVerificationFragment : Fragment() {
     private val userAuthVM: UserAuthViewModel by activityViewModels()
+    private val userVM: UserViewModel by activityViewModels()
     private lateinit var forceResendingToken: PhoneAuthProvider.ForceResendingToken
 
     override fun onCreateView(
@@ -34,6 +36,12 @@ class OTPVerificationFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        //Assign the free plan to User
+        userVM.getFreePlan().observe(viewLifecycleOwner, Observer { freePlan ->
+            if (freePlan != null)
+                userAuthVM.newUser.value?.currentPlan = freePlan
+        })
 
         resendOtpBtn.isEnabled = false
 
