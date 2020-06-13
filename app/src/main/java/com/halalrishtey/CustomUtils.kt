@@ -21,7 +21,6 @@ import com.halalrishtey.models.Gender
 import com.halalrishtey.models.PlanItem
 import com.halalrishtey.models.ProfilePicVisibility
 import com.halalrishtey.models.User
-import org.w3c.dom.Document
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -165,8 +164,32 @@ object CustomUtils {
             numSisters = doc.get("numSisters").toString(),
             meetupList = doc.get("meetupList") as ArrayList<String>,
             registrationToken = doc.get("registrationToken").toString(),
-            dateOfBirth = doc.get("dateOfBirth").toString().toLong()
+            dateOfBirth = doc.get("dateOfBirth").toString().toLong(),
+            isSuspended = doc.get("suspended").toString().toBoolean(),
+            planStart = doc.get("planStart").toString().toLong(),
+            currentPlan = convertToPlan(
+                doc.get("currentPlan") as Map<String, Any>?
+            ),
+            qualDetails = doc.get("qualDetails").toString()
         )
+    }
+
+    fun convertToPlan(plan: Map<String, Any>?): PlanItem? {
+        val p = if (plan != null) {
+            PlanItem(
+                id = plan["id"].toString(),
+                actualPrice = plan["actualPrice"].toString(),
+                chatCount = plan["chatCount"].toString().toInt(),
+                dcCount = plan["dcCount"].toString().toInt(),
+                discountPrice = plan["discountPrice"].toString().toInt(),
+                meetupCount = plan["meetupCount"].toString().toInt(),
+                name = plan["name"].toString(),
+                validity = plan["validity"].toString().toInt()
+            )
+        } else null
+
+        Log.d("CustomUtils", "Converted Plan: $p")
+        return p
     }
 
     fun convertToPlan(d: DocumentSnapshot): PlanItem {
