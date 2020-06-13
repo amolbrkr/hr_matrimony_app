@@ -119,5 +119,33 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     fun updateMeetupStatus(meetupId: String, newStatus: MeetupStatus) =
         UserRepository.updateMeetupStatus(meetupId, newStatus)
 
-    fun getPlans() = UserRepository.getAllPlans()
+    fun getAllPlans() = UserRepository.getAllPlans()
+
+    fun getPlan(planId: String) = UserRepository.getPlan(planId)
+
+    fun getFreePlan() = UserRepository.getFreePlan()
+
+    fun decMessageCount(userId: String) {
+        val t = currentUser.value!!
+        t.currentPlan!!.chatCount -= 1
+        currentUser.value = t
+
+        UserRepository.decMsgCount(userId)
+    }
+
+    fun decDcCount(userId: String) {
+        val t = currentUser.value!!
+        t.currentPlan!!.dcCount -= 1
+        currentUser.value = t
+
+        UserRepository.decDcCount(userId)
+    }
+
+    fun decMeetupCount(userId: String) {
+        val t = currentUser.value!!
+        t.currentPlan!!.meetupCount -= 1
+        currentUser.value = t
+
+        UserRepository.decMeetupCount(userId)
+    }
 }
