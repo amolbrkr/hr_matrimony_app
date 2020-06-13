@@ -50,6 +50,7 @@
                     android:id="@+id/avatarImage"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
+                    android:contentDescription="Tap to change profile pictures"
                     android:src="@drawable/ph_gray" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton

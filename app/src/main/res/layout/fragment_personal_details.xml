@@ -49,6 +49,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="16dp"
+            android:contentDescription="Click to add a Profile Picture"
             android:src="@drawable/add_user"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -155,8 +156,9 @@
             <ImageView
                 android:id="@+id/idProofImg"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="160dp"
                 android:maxHeight="200dp"
+                android:padding="8dp"
                 android:layout_weight="0.4"
                 android:contentDescription="Uploaded ID Proof"
                 android:src="@drawable/ph_gray" />

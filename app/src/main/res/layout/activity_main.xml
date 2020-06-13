@@ -51,6 +51,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/toggleSearchBtn"
                 style="@style/IconOnlyButton"
+                android:contentDescription="Search Or Filter Profiles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tint="@color/primaryColor"
@@ -59,6 +60,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userImageView"
                 android:layout_width="30dp"
+                android:contentDescription="Profile Options"
                 android:layout_height="30dp"
                 android:layout_margin="8dp"
                 android:src="@drawable/ph_gray" />
@@ -84,6 +86,7 @@
             android:backgroundTint="#FFF"
             android:translationZ="100dp"
             android:visibility="gone"
+            android:contentDescription="Enter Search Query"
             app:endIconCheckable="true"
             app:endIconContentDescription="Filter your search"
             app:endIconDrawable="@drawable/ic_filter_list"
@@ -114,6 +117,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/closeInfoBtn"
             style="@style/IconOnlyButton"
+            android:contentDescription="Close Popup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
