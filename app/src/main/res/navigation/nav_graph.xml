@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/shortlistFragment"
-        android:name="com.halalrishtey.ShortlistFragment"
+        android:name="com.halalrishtey.InterestsFragment"
         android:label="fragment_shortlist"
         tools:layout="@layout/fragment_shortlist" />
     <fragment
