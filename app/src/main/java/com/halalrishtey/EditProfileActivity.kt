@@ -90,6 +90,9 @@ class EditProfileActivity : AppCompatActivity() {
                     fathersJob = fOccText.editText?.text.toString()
                     sect = epSectSpinner.selectedItem.toString()
                     dargah = epDargahSpinner.selectedItem.toString()
+                    qualDetails = epQualInp.editText?.text.toString()
+                    numBrothers = epNumBroText.editText?.text.toString()
+                    numSisters = epNumSisText.editText?.text.toString()
                 }
 
                 userVM.updateUserData(temp?.uid!!, temp).observe(this, Observer { res ->
