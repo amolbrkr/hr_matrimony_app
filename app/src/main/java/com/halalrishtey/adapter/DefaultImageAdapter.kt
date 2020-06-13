@@ -37,11 +37,13 @@ class DefaultImageAdapter(private val images: ArrayList<String>) :
             .setFillViewport(true) //Changed
             .setFitMethod(Settings.Fit.INSIDE).gravity = Gravity.CENTER
 
-        Picasso.get().load(images[position])
-            .into(holder.itemView.defImg)
+
+        if (images[position].length > 10) {
+            Picasso.get().load(images[position])
+                .into(holder.itemView.defImg)
+        }
 
         holder.itemView.defImg.setOnClickListener {
-
             val i = Intent(it.context, UserImagesActivity::class.java)
             i.apply {
                 putExtra("images", images)
