@@ -21,19 +21,30 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val v = LayoutInflater.from(requireContext()).inflate(R.layout.profile_options_sheet, null)
+        val currentPlan = userVM.currentUser.value!!.currentPlan!!
 
         v.meetupOpt.setOnClickListener {
             val current = userVM.currentUser.value?.uid
             val target = user.uid
-            if (current != null && target != null) {
-                val i = Intent(context, ScheduleMeetupActivity::class.java)
-                i.apply {
-                    putExtra("currentId", current)
-                    putExtra("targetId", target)
-                }
-                startActivity(i)
-            } else Snackbar.make(requireView(), "Something went wrong!", Snackbar.LENGTH_SHORT)
-                .show()
+
+            if (currentPlan != null && currentPlan.meetupCount > 0) {
+                if (current != null && target != null) {
+                    userVM.decMeetupCount(current)
+                    val i = Intent(context, ScheduleMeetupActivity::class.java)
+                    i.apply {
+                        putExtra("currentId", current)
+                        putExtra("targetId", target)
+                    }
+                    startActivity(i)
+                } else Snackbar.make(requireView(), "Something went wrong!", Snackbar.LENGTH_SHORT)
+                    .show()
+            } else {
+                Snackbar.make(
+                    requireView(),
+                    "You have used all your Meetups from your current Plan.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
 
         v.shareProfileOpt.setOnClickListener {
@@ -54,9 +65,18 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
         }
 
         v.dirContactOpt.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:${user.phoneNumber}")
-            startActivity(intent)
+
+            if (currentPlan.dcCount > 0) {
+                val intent = Intent(Intent.ACTION_DIAL)
+                intent.data = Uri.parse("tel:${user.phoneNumber}")
+                startActivity(intent)
+            } else {
+                Snackbar.make(
+                    v,
+                    "You have used all your Direct Contacts from your current Plan.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
 
         Log.d("ProfileOptions", "Current user: ${userVM.currentUser.value}")
@@ -72,7 +92,7 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
                     userVM.currentUid.value!!,
                     userVM.currentUser.value?.displayName!!,
                     user.uid!!
-                ).observe(viewLifecycleOwner, Observer { msg ->
+                ).observe(requireActivity(), Observer { msg ->
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT)
                         .show()
                 })
@@ -81,7 +101,7 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
                 userVM.removeInterest(
                     userVM.currentUid.value!!,
                     user.uid!!
-                ).observe(viewLifecycleOwner, Observer { msg ->
+                ).observe(requireActivity(), Observer { msg ->
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT)
                         .show()
                 })
@@ -89,18 +109,29 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
         }
         v.messageOpt.setOnClickListener {
             val currentUser = userVM.currentUser.value!!
-            userVM.initConversation(userVM.currentUser.value!!, user)
-                .observe(viewLifecycleOwner, Observer {
-                    if (it.length > 1) {
-                        val i = Intent(context, ChatActivity::class.java)
-                        i.putExtra("conversationId", it)
-                        i.putExtra("currentId", currentUser.uid)
-                        i.putExtra("targetId", user.uid)
-                        i.putExtra("targetPhotoUrl", user.photoUrl)
-                        i.putExtra("targetName", user.displayName)
-                        startActivity(i)
-                    }
-                })
+
+            if (currentPlan.chatCount > 0) {
+                userVM.initConversation(userVM.currentUser.value!!, user)
+                    .observe(requireActivity(), Observer {
+                        //Reduce message count by 1
+                        userVM.decMessageCount(currentUser.uid!!)
+                        if (it.length > 1) {
+                            val i = Intent(context, ChatActivity::class.java)
+                            i.putExtra("conversationId", it)
+                            i.putExtra("currentId", currentUser.uid)
+                            i.putExtra("targetId", user.uid)
+                            i.putExtra("targetPhotoUrl", user.photoUrl)
+                            i.putExtra("targetName", user.displayName)
+                            startActivity(i)
+                        }
+                    })
+            } else {
+                Snackbar.make(
+                    v,
+                    "You have used all your Messages from your current Plan.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
         val d = BottomSheetDialog(requireContext())
         d.setContentView(v)
