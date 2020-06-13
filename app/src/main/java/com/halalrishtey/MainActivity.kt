@@ -57,7 +57,19 @@ class MainActivity : AppCompatActivity() {
                 }
 
             userVM.currentUid.value = uid
+            userVM.observeUser(uid).observe(this, Observer {
+                userVM.currentUser.value = it
+                Log.d("MainActivity", "Current user set from MainActivity!")
+            })
+
             userVM.getUser(uid).observe(this, Observer {
+                //Check for which plan user is on, show UI based on that
+                if (it.currentPlan == null || it.currentPlan?.name == "Free Plan") {
+                    infoLayout.visibility = View.VISIBLE
+                } else {
+                    infoLayout.visibility = View.GONE
+                }
+
                 if (!it.photoUrl.isBlank() || it.photoUrl.length > 5) {
                     if (it.isSuspended) {
                         suspendedInfo.visibility = View.VISIBLE
@@ -67,10 +79,13 @@ class MainActivity : AppCompatActivity() {
                         suspendedInfo.visibility = View.GONE
                     }
 
-                    Picasso.get().load(it.photoUrl)
-                        .placeholder(R.drawable.ph_gray)
-                        .error(R.drawable.ic_launcher_background)
-                        .into(userImageView)
+                    if (it.photoUrl.length > 10) {
+                        Picasso.get().load(it.photoUrl)
+                            .placeholder(R.drawable.ph_gray)
+                            .error(R.drawable.ic_launcher_background)
+                            .into(userImageView)
+                    }
+
                     userVM.getUser(uid).removeObservers(this)
                 } else {
                     Log.d("MainActivity", "Cannot get Photo url")

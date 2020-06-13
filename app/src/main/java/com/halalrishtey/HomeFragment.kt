@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.models.User
@@ -35,21 +36,32 @@ class HomeFragment : Fragment() {
 
     private fun genMessageBtnListener(
         currentUser: User,
-        targetUser: User
+        targetUser: User,
+        v: View
     ): View.OnClickListener {
         return View.OnClickListener {
-            userVM.initConversation(currentUser, targetUser)
-                .observe(viewLifecycleOwner, Observer {
-                    if (it.length > 1) {
-                        val i = Intent(context, ChatActivity::class.java)
-                        i.putExtra("conversationId", it)
-                        i.putExtra("currentId", currentUser.uid)
-                        i.putExtra("targetId", targetUser.uid)
-                        i.putExtra("targetPhotoUrl", targetUser.photoUrl)
-                        i.putExtra("targetName", targetUser.displayName)
-                        startActivity(i)
-                    }
-                })
+            val currentPlan = userVM.currentUser.value!!.currentPlan!!
+
+            if (currentPlan.chatCount > 0) {
+                userVM.initConversation(currentUser, targetUser)
+                    .observe(viewLifecycleOwner, Observer {
+                        if (it.length > 1) {
+                            val i = Intent(context, ChatActivity::class.java)
+                            i.putExtra("conversationId", it)
+                            i.putExtra("currentId", currentUser.uid)
+                            i.putExtra("targetId", targetUser.uid)
+                            i.putExtra("targetPhotoUrl", targetUser.photoUrl)
+                            i.putExtra("targetName", targetUser.displayName)
+                            startActivity(i)
+                        }
+                    })
+            } else {
+                Snackbar.make(
+                    v,
+                    "You have used all your Messages from your current Plan.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -122,7 +134,8 @@ class HomeFragment : Fragment() {
                                     ),
                                     messageBtnListener = genMessageBtnListener(
                                         currentUser,
-                                        user
+                                        user,
+                                        requireView()
                                     ),
                                     isUserShortlisted = isShortlisted
                                 )

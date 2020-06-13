@@ -92,11 +92,6 @@ object UserRepository {
                 if (it.isSuccessful) {
                     //Send notifcation
                     sendInterestNotif(currentUserId, currentUserName, targetUserId)
-
-                    Log.d(
-                        "UserRepo",
-                        "Succesfully expressed interest to target: $targetUserId for $currentUserId"
-                    )
                     result.value = "We'll let them know that you're interested!"
                 } else result.value = it.exception?.message
             }
@@ -142,6 +137,9 @@ object UserRepository {
                         Log.d("UserRepository", "Conversation already existed: ${doc.id}")
                         r.value = doc.id
                     } else {
+                        //Decrement message count by 1
+                        decMsgCount(currentUser.uid!!)
+
                         //Create a new conversation between the 2 users
                         val convoRef = DatabaseService.getDbInstance()
                             .collection("conversations")
@@ -341,6 +339,7 @@ object UserRepository {
 
                 if (snap != null && snap.exists()) {
                     res.value = CustomUtils.convertToUser(snap)
+                    Log.d("UserRepo", "Fetched user: ${res.value}")
                 } else res.value = null
             }
 
@@ -484,6 +483,9 @@ object UserRepository {
 
         meetup.meetupId = ref.id
 
+        //Decrease meetup count by 1
+        decMeetupCount(meetup.sourceId)
+
         DatabaseService.getDbInstance()
             .runBatch {
                 ref.set(meetup)
@@ -557,6 +559,38 @@ object UserRepository {
         return r;
     }
 
+    fun getFreePlan(): MutableLiveData<PlanItem> {
+        val res = MutableLiveData<PlanItem>()
+
+        DatabaseService.getDbInstance()
+            .collection("plans")
+            .whereEqualTo("name", "Free Plan")
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful && it.result!!.documents.size > 0)
+                    res.value = CustomUtils.convertToPlan(it.result!!.documents[0])
+                else res.value = null
+            }
+        return res
+    }
+
+    fun getPlan(planId: String): MutableLiveData<PlanItem> {
+        val res = MutableLiveData<PlanItem>()
+
+        DatabaseService.getDbInstance()
+            .collection("plans")
+            .document(planId)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    res.value = CustomUtils.convertToPlan(it.result!!)
+                } else {
+                    res.value = null
+                }
+            }
+        return res
+    }
+
     fun getAllPlans(): MutableLiveData<ArrayList<PlanItem>> {
         val r = MutableLiveData<ArrayList<PlanItem>>()
 
@@ -574,5 +608,39 @@ object UserRepository {
             }
 
         return r;
+    }
+
+    fun decMsgCount(userId: String) {
+        DatabaseService.getDbInstance()
+            .collection("users")
+            .document(userId)
+            .update(mapOf("currentPlan.chatCount" to FieldValue.increment(-1)))
+            .addOnCompleteListener {
+                if (it.isSuccessful)
+                    Log.d("UserRepo", "Dreceased message count!")
+            }
+    }
+
+    fun decDcCount(userId: String) {
+        DatabaseService.getDbInstance()
+            .collection("users")
+            .document(userId)
+            .update(mapOf("currentPlan.dcCount" to FieldValue.increment(-1)))
+            .addOnCompleteListener {
+                if (it.isSuccessful)
+                    Log.d("UserRepo", "Decreased direct contact count!")
+            }
+
+    }
+
+    fun decMeetupCount(userId: String) {
+        DatabaseService.getDbInstance()
+            .collection("users")
+            .document(userId)
+            .update(mapOf("currentPlan.meetupCount" to FieldValue.increment(-1)))
+            .addOnCompleteListener {
+                if (it.isSuccessful)
+                    Log.d("UserRepo", "Decreased meetup count!")
+            }
     }
 }

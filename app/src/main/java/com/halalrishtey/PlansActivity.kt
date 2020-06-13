@@ -1,6 +1,10 @@
 package com.halalrishtey
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -32,8 +36,42 @@ class PlansActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        userVM.observeUser(userVM.currentUid.value!!).observe(this, Observer {
+            val plan = it.currentPlan
 
-        userVM.getPlans().observe(this, Observer {
+            pTitleText.text = "You are on: ${plan?.name}, which has remaining"
+            val msgText = SpannableString("${plan?.chatCount} \n Chat Messages")
+            msgText.setSpan(RelativeSizeSpan(2f), 0, 2, 0)
+            msgText.setSpan(
+                ForegroundColorSpan(resources.getColor(R.color.primaryColor)),
+                0,
+                2,
+                Spanned.SPAN_INCLUSIVE_INCLUSIVE
+            )
+            msgLimitText.text = msgText
+
+            val dcText = SpannableString("${plan?.dcCount} \n Direct Contacts")
+            dcText.setSpan(RelativeSizeSpan(2f), 0, 2, 0)
+            dcText.setSpan(
+                ForegroundColorSpan(resources.getColor(R.color.primaryColor)),
+                0,
+                2,
+                Spanned.SPAN_INCLUSIVE_INCLUSIVE
+            )
+            dcLimitText.text = dcText
+
+            val mText = SpannableString("${plan?.meetupCount} \n Meetups")
+            mText.setSpan(RelativeSizeSpan(2f), 0, 2, 0)
+            mText.setSpan(
+                ForegroundColorSpan(resources.getColor(R.color.primaryColor)),
+                0,
+                2,
+                Spanned.SPAN_INCLUSIVE_INCLUSIVE
+            )
+            meetupLimitText.text = mText
+        })
+
+        userVM.getAllPlans().observe(this, Observer {
             if (it.size > 0) {
                 plans.clear()
                 plans.addAll(it)
