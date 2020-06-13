@@ -29,4 +29,5 @@
     <string name="dev_info">This app is a product of HacksInfo Digital, designed and developed by Amol Borkar. For more information you can reach us at info@hacksinfo.org  </string>
     <string name="meetup_tnc_content">Before you proceed for scheduling meetup, we ask you to keep things Halal. Meeting should be done between families under parents/guardians. Make your meeting successful in the way of honesty. We\'re against dowry help us to make dowry free society by not demanding dowry. \n\nPlease adhere to sensible Islamic etiquette, not doing so will lead to a permanent ban from our service.</string>
     <string name="suspend_txt">You are suspended indefinitely from using this app because of not following our community guidelines or breaking rules.</string>
+    <string name="no_data">No data provided by User.</string>
 </resources>
