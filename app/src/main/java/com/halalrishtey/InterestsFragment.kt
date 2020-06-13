@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.halalrishtey.adapter.CardDataRVAdapter
 import com.halalrishtey.models.ProfileCardData
 import com.halalrishtey.models.User
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_shortlist.view.*
 import kotlinx.android.synthetic.main.profile_card.view.*
 
 
-class ShortlistFragment : Fragment() {
+class InterestsFragment : Fragment() {
     private val userVM: UserViewModel by activityViewModels()
 
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -59,21 +60,32 @@ class ShortlistFragment : Fragment() {
 
     private fun genMessageBtnListener(
         currentUser: User,
-        targetUser: User
+        targetUser: User,
+        v: View
     ): View.OnClickListener {
         return View.OnClickListener {
-            userVM.initConversation(currentUser, targetUser)
-                .observe(viewLifecycleOwner, Observer {
-                    if (it.length > 1) {
-                        val i = Intent(context, ChatActivity::class.java)
-                        i.putExtra("conversationId", it)
-                        i.putExtra("currentId", currentUser.uid)
-                        i.putExtra("targetId", targetUser.uid)
-                        i.putExtra("targetPhotoUrl", targetUser.photoUrl)
-                        i.putExtra("targetName", targetUser.displayName)
-                        startActivity(i)
-                    }
-                })
+            val currentPlan = userVM.currentUser.value!!.currentPlan!!
+
+            if (currentPlan.chatCount > 0) {
+                userVM.initConversation(currentUser, targetUser)
+                    .observe(viewLifecycleOwner, Observer {
+                        if (it.length > 1) {
+                            val i = Intent(context, ChatActivity::class.java)
+                            i.putExtra("conversationId", it)
+                            i.putExtra("currentId", currentUser.uid)
+                            i.putExtra("targetId", targetUser.uid)
+                            i.putExtra("targetPhotoUrl", targetUser.photoUrl)
+                            i.putExtra("targetName", targetUser.displayName)
+                            startActivity(i)
+                        }
+                    })
+            } else {
+                Snackbar.make(
+                    v,
+                    "You have used all your Messages from your current Plan.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -112,7 +124,7 @@ class ShortlistFragment : Fragment() {
             userVM.getProfilesByIds(currentUser.interestedProfiles)
                 .observe(viewLifecycleOwner, Observer {
                     interestProgress.visibility = View.GONE
-                    it.forEach { user ->
+                    CustomUtils.filterValidProfiles(currentUser, it).forEach { user ->
                         val isShortlisted =
                             currentUser.interestedProfiles.contains(
                                 user.uid
@@ -124,11 +136,12 @@ class ShortlistFragment : Fragment() {
                                 showBtnInterestListener = genInterestBtnListener(
                                     isShortlisted,
                                     user.uid!!,
-                                    view!!
+                                    requireView()
                                 ),
                                 messageBtnListener = genMessageBtnListener(
                                     currentUser,
-                                    user
+                                    user,
+                                    requireView()
                                 ),
                                 isUserShortlisted = isShortlisted
                             )
