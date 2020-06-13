@@ -1,12 +1,20 @@
 package com.halalrishtey.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class PlanItem(
     val id: String,
     val actualPrice: String,
-    val chatCount: Int,
-    val dcCount: Int,
+    var chatCount: Int,
+    var dcCount: Int,
     val discountPrice: Int,
-    val meetupCount: Int,
+    var meetupCount: Int,
     val name: String,
     val validity: Int
-)
+) : Parcelable {
+    override fun toString(): String {
+        return "Plan #$id, $name, $validity months"
+    }
+}

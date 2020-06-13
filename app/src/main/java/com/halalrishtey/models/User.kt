@@ -19,7 +19,7 @@ enum class ProfilePicVisibility {
 data class User(
     val email: String,      //done //Must be first
     var uid: String? = "",      //done
-    var displayName: String = "", //doneK
+    var displayName: String = "", //done
     var age: Int? = null,          //done
     var photoUrl: String = "",      //done
     var idProofUrl: String = "",        //done
@@ -59,13 +59,13 @@ data class User(
     var fathersJob: String = "",
     var profilePicVisibility: ProfilePicVisibility = ProfilePicVisibility.Public,
     var photoList: ArrayList<String> = ArrayList(),
-    var currentPlan: String = "",
+    var currentPlan: PlanItem? = null,
     var planStart: Long = 0
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)
 
     override fun toString(): String {
-        return "id: $uid, email: $email, displayName: $displayName"
+        return "id: $uid, email: $email, displayName: $displayName, plan: $currentPlan"
     }
 }
