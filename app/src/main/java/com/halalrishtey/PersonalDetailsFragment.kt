@@ -14,6 +14,7 @@ import com.halalrishtey.adapter.SpinnerAdapters
 import com.halalrishtey.models.Gender
 import com.halalrishtey.viewmodels.SharedViewModel
 import com.halalrishtey.viewmodels.UserAuthViewModel
+import com.halalrishtey.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_personal_details.*
 import java.util.*
@@ -21,6 +22,7 @@ import java.util.*
 
 class PersonalDetailsFragment : Fragment() {
     private val userAuthVM: UserAuthViewModel by activityViewModels()
+    private val userVM: UserViewModel by activityViewModels()
     private val sharedVM: SharedViewModel by activityViewModels()
     private var savedViewInstance: View? = null
     private var userAge: Int = 0
