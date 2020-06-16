@@ -10,10 +10,15 @@
         android:id="@+id/pToolbar"
         layout="@layout/main_toolbar" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/pContentText"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/pToolbar" />
+        app:layout_constraintTop_toBottomOf="@id/pToolbar">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/pContentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
