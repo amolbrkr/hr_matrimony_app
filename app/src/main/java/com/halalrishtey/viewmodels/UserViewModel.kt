@@ -103,6 +103,16 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         return UserRepository.blockUser(currentId, targetId)
     }
 
+    fun unblockUser(current: String, target: String): MutableLiveData<String> {
+        val t = currentUser.value!!
+        if (t.blockList.contains(target))
+            t.blockList.remove(target)
+
+        currentUser.value = t
+
+        return UserRepository.unblockUser(current, target)
+    }
+
     fun reportUser(current: String, target: String, reason: String) =
         UserRepository.reportUser(current, target, reason)
 

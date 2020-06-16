@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FieldValue
 import com.halalrishtey.adapter.ProfileImagesAdapter
 import com.halalrishtey.adapter.SpinnerAdapters
+import com.halalrishtey.adapter.UnblockAdapter
 import com.halalrishtey.models.ProfilePicVisibility
 import com.halalrishtey.models.User
 import com.halalrishtey.services.StorageService
@@ -24,8 +25,9 @@ import kotlinx.android.synthetic.main.activity_edit_profile.*
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var adapter: ProfileImagesAdapter
+    private lateinit var unblockAdapter: UnblockAdapter
     private lateinit var userImages: ArrayList<String>
-
+    private lateinit var blockedUsers: ArrayList<User>
     private val userVM by viewModels<UserViewModel>()
     private lateinit var userData: User
 
@@ -39,6 +41,7 @@ class EditProfileActivity : AppCompatActivity() {
         supportActionBar?.title = "Edit Profile"
 
         userImages = ArrayList()
+        blockedUsers = ArrayList()
         layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         fun removeImageFromDB(imageUrl: String) {
@@ -51,6 +54,13 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         adapter = ProfileImagesAdapter(userImages, ::removeImageFromDB)
+
+        unblockAdapter = UnblockAdapter(blockedUsers) { targetId ->
+            val currentId = userVM.currentUid.value!!
+            userVM.unblockUser(currentId, targetId).observe(this, Observer {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            })
+        }
 
         profileImgRV.layoutManager = layoutManager
         profileImgRV.adapter = adapter
