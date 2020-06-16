@@ -28,18 +28,18 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         welcomeViewPager.adapter = WelcomeViewPagerAdapter(this)
 
-        nextPageBtn.setOnClickListener {
-            val c = welcomeViewPager.currentItem
-            if (c != 3) welcomeViewPager.currentItem = c + 1
-        }
+//        nextPageBtn.setOnClickListener {
+//            val c = welcomeViewPager.currentItem
+//            if (c != 3) welcomeViewPager.currentItem = c + 1
+//        }
 
         welcomeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 if (position == 3) {
-                    nextPageBtn.visibility = View.GONE
+                    swipeText.visibility = View.GONE
                     getStartedBtn.visibility = View.VISIBLE
                 } else {
-                    nextPageBtn.visibility = View.VISIBLE
+                    swipeText.visibility = View.VISIBLE
                     getStartedBtn.visibility = View.GONE
                 }
             }
