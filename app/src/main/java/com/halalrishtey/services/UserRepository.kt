@@ -416,6 +416,33 @@ object UserRepository {
         return res
     }
 
+    fun unblockUser(currentUserId: String, targetUserId: String): MutableLiveData<String> {
+        val res = MutableLiveData<String>()
+        val cur = DatabaseService.getDbInstance()
+            .collection("users")
+            .document(currentUserId)
+        val target = DatabaseService.getDbInstance()
+            .collection("users")
+            .document(targetUserId)
+
+        DatabaseService.getDbInstance().runBatch {
+            it.update(
+                cur,
+                mapOf("blockList" to FieldValue.arrayRemove(targetUserId))
+            )
+
+            it.update(
+                target,
+                mapOf("blockList" to FieldValue.arrayRemove(currentUserId))
+            )
+        }.addOnCompleteListener {
+            if (it.isSuccessful)
+                res.value = "User Unblocked!"
+            else res.value = "Error: ${it.exception?.message}"
+        }
+        return res
+    }
+
     fun blockUser(currentUserId: String, targetUserId: String): MutableLiveData<String> {
         val res = MutableLiveData<String>()
         val cur = DatabaseService.getDbInstance()
@@ -426,6 +453,8 @@ object UserRepository {
             .document(targetUserId)
 
         val convoId = CustomUtils.genCombinedHash(currentUserId, targetUserId)
+
+        val convoRef = DatabaseService.getDbInstance().collection("conversations").document(convoId)
 
         DatabaseService.getDbInstance()
             .runBatch {
@@ -445,6 +474,7 @@ object UserRepository {
                         "interestedProfiles" to FieldValue.arrayRemove(currentUserId)
                     )
                 )
+                it.delete(convoRef)
             }.addOnCompleteListener {
                 if (it.isSuccessful) {
                     res.value = "Successfully blocked this user!"
@@ -642,5 +672,24 @@ object UserRepository {
                 if (it.isSuccessful)
                     Log.d("UserRepo", "Decreased meetup count!")
             }
+    }
+
+    fun createOrder(userId: String, planId: String, orderId: String) {
+        DatabaseService.getDbInstance()
+            .collection("orders")
+            .document()
+            .set(
+                mapOf(
+                    "userId" to userId,
+                    "planId" to planId,
+                    "receiptId" to "${userId}_${planId}_${System.currentTimeMillis()}",
+                    "timestamp" to System.currentTimeMillis(),
+                    "orderId" to orderId
+                )
+            ).addOnCompleteListener {
+                if (it.isSuccessful)
+                    Log.d("UserRepo", "Succesfully created order!")
+            }
+
     }
 }
