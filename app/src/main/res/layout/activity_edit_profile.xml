@@ -217,7 +217,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:hint="Work Location"
-                app:startIconDrawable="@drawable/ic_work">
+                app:startIconDrawable="@drawable/ic_location_on">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -270,7 +270,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:hint="Father's Profession"
-                app:startIconDrawable="@drawable/ic_face">
+                app:startIconDrawable="@drawable/ic_work">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -324,6 +324,20 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:minHeight="48dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="Blocked Profiles"
+                android:textColor="@color/primaryColor"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/blockedRV"
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </ScrollView>
