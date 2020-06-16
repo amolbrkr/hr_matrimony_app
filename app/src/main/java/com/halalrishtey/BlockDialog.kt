@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.halalrishtey.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_block_dialog.view.*
 
@@ -31,6 +32,8 @@ class BlockDialog(private val currentId: String, private val targetId: String) :
             userVM.blockUser(currentId, targetId).observe(this, Observer {
                 if (!it.contains("Successfully"))
                     Toast.makeText(view.context, "Error: $it", Toast.LENGTH_SHORT).show()
+                else
+                    Snackbar.make(view, "You have blocked a user!", Snackbar.LENGTH_SHORT).show()
                 this.activity?.finish()
             })
         }
