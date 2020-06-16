@@ -1,6 +1,8 @@
 package com.halalrishtey
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -24,26 +26,42 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
         val currentPlan = userVM.currentUser.value!!.currentPlan!!
 
         v.meetupOpt.setOnClickListener {
-            val current = userVM.currentUser.value?.uid
-            val target = user.uid
+            val dialogBuilder = AlertDialog.Builder(activity)
+            dialogBuilder.setIcon(R.drawable.heart)
+            dialogBuilder.setMessage(R.string.meetup_tnc_content)
 
-            if (currentPlan != null && currentPlan.meetupCount > 0) {
-                if (current != null && target != null) {
-                    userVM.decMeetupCount(current)
-                    val i = Intent(context, ScheduleMeetupActivity::class.java)
-                    i.apply {
-                        putExtra("currentId", current)
-                        putExtra("targetId", target)
-                    }
-                    startActivity(i)
-                } else Snackbar.make(requireView(), "Something went wrong!", Snackbar.LENGTH_SHORT)
-                    .show()
-            } else {
-                Snackbar.make(
-                    requireView(),
-                    "You have used all your Meetups from your current Plan.",
-                    Snackbar.LENGTH_SHORT
-                ).show()
+            dialogBuilder.setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->
+                this.dismiss()
+            })
+
+            dialogBuilder.setPositiveButton(
+                "Agree"
+            ) { dialogInterface: DialogInterface, i: Int ->
+                val current = userVM.currentUser.value?.uid
+                val target = user.uid
+
+                if (currentPlan != null && currentPlan.meetupCount > 0) {
+                    if (current != null && target != null) {
+                        userVM.decMeetupCount(current)
+                        val i = Intent(context, ScheduleMeetupActivity::class.java)
+                        i.apply {
+                            putExtra("currentId", current)
+                            putExtra("targetId", target)
+                        }
+                        startActivity(i)
+                    } else Snackbar.make(
+                        requireView(),
+                        "Something went wrong!",
+                        Snackbar.LENGTH_SHORT
+                    )
+                        .show()
+                } else {
+                    Snackbar.make(
+                        requireView(),
+                        "You have used all your Meetups from your current Plan.",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
 
