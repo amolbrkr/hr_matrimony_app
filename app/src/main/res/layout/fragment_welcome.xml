@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     tools:context=".WelcomeFragment">
 
@@ -12,17 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/nextPageBtn"
+    <TextView
+        android:id="@+id/swipeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="24dp"
-        app:borderWidth="0dp"
-        android:backgroundTint="#FFF"
-        android:src="@drawable/ic_navigate_next"
-        android:tint="@color/primaryDarkColor" />
+        android:text="Swipe left to continue!"
+        android:textColor="#111"
+        android:shadowColor="#AAA"
+        android:shadowDy="10.0"
+        android:layout_marginBottom="128dp"
+        android:textSize="18sp" />
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/nextPageBtn"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_margin="24dp"-->
+    <!--        app:borderWidth="0dp"-->
+    <!--        android:backgroundTint="#FFF"-->
+    <!--        android:src="@drawable/ic_navigate_next"-->
+    <!--        android:tint="@color/primaryDarkColor" />-->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/getStartedBtn"

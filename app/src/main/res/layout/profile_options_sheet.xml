@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Schedule Meetup"
+            android:text="Ask For Meetup"
             android:textSize="16sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
