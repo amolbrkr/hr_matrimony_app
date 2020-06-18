@@ -147,11 +147,31 @@ class HomeFragment : Fragment() {
             })
 
             searchVM.query.observe(viewLifecycleOwner, Observer {
-                adapter.updateDataSet(searchVM.applySearchFilters(usersToShow))
+                val res = searchVM.applySearchFilters(usersToShow)
+                if (res.size > 0) {
+                    adapter.updateDataSet(searchVM.applySearchFilters(usersToShow))
+                    searchNoResImg.visibility = View.GONE
+                    searchNoResText.visibility = View.GONE
+                    profileRV.visibility = View.VISIBLE
+                } else {
+                    searchNoResText.visibility = View.VISIBLE
+                    searchNoResText.visibility = View.VISIBLE
+                    profileRV.visibility = View.GONE
+                }
             })
 
             searchVM.filters.observe(viewLifecycleOwner, Observer {
-                adapter.updateDataSet(searchVM.applySearchFilters(usersToShow))
+                val res = searchVM.applySearchFilters(usersToShow)
+                if (res.size > 0) {
+                    adapter.updateDataSet(searchVM.applySearchFilters(usersToShow))
+                    searchNoResImg.visibility = View.GONE
+                    searchNoResText.visibility = View.GONE
+                    profileRV.visibility = View.VISIBLE
+                } else {
+                    searchNoResText.visibility = View.VISIBLE
+                    searchNoResText.visibility = View.VISIBLE
+                    profileRV.visibility = View.GONE
+                }
             })
         }
 

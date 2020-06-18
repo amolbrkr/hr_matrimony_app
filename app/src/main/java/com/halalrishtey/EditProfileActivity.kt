@@ -54,13 +54,15 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         adapter = ProfileImagesAdapter(userImages, ::removeImageFromDB)
-
         unblockAdapter = UnblockAdapter(blockedUsers) { targetId ->
             val currentId = userVM.currentUid.value!!
             userVM.unblockUser(currentId, targetId).observe(this, Observer {
                 Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
             })
         }
+
+        blockedRV.layoutManager = LinearLayoutManager(this)
+        blockedRV.adapter = unblockAdapter
 
         profileImgRV.layoutManager = layoutManager
         profileImgRV.adapter = adapter
@@ -119,7 +121,14 @@ class EditProfileActivity : AppCompatActivity() {
 
         userVM.currentUser.observe(this, Observer {
             userData = it
-
+            //Update & show blocked profiles
+            if (it.blockList.size > 0) {
+                userVM.getProfilesByIds(it.blockList).observe(this, Observer { userList ->
+                    blockedUsers.clear()
+                    blockedUsers.addAll(userList)
+                    unblockAdapter.notifyDataSetChanged()
+                })
+            }
             //Update recyclerview to show user uploaded images
             userImages.clear()
             userImages.addAll(it.photoList)
@@ -129,7 +138,7 @@ class EditProfileActivity : AppCompatActivity() {
 
             epNameText.text = it.displayName
             epSubText.text = "${it.gender}, ${it.age} Yrs, ${it.phoneNumber}"
-            epUidText.text = it.uid
+            epUidText.text = it.email
             epBioTextInp.editText?.setText(it.bio)
 
             when (it.profilePicVisibility) {

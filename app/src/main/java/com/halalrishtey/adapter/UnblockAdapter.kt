@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.halalrishtey.R
 import com.halalrishtey.models.User
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.blocked_profile.view.*
 
 class UnblockAdapter(
@@ -25,9 +26,17 @@ class UnblockAdapter(
 
     override fun onBindViewHolder(holder: UnblockVH, position: Int) {
         holder.itemView.apply {
+            if (blockedUsers[position].photoUrl.length > 10) {
+                Picasso.get().load(blockedUsers[position].photoUrl).into(bpThumb)
+            }
+
+            bpThumb.contentDescription = "${blockedUsers[position].displayName}'s Profile Image"
+
             bpNameText.text = blockedUsers[position].displayName
             bpUnblockBtn.setOnClickListener {
                 ubUserBtnCb(blockedUsers[position].uid!!)
+                blockedUsers.removeAt(position)
+                notifyItemRemoved(position)
             }
         }
     }

@@ -27,6 +27,10 @@ import java.util.*
 
 object CustomUtils {
 
+    fun convertMonthsToMillis(months: Int): Long {
+        return months * 2592000000
+    }
+
     fun openUserDetails(context: Context, userId: String) {
         val i = Intent(context, UserDetailActivity::class.java)
         i.putExtra("userId", userId)

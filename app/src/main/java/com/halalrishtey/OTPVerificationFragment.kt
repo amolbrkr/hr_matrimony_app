@@ -41,6 +41,7 @@ class OTPVerificationFragment : Fragment() {
         userVM.getFreePlan().observe(viewLifecycleOwner, Observer { freePlan ->
             if (freePlan != null)
                 userAuthVM.newUser.value?.currentPlan = freePlan
+            userAuthVM.newUser.value?.planStart = System.currentTimeMillis()
         })
 
         resendOtpBtn.isEnabled = false

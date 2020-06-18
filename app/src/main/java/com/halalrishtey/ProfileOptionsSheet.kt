@@ -83,8 +83,8 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
         }
 
         v.dirContactOpt.setOnClickListener {
-
             if (currentPlan.dcCount > 0) {
+                userVM.decDcCount(userVM.currentUid.value!!)
                 val intent = Intent(Intent.ACTION_DIAL)
                 intent.data = Uri.parse("tel:${user.phoneNumber}")
                 startActivity(intent)

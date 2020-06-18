@@ -115,7 +115,9 @@ class ChatActivity : AppCompatActivity() {
         if (conversationId != null) {
             userVM.updateReadStatus(conversationId!!, currentUserId!!)
             userVM.observeConversation(conversationId!!).observe(this, Observer {
-                val temp = it["messages"] as ArrayList<Map<String, Any>>
+                var temp = ArrayList<Map<String, Any>>()
+                if (it != null)
+                    temp = it["messages"] as ArrayList<Map<String, Any>>
 
                 messages.clear()
                 temp.map { t ->

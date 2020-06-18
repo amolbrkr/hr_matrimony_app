@@ -5,6 +5,12 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/bpThumb"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ph_gray" />
+
     <TextView
         android:id="@+id/bpNameText"
         android:layout_width="0dp"

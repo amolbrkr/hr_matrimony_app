@@ -51,8 +51,12 @@ class PlansActivity : AppCompatActivity(), PaymentResultListener {
         userVM.observeUser(userVM.currentUid.value!!).observe(this, Observer {
             val plan = it.currentPlan
 
-            pTitleText.text = "You are on: ${plan?.name}, which has remaining"
-            val msgText = SpannableString("${plan?.chatCount} \n Chat Messages")
+            pTitleText.text = plan?.name
+            val exp =
+                userVM.currentUser.value?.planStart!! + CustomUtils.convertMonthsToMillis(plan?.validity!!)
+            pValidityText.text = "Plan Expires on: ${CustomUtils.genDateString(exp)}"
+
+            val msgText = SpannableString("${plan.chatCount} \n Chat Messages")
             msgText.setSpan(RelativeSizeSpan(2f), 0, 2, 0)
             msgText.setSpan(
                 ForegroundColorSpan(resources.getColor(R.color.primaryColor)),
@@ -62,7 +66,7 @@ class PlansActivity : AppCompatActivity(), PaymentResultListener {
             )
             msgLimitText.text = msgText
 
-            val dcText = SpannableString("${plan?.dcCount} \n Direct Contacts")
+            val dcText = SpannableString("${plan.dcCount} \n Direct Contacts")
             dcText.setSpan(RelativeSizeSpan(2f), 0, 2, 0)
             dcText.setSpan(
                 ForegroundColorSpan(resources.getColor(R.color.primaryColor)),
@@ -72,7 +76,7 @@ class PlansActivity : AppCompatActivity(), PaymentResultListener {
             )
             dcLimitText.text = dcText
 
-            val mText = SpannableString("${plan?.meetupCount} \n Meetups")
+            val mText = SpannableString("${plan.meetupCount} \n Meetups")
             mText.setSpan(RelativeSizeSpan(2f), 0, 2, 0)
             mText.setSpan(
                 ForegroundColorSpan(resources.getColor(R.color.primaryColor)),
