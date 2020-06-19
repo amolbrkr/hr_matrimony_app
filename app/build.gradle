@@ -36,6 +36,11 @@ android {
 
 dependencies {
     def nav_version = "2.2.1"
+    //For viewpager dots
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+
+    //For new raange slider https://github.com/apptik/MultiSlider
+    implementation 'io.apptik.widget:multislider:1.3'
 
     //For Razorpay
     implementation 'com.razorpay:checkout:1.5.16'
@@ -51,9 +56,6 @@ dependencies {
 
     //For guestures and zoom in Images
     implementation 'com.alexvasilkov:gesture-views:2.6.0'
-
-    //Range slider
-    implementation 'com.github.sephiroth74:RangeSeekBar:1.1.0'
 
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
