@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

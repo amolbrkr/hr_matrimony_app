@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.halalrishtey">
+    package="com.makeshaadi">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -28,7 +28,7 @@
             android:value="AIzaSyCsDLdcuW_HeLU0Uus4ppE4M8-uwZhED-k" />
 
         <service
-            android:name=".FCMService"
+            android:name="com.makeshaadi.FCMService"
             android:enabled="true"
             android:exported="true"
             android:permission="TODO">
@@ -37,37 +37,39 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".PolicyActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".PlansActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".MeetupDetailActivity" />
-        <activity android:name=".ScheduleMeetupActivity" />
-        <activity
-            android:name=".UserImagesActivity"
-            android:parentActivityName=".EditProfileActivity" />
-        <activity
-            android:name=".AboutActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".EditProfileActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".UserDetailActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".ChatActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".WelcomeActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.makeshaadi.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.makeshaadi.PolicyActivity"
+            android:parentActivityName="com.makeshaadi.MainActivity" />
+        <activity
+            android:name="com.makeshaadi.PlansActivity"
+            android:parentActivityName="com.makeshaadi.MainActivity" />
+        <activity android:name="com.makeshaadi.MeetupDetailActivity" />
+        <activity
+            android:name="com.makeshaadi.ScheduleMeetupActivity"
+            android:parentActivityName="com.makeshaadi.UserDetailActivity" />
+        <activity
+            android:name="com.makeshaadi.UserImagesActivity"
+            android:parentActivityName="com.makeshaadi.EditProfileActivity" />
+        <activity
+            android:name="com.makeshaadi.AboutActivity"
+            android:parentActivityName="com.makeshaadi.MainActivity" />
+        <activity
+            android:name="com.makeshaadi.EditProfileActivity"
+            android:parentActivityName="com.makeshaadi.MainActivity" />
+        <activity
+            android:name="com.makeshaadi.UserDetailActivity"
+            android:parentActivityName="com.makeshaadi.MainActivity" />
+        <activity
+            android:name="com.makeshaadi.ChatActivity"
+            android:parentActivityName="com.makeshaadi.MainActivity" />
+        <activity android:name="com.makeshaadi.WelcomeActivity" />
+        <activity android:name="com.makeshaadi.MainActivity" />
     </application>
 
 </manifest>
