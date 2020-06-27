@@ -1,4 +1,4 @@
-package com.halalrishtey.adapter
+package com.makeshaadi.adapter
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.halalrishtey.CustomUtils
-import com.halalrishtey.R
-import com.halalrishtey.ScheduleMeetupActivity
-import com.halalrishtey.models.MessageItem
+import com.makeshaadi.CustomUtils
+import com.makeshaadi.R
+import com.makeshaadi.ScheduleMeetupActivity
+import com.makeshaadi.models.MessageItem
 import kotlinx.android.synthetic.main.in_message.view.*
 import kotlinx.android.synthetic.main.meetup_prompt.view.*
 import kotlinx.android.synthetic.main.meetup_tnc.view.*
@@ -55,6 +55,7 @@ class MessageAdapter(
                             holder.itemView.context,
                             ScheduleMeetupActivity::class.java
                         ).apply {
+                            putExtra("mode", "new")
                             putExtra("currentId", senderId)
                             putExtra("targetId", targetId)
                         }
@@ -78,7 +79,7 @@ class MessageAdapter(
         if (data[position].senderId != senderId)
             targetId = data[position].senderId
 
-        if (position != 0 && position % 10 == 0 && targetId != null) return 2
+        if (position != 0 && position % 21 == 0 && targetId != null) return 2
 
         return if (data[position].senderId == senderId) 1 else 0
     }
