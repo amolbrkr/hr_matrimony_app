@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.annotation.SuppressLint
 import android.app.Notification
@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
@@ -17,15 +18,31 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.firestore.DocumentSnapshot
-import com.halalrishtey.models.Gender
-import com.halalrishtey.models.PlanItem
-import com.halalrishtey.models.ProfilePicVisibility
-import com.halalrishtey.models.User
+import com.makeshaadi.models.MeetupItem
+import com.makeshaadi.models.PlanItem
+import com.makeshaadi.models.ProfilePicVisibility
+import com.makeshaadi.models.User
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 object CustomUtils {
+
+    fun getMeetupInitiator(current: String, meetup: MeetupItem): String {
+        return if (current == meetup.sourceId) current
+        else meetup.targetId
+    }
+
+    fun convertFtIntoCm(length: String): Int {
+        val n = length.filter { it.isDigit() }
+        return ("${n[0]}.${n.substring(1)}".toDouble() * 30.48).toInt()
+    }
+
+    fun convertCmToFtIn(lengthInCm: Int): String {
+        val ft = (lengthInCm / 30.48).toString()[0]
+        val inc = (lengthInCm / 30.48).toString().substring(2, 3)
+        return "$ft ft $inc in"
+    }
 
     fun convertMonthsToMillis(months: Int): Long {
         return months * 2592000000
@@ -98,6 +115,7 @@ object CustomUtils {
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                 .build()
+
             channel.setSound(Settings.System.DEFAULT_NOTIFICATION_URI, audioAttributes)
             channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             channel.vibrationPattern = longArrayOf(1000, 1000)
@@ -108,7 +126,8 @@ object CustomUtils {
         }
 
         val builder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.ic_favorite)
+            .setSmallIcon(R.drawable.ic_notif_icon)
+            .setLargeIcon(BitmapFactory.decodeResource(null, R.drawable.ic_notif_icon))
             .setColor(Color.RED)
             .setContentTitle(notifTitle)
             .setContentText(notifText)
@@ -134,7 +153,7 @@ object CustomUtils {
             photoUrl = doc.get("photoUrl").toString(),
             idProofUrl = doc.get("idProofUrl").toString(),
             phoneNumber = doc.get("phoneNumber") as Number,
-            gender = Gender.valueOf(doc.get("gender").toString()),
+            gender = enumValueOf(doc.get("gender").toString()),
             createdFor = doc.get("createdFor").toString(),
             createdAt = doc.get("createdAt").toString().toLong(),
             lastSignInAt = System.currentTimeMillis(),

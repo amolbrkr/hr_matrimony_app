@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 
 import android.content.Intent
@@ -12,10 +12,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.halalrishtey.adapter.CardDataRVAdapter
-import com.halalrishtey.models.ProfileCardData
-import com.halalrishtey.models.User
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.adapter.CardDataRVAdapter
+import com.makeshaadi.models.ProfileCardData
+import com.makeshaadi.models.User
+import com.makeshaadi.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_shortlist.*
 import kotlinx.android.synthetic.main.fragment_shortlist.view.*
 import kotlinx.android.synthetic.main.profile_card.view.*
@@ -65,6 +65,12 @@ class InterestsFragment : Fragment() {
     ): View.OnClickListener {
         return View.OnClickListener {
             val currentPlan = userVM.currentUser.value!!.currentPlan!!
+
+            Snackbar.make(
+                it,
+                "You have remaining ${currentPlan.chatCount} chats in your current plan.",
+                Snackbar.LENGTH_SHORT
+            ).show()
 
             if (currentPlan.chatCount > 0) {
                 userVM.initConversation(currentUser, targetUser)
