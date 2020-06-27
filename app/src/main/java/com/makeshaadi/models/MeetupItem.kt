@@ -1,4 +1,4 @@
-package com.halalrishtey.models
+package com.makeshaadi.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -19,7 +19,7 @@ data class MeetupItem(
     val targetPhoto: String = "",
     val targetName: String = "",
     val timestamp: Long,
-    val status: MeetupStatus = MeetupStatus.Scheduled,
+    var status: MeetupStatus = MeetupStatus.Scheduled,
     val date: Long,
     val locLat: Double = 0.0,
     val locLong: Double = 0.0,

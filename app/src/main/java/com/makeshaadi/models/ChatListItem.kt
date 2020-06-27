@@ -1,4 +1,4 @@
-package com.halalrishtey.models
+package com.makeshaadi.models
 
 data class ChatListItem(
     val conversationId: String,

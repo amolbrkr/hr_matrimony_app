@@ -1,4 +1,4 @@
-package com.halalrishtey.models
+package com.makeshaadi.models
 
 import android.os.Parcelable
 import com.google.firebase.auth.FirebaseUser
