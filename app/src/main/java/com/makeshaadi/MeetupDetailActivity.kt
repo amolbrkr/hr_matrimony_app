@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.graphics.Color
 import android.os.Bundle
@@ -15,10 +15,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.halalrishtey.models.MeetupItem
-import com.halalrishtey.models.MeetupStatus
-import com.halalrishtey.viewmodels.UserAuthViewModel
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.models.MeetupItem
+import com.makeshaadi.models.MeetupStatus
+import com.makeshaadi.viewmodels.UserAuthViewModel
+import com.makeshaadi.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_meetup_detail.*
 
@@ -54,9 +54,9 @@ class MeetupDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
             mdLocText.text = data!!.address
 
-            mFeedbackBtn.setOnClickListener {
-                Toast.makeText(this, "Thanks for your feedback.", Toast.LENGTH_SHORT).show()
-            }
+//            mFeedbackBtn.setOnClickListener {
+//                Toast.makeText(this, "Thanks for your feedback.", Toast.LENGTH_SHORT).show()
+//            }
 
             mdBackBtn.setOnClickListener {
                 this.finish()
@@ -95,8 +95,12 @@ class MeetupDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 //                        urlDirections,
 //                        Response.Listener<String> { response ->
 //                            val jsonResponse = JSONObject(response)
-//                            if(jsonResponse.get("error_message").toString().isNotEmpty()) {
-//                                Toast.makeText(this, jsonResponse.get("error_message").toString(), Toast.LENGTH_SHORT).show();
+//                            if (jsonResponse.get("error_message").toString().isNotEmpty()) {
+//                                Toast.makeText(
+//                                    this,
+//                                    jsonResponse.get("error_message").toString(),
+//                                    Toast.LENGTH_SHORT
+//                                ).show();
 //                                this.finish();
 //                            }
 //                            Log.d("MeetupDetails", "API Res: $response")
