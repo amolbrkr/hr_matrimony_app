@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 
 import android.Manifest
@@ -27,6 +27,7 @@ class WelcomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         welcomeViewPager.adapter = WelcomeViewPagerAdapter(this)
+        pageIndicator.setViewPager2(welcomeViewPager)
 
 //        nextPageBtn.setOnClickListener {
 //            val c = welcomeViewPager.currentItem
@@ -36,10 +37,10 @@ class WelcomeFragment : Fragment() {
         welcomeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 if (position == 3) {
-                    swipeText.visibility = View.GONE
+//                    nextPageBtn.visibility = View.GONE
                     getStartedBtn.visibility = View.VISIBLE
                 } else {
-                    swipeText.visibility = View.VISIBLE
+//                    nextPageBtn.visibility = View.VISIBLE
                     getStartedBtn.visibility = View.GONE
                 }
             }
