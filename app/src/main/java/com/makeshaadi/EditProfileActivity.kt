@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.app.Activity
 import android.content.Intent
@@ -12,13 +12,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FieldValue
-import com.halalrishtey.adapter.ProfileImagesAdapter
-import com.halalrishtey.adapter.SpinnerAdapters
-import com.halalrishtey.adapter.UnblockAdapter
-import com.halalrishtey.models.ProfilePicVisibility
-import com.halalrishtey.models.User
-import com.halalrishtey.services.StorageService
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.adapter.ProfileImagesAdapter
+import com.makeshaadi.adapter.SpinnerAdapters
+import com.makeshaadi.adapter.UnblockAdapter
+import com.makeshaadi.models.ProfilePicVisibility
+import com.makeshaadi.models.User
+import com.makeshaadi.services.StorageService
+import com.makeshaadi.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
@@ -78,7 +78,10 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         epProfilePicFAB.setOnClickListener {
-            Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show()
+            val i = Intent()
+            i.type = "image/*"
+            i.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(i, 2)
         }
 
         epSaveBtn.setOnClickListener {
@@ -180,8 +183,22 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null) {
+            StorageService.uploadImgToStorage(data.data!!).observe(this, Observer {
+                if (it.errorMsg != null)
+                    Toast.makeText(this, it.errorMsg, Toast.LENGTH_SHORT).show()
+                else {
+                    userVM.updateUserData(
+                        userVM.currentUid.value!!,
+                        mapOf("photoUrl" to it.fileUrl!!)
+                    ).observe(this, Observer { s ->
+                        Log.d("EditProfile", s)
+                    })
 
+                    Picasso.get().load(it.fileUrl!!).into(avatarImage)
+                }
+            })
+        } else if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
             StorageService.uploadImgToStorage(data.data!!).observe(this, Observer {
                 if (it.errorMsg != null)
                     Toast.makeText(this, it.errorMsg, Toast.LENGTH_SHORT).show()
@@ -197,6 +214,12 @@ class EditProfileActivity : AppCompatActivity() {
                     adapter.notifyDataSetChanged()
                 }
             })
+        } else {
+            Toast.makeText(
+                this,
+                "Something went wrong! Please Try Again Later!",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
