@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.content.Context
 import android.content.Intent
@@ -16,11 +16,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.firebase.iid.FirebaseInstanceId
-import com.halalrishtey.viewmodels.SearchViewModel
-import com.halalrishtey.viewmodels.UserAuthViewModel
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.viewmodels.SearchViewModel
+import com.makeshaadi.viewmodels.UserAuthViewModel
+import com.makeshaadi.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
     private val userVM: UserViewModel by viewModels()
@@ -64,10 +65,11 @@ class MainActivity : AppCompatActivity() {
 
             userVM.getUser(uid).observe(this, Observer {
                 //Check for which plan user is on, show UI based on that
-                if (it.currentPlan == null || it.currentPlan?.name == "Free Plan") {
-                    infoLayout.visibility = View.VISIBLE
-                } else {
-                    infoLayout.visibility = View.GONE
+                if (it != null) {
+                    val planStartDur = System.currentTimeMillis() - it.planStart
+                    if (planStartDur > 1296000000 && it.currentPlan?.name == "Free Plan") {
+                        infoLayout.visibility = View.VISIBLE
+                    } else infoLayout.visibility = View.GONE
                 }
 
                 if (!it.photoUrl.isBlank() || it.photoUrl.length > 5) {
@@ -163,6 +165,7 @@ class MainActivity : AppCompatActivity() {
 
                 val i = Intent(this, WelcomeActivity::class.java)
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                i.putExtra("showLogin", true)
                 startActivity(i)
                 this.finish()
                 return true
