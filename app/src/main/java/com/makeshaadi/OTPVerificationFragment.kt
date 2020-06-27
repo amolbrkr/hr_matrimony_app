@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 
 import android.content.Context
@@ -17,8 +17,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
-import com.halalrishtey.viewmodels.UserAuthViewModel
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.viewmodels.UserAuthViewModel
+import com.makeshaadi.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_otpverification.*
 import java.util.concurrent.TimeUnit
 

@@ -1,7 +1,8 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +11,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.halalrishtey.adapter.SpinnerAdapters
-import com.halalrishtey.models.Gender
-import com.halalrishtey.viewmodels.SharedViewModel
-import com.halalrishtey.viewmodels.UserAuthViewModel
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.adapter.SpinnerAdapters
+import com.makeshaadi.models.Gender
+import com.makeshaadi.viewmodels.SharedViewModel
+import com.makeshaadi.viewmodels.UserAuthViewModel
+import com.makeshaadi.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_personal_details.*
 import java.util.*
@@ -42,6 +43,8 @@ class PersonalDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val adapters = SpinnerAdapters(requireContext())
+
+        tocCheckBox.movementMethod = LinkMovementMethod.getInstance()
 
         sharedVM.bundleFromUploadImageFragment.observe(viewLifecycleOwner, Observer { bundle ->
             val uploadedImgUrl = bundle.getString("uploadedImageUrl", "Not Uploaded")
@@ -112,6 +115,10 @@ class PersonalDetailsFragment : Fragment() {
             findNavController().navigate(R.id.action_personalDetailsFragment_to_uploadImageFragment)
         }
 
+        pdBackBtn.setOnClickListener {
+            activity?.onBackPressed()
+        }
+
         pdNextButton.setOnClickListener {
             if (validatePersonalDetails() == null) {
                 userAuthVM.newUser.value?.apply {
@@ -159,11 +166,17 @@ class PersonalDetailsFragment : Fragment() {
             nameTextInp.editText?.text.toString().length < 5 -> {
                 "Name seems too short, please enter your full name"
             }
+            userAuthVM.newUser.value?.photoUrl?.length!! < 10 -> {
+                "Please Upload a Picture of yourself!"
+            }
             userAuthVM.newUser.value?.age == null -> {
                 "Please enter your date of birth"
             }
             userAge < 18 -> {
                 "User must be at least 18 years old"
+            }
+            !tocCheckBox.isChecked -> {
+                "Please Agree to our Terms & Conditions"
             }
             else -> null
         }
