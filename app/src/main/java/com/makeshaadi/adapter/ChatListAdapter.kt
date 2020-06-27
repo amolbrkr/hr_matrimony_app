@@ -1,4 +1,4 @@
-package com.halalrishtey.adapter
+package com.makeshaadi.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.halalrishtey.ChatActivity
-import com.halalrishtey.CustomUtils
-import com.halalrishtey.R
-import com.halalrishtey.models.ChatListItem
+import com.makeshaadi.ChatActivity
+import com.makeshaadi.CustomUtils
+import com.makeshaadi.R
+import com.makeshaadi.models.ChatListItem
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.chat_item.view.*
 

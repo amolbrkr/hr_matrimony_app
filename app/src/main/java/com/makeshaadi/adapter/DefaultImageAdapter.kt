@@ -1,4 +1,4 @@
-package com.halalrishtey.adapter
+package com.makeshaadi.adapter
 
 import android.content.Intent
 import android.view.Gravity
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.alexvasilkov.gestures.Settings
-import com.halalrishtey.R
-import com.halalrishtey.UserImagesActivity
+import com.makeshaadi.R
+import com.makeshaadi.UserImagesActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.image_layout.view.*
 

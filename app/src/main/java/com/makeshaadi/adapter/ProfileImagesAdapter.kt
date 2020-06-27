@@ -1,10 +1,10 @@
-package com.halalrishtey.adapter
+package com.makeshaadi.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.halalrishtey.R
+import com.makeshaadi.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_image_item.view.*
 import kotlin.reflect.KFunction1

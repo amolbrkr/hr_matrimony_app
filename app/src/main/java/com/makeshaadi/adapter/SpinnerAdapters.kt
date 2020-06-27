@@ -1,8 +1,8 @@
-package com.halalrishtey.adapter
+package com.makeshaadi.adapter
 
 import android.content.Context
 import android.widget.ArrayAdapter
-import com.halalrishtey.R
+import com.makeshaadi.R
 
 class SpinnerAdapters(context: Context) {
 

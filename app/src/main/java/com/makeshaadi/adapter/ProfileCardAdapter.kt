@@ -1,14 +1,14 @@
-package com.halalrishtey.adapter
+package com.makeshaadi.adapter
 
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.halalrishtey.CustomUtils
-import com.halalrishtey.R
-import com.halalrishtey.models.ProfileCardData
-import com.halalrishtey.models.ProfilePicVisibility
+import com.makeshaadi.CustomUtils
+import com.makeshaadi.R
+import com.makeshaadi.models.ProfileCardData
+import com.makeshaadi.models.ProfilePicVisibility
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.profile_card.view.*
 
