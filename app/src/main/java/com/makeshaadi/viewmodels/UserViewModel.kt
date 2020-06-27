@@ -1,15 +1,15 @@
-package com.halalrishtey.viewmodels
+package com.makeshaadi.viewmodels
 
 import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.halalrishtey.CustomUtils
-import com.halalrishtey.models.MeetupItem
-import com.halalrishtey.models.MeetupStatus
-import com.halalrishtey.models.User
-import com.halalrishtey.services.UserRepository
+import com.makeshaadi.CustomUtils
+import com.makeshaadi.models.MeetupItem
+import com.makeshaadi.models.MeetupStatus
+import com.makeshaadi.models.User
+import com.makeshaadi.services.UserRepository
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -123,6 +123,9 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         return UserRepository.schedMeetup(meetup)
     }
 
+    fun updateMeetup(meetupId: String, data: Map<String, Any>) =
+        UserRepository.updateMeetupData(meetupId, data)
+
     fun getMeetupsFromIds(meetupIds: ArrayList<String>) =
         UserRepository.getMeetupsFromIds(meetupIds)
 
@@ -134,14 +137,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     fun getPlan(planId: String) = UserRepository.getPlan(planId)
 
     fun getFreePlan() = UserRepository.getFreePlan()
-
-    fun decMessageCount(userId: String) {
-        val t = currentUser.value!!
-        t.currentPlan!!.chatCount -= 1
-        currentUser.value = t
-
-        UserRepository.decMsgCount(userId)
-    }
 
     fun decDcCount(userId: String) {
         val t = currentUser.value!!
@@ -158,4 +153,8 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
         UserRepository.decMeetupCount(userId)
     }
+
+    fun createPayment(userId: String, planId: String, paymentId: String) =
+        UserRepository.createPayment(userId, planId, paymentId)
+
 }
