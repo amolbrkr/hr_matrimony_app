@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod

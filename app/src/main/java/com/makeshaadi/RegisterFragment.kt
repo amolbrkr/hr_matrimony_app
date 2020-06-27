@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.location.Address
 import android.location.Geocoder
@@ -12,9 +12,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.halalrishtey.models.User
-import com.halalrishtey.viewmodels.UserAuthViewModel
-import kotlinx.android.synthetic.main.fragment_personal_details.*
+import com.makeshaadi.models.User
+import com.makeshaadi.viewmodels.UserAuthViewModel
 import kotlinx.android.synthetic.main.fragment_register.*
 import java.util.*
 

@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_report_dialog.view.*
 
 class ReportDialog(private val currentId: String, private val targetId: String) : DialogFragment() {

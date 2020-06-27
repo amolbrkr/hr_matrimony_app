@@ -1,19 +1,22 @@
-package com.halalrishtey
+package com.makeshaadi
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.halalrishtey.adapter.MessageAdapter
-import com.halalrishtey.models.MessageItem
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.adapter.MessageAdapter
+import com.makeshaadi.models.MessageItem
+import com.makeshaadi.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_chat.*
+
 
 class ChatActivity : AppCompatActivity() {
 
@@ -112,6 +115,18 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        messageRV.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            if (bottom < oldBottom) {
+                messageRV.postDelayed(Runnable {
+                    messageRV.adapter?.itemCount?.minus(1)?.let {
+                        messageRV.smoothScrollToPosition(
+                            it
+                        )
+                    }
+                }, 100)
+            }
+        }
+
         if (conversationId != null) {
             userVM.updateReadStatus(conversationId!!, currentUserId!!)
             userVM.observeConversation(conversationId!!).observe(this, Observer {

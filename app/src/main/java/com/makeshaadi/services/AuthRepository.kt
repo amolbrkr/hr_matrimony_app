@@ -1,12 +1,12 @@
-package com.halalrishtey.services
+package com.makeshaadi.services
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.halalrishtey.models.AuthData
-import com.halalrishtey.models.User
+import com.makeshaadi.models.AuthData
+import com.makeshaadi.models.User
 
 class AuthRepository {
     private val firebaseAuth: FirebaseAuth by lazy {

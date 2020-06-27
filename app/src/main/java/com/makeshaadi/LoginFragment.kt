@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 
 import android.content.Context
@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.halalrishtey.viewmodels.UserAuthViewModel
+import com.makeshaadi.viewmodels.UserAuthViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 
 

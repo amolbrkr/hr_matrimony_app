@@ -1,4 +1,4 @@
-package com.halalrishtey.viewmodels
+package com.makeshaadi.viewmodels
 
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData

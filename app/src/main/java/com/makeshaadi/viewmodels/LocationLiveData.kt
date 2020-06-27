@@ -1,4 +1,4 @@
-package com.halalrishtey.viewmodels
+package com.makeshaadi.viewmodels
 
 import android.content.Context
 import android.location.Location

@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 
 import android.util.Log
@@ -18,9 +18,9 @@ class FCMService : FirebaseMessagingService() {
         if (p0.notification != null) {
             CustomUtils.displayLocalNotif(
                 this,
-                21,
+                777,
                 MainActivity::class.java,
-                "push_notif",
+                "ms_notif",
                 p0.notification?.title!!,
                 p0.notification?.body.toString()
             );

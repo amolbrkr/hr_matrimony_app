@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 
 import android.os.Bundle
@@ -10,9 +10,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.halalrishtey.adapter.ChatListAdapter
-import com.halalrishtey.models.ChatListItem
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.adapter.ChatListAdapter
+import com.makeshaadi.models.ChatListItem
+import com.makeshaadi.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_chatlist.*
 import kotlinx.android.synthetic.main.fragment_chatlist.view.*
 

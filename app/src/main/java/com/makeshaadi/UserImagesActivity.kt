@@ -1,9 +1,9 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.halalrishtey.adapter.DefaultImageAdapter
+import com.makeshaadi.adapter.DefaultImageAdapter
 import kotlinx.android.synthetic.main.activity_user_images.*
 
 class UserImagesActivity() : AppCompatActivity() {

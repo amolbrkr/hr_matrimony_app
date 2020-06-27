@@ -1,10 +1,10 @@
-package com.halalrishtey.viewmodels
+package com.makeshaadi.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.halalrishtey.models.User
-import com.halalrishtey.services.AuthRepository
+import com.makeshaadi.models.User
+import com.makeshaadi.services.AuthRepository
 
 
 class UserAuthViewModel(application: Application) : AndroidViewModel(application) {

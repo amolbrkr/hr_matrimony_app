@@ -1,4 +1,4 @@
-package com.halalrishtey.services
+package com.makeshaadi.services
 
 import com.google.firebase.firestore.FirebaseFirestore
 

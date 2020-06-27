@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity

@@ -1,4 +1,4 @@
-package com.halalrishtey.services
+package com.makeshaadi.services
 
 import android.net.Uri
 import android.util.Log
