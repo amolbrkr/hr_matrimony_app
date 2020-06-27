@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.os.Bundle
 import android.text.SpannableString
@@ -12,9 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.halalrishtey.adapter.PlansAdapter
-import com.halalrishtey.models.PlanItem
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.adapter.PlansAdapter
+import com.makeshaadi.models.PlanItem
+import com.makeshaadi.viewmodels.UserViewModel
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 import kotlinx.android.synthetic.main.activity_plans.*
@@ -26,6 +26,7 @@ class PlansActivity : AppCompatActivity(), PaymentResultListener {
     private lateinit var adapter: PlansAdapter
     private lateinit var plans: ArrayList<PlanItem>
     private lateinit var checkout: Checkout
+    private lateinit var selectedPlan: PlanItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +37,10 @@ class PlansActivity : AppCompatActivity(), PaymentResultListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         plans = ArrayList()
-        adapter = PlansAdapter(plans, userVM.currentUid.value!!) { opts -> startPayment(opts) }
+        adapter = PlansAdapter(plans, userVM.currentUid.value!!) { plan, opts ->
+            selectedPlan = plan
+            startPayment(opts)
+        }
         plansRV.layoutManager = LinearLayoutManager(this);
         plansRV.adapter = adapter
 
@@ -109,16 +113,30 @@ class PlansActivity : AppCompatActivity(), PaymentResultListener {
 
     //p0: Payment Id
     override fun onPaymentSuccess(p0: String?) {
-        val snack = Snackbar.make(
-            window.decorView.findViewById(android.R.id.content),
-            "Thank you for choosing us! Your plan will be updated in a minute",
-            Snackbar.LENGTH_INDEFINITE
-        )
-        snack.setAction("OK") { snack.dismiss() }
+        val cUid = userVM.currentUid.value!!
+
+        //Since payment is successful, update user's current plan
+        userVM.updateUserData(
+            cUid, mapOf(
+                "currentPlan" to selectedPlan,
+                "planStart" to System.currentTimeMillis()
+            )
+        ).observe(this, Observer {
+            val snack = Snackbar.make(
+                window.decorView.findViewById(android.R.id.content),
+                "Thank you for choosing us! Your plan will be updated in a minute",
+                Snackbar.LENGTH_INDEFINITE
+            )
+            if (it.contains("Error"))
+                snack.setText(it)
+            snack.setAction("OK") { snack.dismiss() }
+        })
+
+        //Add payment to our database for future reference.
+        userVM.createPayment(cUid, selectedPlan.id, p0!!)
     }
 
     fun startPayment(options: JSONObject) {
-//        checkout.setImage(R.drawable.ic_star) //For Logo
         try {
             checkout.open(this, options)
         } catch (e: Exception) {
