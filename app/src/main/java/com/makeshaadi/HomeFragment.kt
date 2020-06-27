@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 
 import android.content.Intent
@@ -12,13 +12,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.halalrishtey.adapter.CardDataRVAdapter
-import com.halalrishtey.models.ProfileCardData
-import com.halalrishtey.models.User
-import com.halalrishtey.services.UserRepository
-import com.halalrishtey.viewmodels.SearchViewModel
-import com.halalrishtey.viewmodels.UserAuthViewModel
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.adapter.CardDataRVAdapter
+import com.makeshaadi.models.ProfileCardData
+import com.makeshaadi.models.User
+import com.makeshaadi.services.UserRepository
+import com.makeshaadi.viewmodels.SearchViewModel
+import com.makeshaadi.viewmodels.UserAuthViewModel
+import com.makeshaadi.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.profile_card.view.*
@@ -41,6 +41,12 @@ class HomeFragment : Fragment() {
     ): View.OnClickListener {
         return View.OnClickListener {
             val currentPlan = userVM.currentUser.value!!.currentPlan!!
+
+            Snackbar.make(
+                it,
+                "You have remaining ${currentPlan.chatCount} chats in your current plan.",
+                Snackbar.LENGTH_SHORT
+            ).show()
 
             if (currentPlan.chatCount > 0) {
                 userVM.initConversation(currentUser, targetUser)
@@ -106,8 +112,12 @@ class HomeFragment : Fragment() {
 
         view.profileRV.layoutManager = linearLayoutManager
         view.profileRV.adapter = adapter
-
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        hfNoResText.visibility = View.GONE
     }
 
     override fun onStart() {
@@ -145,56 +155,47 @@ class HomeFragment : Fragment() {
                     })
                 }
             })
-
-            searchVM.query.observe(viewLifecycleOwner, Observer {
-                val res = searchVM.applySearchFilters(usersToShow)
-                if (res.size > 0) {
-                    adapter.updateDataSet(searchVM.applySearchFilters(usersToShow))
-                    searchNoResImg.visibility = View.GONE
-                    searchNoResText.visibility = View.GONE
-                    profileRV.visibility = View.VISIBLE
-                } else {
-                    searchNoResText.visibility = View.VISIBLE
-                    searchNoResText.visibility = View.VISIBLE
-                    profileRV.visibility = View.GONE
-                }
-            })
-
-            searchVM.filters.observe(viewLifecycleOwner, Observer {
-                val res = searchVM.applySearchFilters(usersToShow)
-                if (res.size > 0) {
-                    adapter.updateDataSet(searchVM.applySearchFilters(usersToShow))
-                    searchNoResImg.visibility = View.GONE
-                    searchNoResText.visibility = View.GONE
-                    profileRV.visibility = View.VISIBLE
-                } else {
-                    searchNoResText.visibility = View.VISIBLE
-                    searchNoResText.visibility = View.VISIBLE
-                    profileRV.visibility = View.GONE
-                }
-            })
         }
 
-        userAuthVM.locationUpdates.observe(viewLifecycleOwner, Observer { loc ->
-            val addr = if (loc != null) {
-                CustomUtils.convertCoordsToAddr(requireContext(), loc.latitude, loc.longitude)
-            } else null
+        searchVM.query.observe(viewLifecycleOwner, Observer {
+            val res = searchVM.applySearchFilters(usersToShow)
+            adapter.updateDataSet(res)
 
-            var addrLines = ""
-            for (i in 0 until addr?.maxAddressLineIndex!!) {
-                addrLines += addr.getAddressLine(i) + " "
+            if (res.size == 0) {
+                hfNoResText.visibility = View.VISIBLE
+            } else {
+                hfNoResText.visibility = View.GONE
             }
+        })
 
-            val infoToBeUpdated: HashMap<String, Any?> = hashMapOf(
-                "pincode" to addr.postalCode,
-                "locationLat" to addr.latitude,
-                "locationLong" to addr.longitude,
-                "address" to addrLines,
-                "lastSignInAt" to System.currentTimeMillis()
-            )
+        searchVM.filters.observe(viewLifecycleOwner, Observer {
+            val res = searchVM.applySearchFilters(usersToShow)
+            adapter.updateDataSet(searchVM.applySearchFilters(res))
 
-            userAuthVM.updateUserData(userVM.currentUid.value!!, infoToBeUpdated)
-            userAuthVM.locationUpdates.removeObservers(viewLifecycleOwner)
+            if (res.size == 0) {
+                hfNoResText.visibility = View.VISIBLE
+            } else {
+                hfNoResText.visibility = View.GONE
+            }
+        })
+
+        userAuthVM.locationUpdates.observe(viewLifecycleOwner, Observer { loc ->
+            if (loc != null) {
+                val addr =
+                    CustomUtils.convertCoordsToAddr(requireContext(), loc.latitude, loc.longitude)
+
+                var addrLines = "${addr?.getAddressLine(0)} ${addr?.getAddressLine(1)}"
+                val infoToBeUpdated: HashMap<String, Any?> = hashMapOf(
+                    "pincode" to addr?.postalCode,
+                    "locationLat" to addr?.latitude,
+                    "locationLong" to addr?.longitude,
+                    "address" to addrLines,
+                    "lastSignInAt" to System.currentTimeMillis()
+                )
+
+                userAuthVM.updateUserData(userVM.currentUid.value!!, infoToBeUpdated)
+                userAuthVM.locationUpdates.removeObservers(viewLifecycleOwner)
+            }
         })
     }
 
