@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:contentDescription="Show More Options"
-        android:src="@drawable/ic_keyboard_arrow_up"
+        android:src="@drawable/open_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="#FFF" />
@@ -33,13 +33,14 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:maxHeight="500dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/udImagesRV"
                     android:layout_width="match_parent"
-                    android:layout_height="450dp"
+                    android:layout_height="500dp"
                     android:orientation="horizontal" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -138,28 +139,13 @@
                     android:textColor="@color/primaryColor"
                     android:textSize="16sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/detail1Text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/detail1Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".50"
-                        android:text="@string/no_data"
-                        android:textColor="#333" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/detail2Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".50"
-                        android:text="@string/no_data"
-                        android:textColor="#333" />
-                </LinearLayout>
+                    android:layout_weight=".50"
+                    android:text="@string/no_data"
+                    android:textColor="#333" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -168,29 +154,13 @@
                     android:textColor="@color/primaryColor"
                     android:textSize="16sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/detail2Text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/fd1Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".50"
-                        android:text="@string/no_data"
-                        android:textColor="#333" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/fd2Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".50"
-                        android:text="@string/no_data"
-                        android:textColor="#333" />
-
-                </LinearLayout>
+                    android:layout_weight=".50"
+                    android:text="@string/no_data"
+                    android:textColor="#333" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -199,28 +169,14 @@
                     android:textColor="@color/primaryColor"
                     android:textSize="16sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/detail3Text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="80dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/od1Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".50"
-                        android:text="@string/no_data"
-                        android:textColor="#333" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/od2Text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".50"
-                        android:text="@string/no_data"
-                        android:textColor="#333" />
-                </LinearLayout>
+                    android:layout_marginBottom="64dp"
+                    android:layout_weight=".50"
+                    android:text="@string/no_data"
+                    android:textColor="#333" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

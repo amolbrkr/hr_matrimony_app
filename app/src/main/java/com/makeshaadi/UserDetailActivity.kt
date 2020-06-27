@@ -1,16 +1,17 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.halalrishtey.adapter.DefaultImageAdapter
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.adapter.DefaultImageAdapter
+import com.makeshaadi.viewmodels.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_user_detail.*
 
@@ -43,8 +44,10 @@ class UserDetailActivity : AppCompatActivity() {
                 userImages.addAll(user.photoList)
                 adapter.notifyDataSetChanged()
 
-                if (userVM.currentUid.value == user.uid)
+                if (userVM.currentUid.value == user.uid) {
                     editProfileFAB.visibility = View.VISIBLE
+                    profileOptionsFAB.visibility = View.GONE
+                }
 
                 if (user.photoUrl.length > 10) {
                     Picasso.get().load(user.photoUrl).into(userAvatarImage)
@@ -63,27 +66,35 @@ class UserDetailActivity : AppCompatActivity() {
 
                 userNameText.text = user.displayName
                 userSubText.text = "${user.gender}, ${user.age} Years"
+                bioText.text = ifValid(user.bio)
 
-                if (user.qualification.isNotBlank())
-                    detail1Text.text =
-                        "Qualification: ${user.qualification} \n${user.qualDetails}"
+                detail1Text.text =
+                    "Height: ${ifValid(user.height)}\n" +
+                            "Qualification: ${ifValid(user.qualification)}\n" +
+                            "Details: ${ifValid(user.qualDetails)}\n" +
+                            "Profession: ${ifValid(user.organizationName)}\n" +
+                            "Work Location: ${ifValid(user.workLocation)}\n" +
+                            "Annual Income: ${ifValid(user.annualIncome)}\n"
 
-                if (user.qualification.isNotBlank())
-                    detail2Text.text = "Works at: ${user.organizationName} \n${user.annualIncome}"
+                detail2Text.text = "Father's Name: ${ifValid(user.fathersName)}\n" +
+                        "Father's Job: ${ifValid(user.fathersJob)}\n" +
+                        "Number of Brothers: ${ifValid(user.numBrothers)}\n" +
+                        "Number of Sisters: ${ifValid(user.numSisters)}\n"
 
-                if (user.fathersName.isNotBlank() && user.fathersJob.isNotBlank())
-                    fd1Text.text = "Father: ${user.fathersName} \nProfession: ${user.fathersJob}"
-
-                if (user.numBrothers.isNotBlank())
-                    fd2Text.text =
-                        "Number of Brothers: ${user.numBrothers} \nNumber of Sister: ${user.numSisters}"
-
-                if (user.dargah.isNotBlank())
-                    od1Text.text = "Dargah: ${user.dargah}"
-
-                if (user.sect.isNotBlank())
-                    od2Text.text = "Sect: ${user.sect}"
+                detail3Text.text = "Marital Status: ${ifValid(user.maritalStatus)}\n" +
+                        "Dargah: ${ifValid(user.dargah)}\n" +
+                        "Sect: ${ifValid(user.sect)}\n" +
+                        "Joined On: ${CustomUtils.genDateString(user.createdAt)}"
             })
         }
+    }
+
+    fun showMsg(s: String) {
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show()
+    }
+
+    fun ifValid(str: String): String {
+        return if (str.isNotBlank() && str.length > 0)
+            str; else "No info provided."
     }
 }
