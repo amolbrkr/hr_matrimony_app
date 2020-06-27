@@ -1,4 +1,4 @@
-package com.halalrishtey
+package com.makeshaadi
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -13,9 +13,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
-import com.halalrishtey.models.User
-import com.halalrishtey.viewmodels.UserViewModel
+import com.makeshaadi.models.User
+import com.makeshaadi.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.profile_options_sheet.view.*
 
 class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
@@ -26,42 +25,50 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
         val currentPlan = userVM.currentUser.value!!.currentPlan!!
 
         v.meetupOpt.setOnClickListener {
-            val dialogBuilder = AlertDialog.Builder(activity)
-            dialogBuilder.setIcon(R.drawable.heart)
-            dialogBuilder.setMessage(R.string.meetup_tnc_content)
+            Toast.makeText(
+                context,
+                "You have remaining ${currentPlan.meetupCount} meetup(s) in your current Plan.",
+                Toast.LENGTH_LONG
+            ).show()
 
-            dialogBuilder.setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->
-                this.dismiss()
-            })
+            if (currentPlan.meetupCount > 0) {
+                val dialogBuilder = AlertDialog.Builder(activity)
+                dialogBuilder.setIcon(R.drawable.heart)
+                dialogBuilder.setMessage(R.string.meetup_tnc_content)
 
-            dialogBuilder.setPositiveButton(
-                "Agree"
-            ) { dialogInterface: DialogInterface, i: Int ->
-                val current = userVM.currentUser.value?.uid
-                val target = user.uid
+                dialogBuilder.setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->
+                    this.dismiss()
+                })
 
-                if (currentPlan != null && currentPlan.meetupCount > 0) {
+                dialogBuilder.setPositiveButton(
+                    "Agree"
+                ) { dialogInterface: DialogInterface, _: Int ->
+                    val current = userVM.currentUser.value?.uid
+                    val target = user.uid
+
                     if (current != null && target != null) {
                         userVM.decMeetupCount(current)
                         val i = Intent(context, ScheduleMeetupActivity::class.java)
                         i.apply {
+                            putExtra("mode", "new")
                             putExtra("currentId", current)
                             putExtra("targetId", target)
                         }
                         startActivity(i)
-                    } else Snackbar.make(
-                        requireView(),
+                    } else Toast.makeText(
+                        context,
                         "Something went wrong!",
-                        Snackbar.LENGTH_SHORT
+                        Toast.LENGTH_LONG
                     )
                         .show()
-                } else {
-                    Snackbar.make(
-                        requireView(),
-                        "You have used all your Meetups from your current Plan.",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
                 }
+                dialogBuilder.show()
+            } else {
+                Toast.makeText(
+                    context,
+                    "You have used all your Meetups from your current Plan.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -83,16 +90,22 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
         }
 
         v.dirContactOpt.setOnClickListener {
+            Toast.makeText(
+                context,
+                "You have remaining ${currentPlan.dcCount} direct contacts in your current plan.",
+                Toast.LENGTH_LONG
+            ).show()
+
             if (currentPlan.dcCount > 0) {
                 userVM.decDcCount(userVM.currentUid.value!!)
                 val intent = Intent(Intent.ACTION_DIAL)
                 intent.data = Uri.parse("tel:${user.phoneNumber}")
                 startActivity(intent)
             } else {
-                Snackbar.make(
-                    v,
-                    "You have used all your Direct Contacts from your current Plan.",
-                    Snackbar.LENGTH_SHORT
+                Toast.makeText(
+                    context,
+                    "You have used all your Direct Contacts from your current plan.",
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }
@@ -111,7 +124,7 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
                     userVM.currentUser.value?.displayName!!,
                     user.uid!!
                 ).observe(requireActivity(), Observer { msg ->
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+                    Toast.makeText(context, msg, Toast.LENGTH_LONG)
                         .show()
                 })
             } else {
@@ -120,19 +133,24 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
                     userVM.currentUid.value!!,
                     user.uid!!
                 ).observe(requireActivity(), Observer { msg ->
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+                    Toast.makeText(context, msg, Toast.LENGTH_LONG)
                         .show()
                 })
             }
         }
+
         v.messageOpt.setOnClickListener {
             val currentUser = userVM.currentUser.value!!
+
+            Toast.makeText(
+                context,
+                "You have remaining ${currentPlan.chatCount} chats in your current plan.",
+                Toast.LENGTH_LONG
+            ).show()
 
             if (currentPlan.chatCount > 0) {
                 userVM.initConversation(userVM.currentUser.value!!, user)
                     .observe(requireActivity(), Observer {
-                        //Reduce message count by 1
-                        userVM.decMessageCount(currentUser.uid!!)
                         if (it.length > 1) {
                             val i = Intent(context, ChatActivity::class.java)
                             i.putExtra("conversationId", it)
@@ -144,10 +162,10 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
                         }
                     })
             } else {
-                Snackbar.make(
-                    v,
+                Toast.makeText(
+                    context,
                     "You have used all your Messages from your current Plan.",
-                    Snackbar.LENGTH_SHORT
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }
