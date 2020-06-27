@@ -1,12 +1,12 @@
-package com.halalrishtey.services
+package com.makeshaadi.services
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FieldValue
-import com.halalrishtey.CustomUtils
-import com.halalrishtey.models.*
+import com.makeshaadi.CustomUtils
+import com.makeshaadi.models.*
 
 object UserRepository {
     private val notifOnCompleteListener = OnCompleteListener { task: Task<Void> ->
@@ -55,22 +55,16 @@ object UserRepository {
             ).addOnCompleteListener(notifOnCompleteListener)
     }
 
-    fun sendGeneralNotifToUser(
-        currentUserId: String,
-        targetUserId: String,
-        title: String,
-        content: String
-    ) {
+    private fun sendMeetupNotif(notifTarget: String, meetup: MeetupItem?, status: MeetupStatus) {
         DatabaseService.getDbInstance()
             .collection("notifications")
             .document()
             .set(
                 mapOf(
-                    "notificationType" to "general",
-                    "senderId" to currentUserId,
-                    "targetId" to targetUserId,
-                    "title" to title,
-                    "content" to content,
+                    "notificationType" to "meetup",
+                    "notifTarget" to notifTarget,
+                    "meetupData" to meetup,
+                    "status" to status,
                     "timestamp" to System.currentTimeMillis()
                 )
             ).addOnCompleteListener(notifOnCompleteListener)
@@ -522,9 +516,10 @@ object UserRepository {
                 currentRef.update("meetupList", FieldValue.arrayUnion(meetup.meetupId))
                 targetRef.update("meetupList", FieldValue.arrayUnion(meetup.meetupId))
             }.addOnCompleteListener {
-                r.value = if (it.isSuccessful)
-                    "Meetup scheduled with ${meetup.targetName}"
-                else "Error: ${it.exception?.message}"
+                if (it.isSuccessful) {
+                    r.value = "Meetup scheduled with ${meetup.targetName}"
+                    sendMeetupNotif(targetRef.id, meetup, meetup.status)
+                } else "Error: ${it.exception?.message}"
             }
         return r
     }
@@ -538,6 +533,20 @@ object UserRepository {
             .addOnCompleteListener {
                 r.value = if (it.isSuccessful) "Meetup status updated!"
                 else "Error: ${it.exception?.message}"
+            }
+        return r
+    }
+
+    fun updateMeetupData(meetupId: String, data: Map<String, Any>): MutableLiveData<String> {
+        val r = MutableLiveData<String>()
+        DatabaseService.getDbInstance()
+            .collection("meetups")
+            .document(meetupId)
+            .update(data)
+            .addOnCompleteListener {
+                if (it.isSuccessful)
+                    r.value = "Successfully Rescheduled Meetup!"
+                else r.value = "Error: ${it.exception?.message}"
             }
         return r
     }
@@ -566,9 +575,11 @@ object UserRepository {
                         isApproved = d["isApproved"].toString().toBoolean(),
                         date = d["date"].toString().toLong(),
                         locLat = d["locLat"].toString().toDouble(),
-                        locLong = d["locLong"].toString().toDouble()
+                        locLong = d["locLong"].toString().toDouble(),
+                        status = enumValueOf(d["status"].toString())
                     )
-                    t.add(m)
+                    if (m.status == MeetupStatus.Scheduled)
+                        t.add(m)
                     r.value = t
                 }
         }
@@ -674,9 +685,9 @@ object UserRepository {
             }
     }
 
-    fun createOrder(userId: String, planId: String, orderId: String) {
+    fun createPayment(userId: String, planId: String, paymentId: String) {
         DatabaseService.getDbInstance()
-            .collection("orders")
+            .collection("payments")
             .document()
             .set(
                 mapOf(
@@ -684,7 +695,7 @@ object UserRepository {
                     "planId" to planId,
                     "receiptId" to "${userId}_${planId}_${System.currentTimeMillis()}",
                     "timestamp" to System.currentTimeMillis(),
-                    "orderId" to orderId
+                    "paymentId" to paymentId
                 )
             ).addOnCompleteListener {
                 if (it.isSuccessful)
