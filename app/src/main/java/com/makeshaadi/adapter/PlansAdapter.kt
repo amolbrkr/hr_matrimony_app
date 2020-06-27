@@ -1,19 +1,19 @@
-package com.halalrishtey.adapter
+package com.makeshaadi.adapter
 
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.halalrishtey.R
-import com.halalrishtey.models.PlanItem
+import com.makeshaadi.R
+import com.makeshaadi.models.PlanItem
 import kotlinx.android.synthetic.main.plan_item.view.*
 import org.json.JSONObject
 
 class PlansAdapter(
     private val planList: ArrayList<PlanItem>,
     private val currentUid: String,
-    private val initPaymentCb: (JSONObject) -> Unit
+    private val initPaymentCb: (PlanItem, JSONObject) -> Unit
 ) : RecyclerView.Adapter<PlansAdapter.PlansVH>() {
 
     class PlansVH(v: View) : RecyclerView.ViewHolder(v)
@@ -46,7 +46,7 @@ class PlansAdapter(
 
                 //Amount is always passed in currency subunits (PAISE)  * Eg: "500" = INR 5.00
                 options.put("amount", "${planList[position].discountPrice * 100}")
-                initPaymentCb(options)
+                initPaymentCb(planList[position], options)
             }
         }
     }
