@@ -1,4 +1,4 @@
-package com.halalrishtey.adapter
+package com.makeshaadi.adapter
 
 import android.content.Intent
 import android.text.SpannableStringBuilder
@@ -7,15 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.bold
 import androidx.recyclerview.widget.RecyclerView
-import com.halalrishtey.CustomUtils
-import com.halalrishtey.MeetupDetailActivity
-import com.halalrishtey.R
-import com.halalrishtey.models.MeetupItem
+import com.makeshaadi.CustomUtils
+import com.makeshaadi.MeetupDetailActivity
+import com.makeshaadi.R
+import com.makeshaadi.models.MeetupItem
+import com.makeshaadi.models.MeetupStatus
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_meetup_item.view.*
 
-class MeetupAdapter(private val meetups: ArrayList<MeetupItem>) :
-    RecyclerView.Adapter<MeetupAdapter.MeetupVH>() {
+class MeetupAdapter(
+    private val meetups: ArrayList<MeetupItem>,
+    private val cancelCb: (meetupId: String) -> Unit,
+    private val reschedCb: (currentId: String, targetId: String, meetupId: String) -> Unit
+) : RecyclerView.Adapter<MeetupAdapter.MeetupVH>() {
 
     class MeetupVH(v: View) : RecyclerView.ViewHolder(v)
 
@@ -51,6 +55,21 @@ class MeetupAdapter(private val meetups: ArrayList<MeetupItem>) :
         v.mLocText.text = meetups[position].address
         v.mTitleText.text = SpannableStringBuilder().append("Meetup with ")
             .bold { append(meetups[position].targetName) }.append(" on $mDate")
+
+        v.cancelMeetupBtn.setOnClickListener {
+            cancelCb(meetups[position].meetupId)
+            meetups[position].status = MeetupStatus.Cancelled
+            meetups.removeAt(position)
+            notifyDataSetChanged()
+        }
+
+        v.reschedBtn.setOnClickListener {
+            reschedCb(
+                meetups[position].sourceId,
+                meetups[position].targetId,
+                meetups[position].meetupId
+            )
+        }
     }
 
     override fun getItemCount() = meetups.size
