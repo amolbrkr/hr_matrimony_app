@@ -5,6 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 enum class MeetupStatus {
     Scheduled,
+    Rescheduled,
     Done,
     Cancelled
 }
