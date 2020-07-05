@@ -67,9 +67,26 @@ class MainActivity : AppCompatActivity() {
                 //Check for which plan user is on, show UI based on that
                 if (it != null) {
                     val planStartDur = System.currentTimeMillis() - it.planStart
-                    if (planStartDur > 1296000000 && it.currentPlan?.name == "Free Plan") {
+                    if (planStartDur > 259200000 && it.currentPlan?.name == "Free Plan") {
                         infoLayout.visibility = View.VISIBLE
-                    } else infoLayout.visibility = View.GONE
+
+                        browsePlanBtn.setOnClickListener {
+                            val i = Intent(this, PlansActivity::class.java)
+                            startActivity(i)
+                        }
+                    } else {
+//                        infoLayout.visibility = View.GONE
+
+                        infoTitleText.text = "Add Profile Details"
+                        infoContentText.text =
+                            "Please add your profile details so as to get full benefits of the app. "
+
+                        browsePlanBtn.text = "Add Details"
+                        browsePlanBtn.setOnClickListener {
+                            val i = Intent(this, EditProfileActivity::class.java)
+                            startActivity(i)
+                        }
+                    }
                 }
 
                 if (!it.photoUrl.isBlank() || it.photoUrl.length > 5) {
@@ -97,11 +114,6 @@ class MainActivity : AppCompatActivity() {
 
         closeInfoBtn.setOnClickListener {
             infoLayout.visibility = View.GONE
-        }
-
-        browsePlanBtn.setOnClickListener {
-            val i = Intent(this, PlansActivity::class.java)
-            startActivity(i)
         }
 
         userImageView.setOnClickListener {
