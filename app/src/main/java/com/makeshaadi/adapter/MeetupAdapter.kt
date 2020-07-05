@@ -1,5 +1,7 @@
 package com.makeshaadi.adapter
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
@@ -16,6 +18,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_meetup_item.view.*
 
 class MeetupAdapter(
+    private val currentId: String,
     private val meetups: ArrayList<MeetupItem>,
     private val cancelCb: (meetupId: String) -> Unit,
     private val reschedCb: (currentId: String, targetId: String, meetupId: String) -> Unit
@@ -53,14 +56,28 @@ class MeetupAdapter(
         val mDate = CustomUtils.genDateString(meetups[position].date)
 
         v.mLocText.text = meetups[position].address
+
+        val mTarget = if (meetups[position].sourceId == currentId)
+            meetups[position].targetName
+        else meetups[position].sourceName
+
         v.mTitleText.text = SpannableStringBuilder().append("Meetup with ")
-            .bold { append(meetups[position].targetName) }.append(" on $mDate")
+            .bold { append(mTarget) }.append(" on $mDate")
 
         v.cancelMeetupBtn.setOnClickListener {
-            cancelCb(meetups[position].meetupId)
-            meetups[position].status = MeetupStatus.Cancelled
-            meetups.removeAt(position)
-            notifyDataSetChanged()
+            val d = AlertDialog.Builder(v.context)
+            d.setTitle("Confirm cancellation")
+                .setMessage("Are you sure you want to cancel this meetup?")
+                .setPositiveButton("YES", DialogInterface.OnClickListener { _, _ ->
+                    cancelCb(meetups[position].meetupId)
+                    meetups[position].status = MeetupStatus.Cancelled
+                    meetups.removeAt(position)
+                    notifyDataSetChanged()
+                })
+                .setNegativeButton("NO", DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.dismiss()
+                })
+            d.create().show()
         }
 
         v.reschedBtn.setOnClickListener {
