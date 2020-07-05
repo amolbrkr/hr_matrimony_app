@@ -166,9 +166,6 @@ class PersonalDetailsFragment : Fragment() {
             nameTextInp.editText?.text.toString().length < 5 -> {
                 "Name seems too short, please enter your full name"
             }
-            userAuthVM.newUser.value?.photoUrl?.length!! < 10 -> {
-                "Please Upload a Picture of yourself!"
-            }
             userAuthVM.newUser.value?.age == null -> {
                 "Please enter your date of birth"
             }
