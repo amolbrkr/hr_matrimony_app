@@ -192,6 +192,7 @@ class ScheduleMeetupActivity : AppCompatActivity() {
                 }
             }
         } else {
+            //Resched Meetup
             meetupId = intent.getStringExtra("meetupId")
             if (meetupId == null) {
                 Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show()
@@ -199,7 +200,6 @@ class ScheduleMeetupActivity : AppCompatActivity() {
             } else {
                 smConfirmBtn.setOnClickListener {
                     if (validateMeetup() == null) {
-
                         userVM.updateMeetup(
                             meetupId!!, mapOf(
                                 "date" to meetupDate?.time!!

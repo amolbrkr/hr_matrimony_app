@@ -119,9 +119,9 @@ class ChatActivity : AppCompatActivity() {
             if (bottom < oldBottom) {
                 messageRV.postDelayed(Runnable {
                     messageRV.adapter?.itemCount?.minus(1)?.let {
-                        messageRV.smoothScrollToPosition(
-                            it
-                        )
+                        if (it < messages.size) {
+                            messageRV.smoothScrollToPosition(it)
+                        }
                     }
                 }, 100)
             }
