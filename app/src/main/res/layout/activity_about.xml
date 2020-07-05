@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AboutActivity">
 
-    <include
-        android:id="@+id/aboutToolbar"
-        layout="@layout/main_toolbar" />
 
-    <TextView
-        android:id="@+id/aboutText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:gravity="center"
-        android:text="@string/hr_about"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aboutToolbar" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/devText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:autoLink="all"
-        android:gravity="center"
-        android:text="@string/dev_info"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aboutText" />
 
-    <ImageView
-        android:id="@+id/hiLogoImg"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_margin="32dp"
-        android:contentDescription="HacksInfo Company Logo (Developer)"
-        android:src="@drawable/hi_logo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/devText" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/aboutToolbar"
+            layout="@layout/main_toolbar" />
+
+        <TextView
+            android:id="@+id/aboutText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="@string/hr_about"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/aboutToolbar" />
+
+        <TextView
+            android:id="@+id/devText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:autoLink="all"
+            android:gravity="center"
+            android:text="@string/dev_info"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/aboutText" />
+
+        <ImageView
+            android:id="@+id/hiLogoImg"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_margin="32dp"
+            android:contentDescription="HacksInfo Company Logo (Developer)"
+            android:src="@drawable/hi_logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/devText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
