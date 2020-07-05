@@ -1,33 +1,21 @@
 <resources>
-    <string name="app_name">Halal Rishtey</string>
+    <string name="app_name">Make Shaadi</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="auth_warning"><![CDATA[This is for security & authenticity purposes, we don\'t reveal anyone\'s personal information. ID Proof must be clear in visiblity.]]></string>
-    <string name="title_activity_chat">ChatActivity</string>
-    <string name="title_activity_settings">Settings</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="report_block_text"><![CDATA[Report & Block]]></string>
     <string name="report_warn_text">Are you sure that you want to report this user? Please select you reason for reporting.</string>
     <string name="block_warn_text">You will be unable to chat with this user or see their profile.</string>
-    <string name="hr_about">Halal Rishtey is a dowry-free matrimony platform wholeheartedly focused on providing excellent marriage related services in accordance with the traditions and guidelines of Islamic Community!</string>
-    <string name="dev_info">This app is a product of HacksInfo Digital, designed and developed by Amol Borkar. For more information you can reach us at info@hacksinfo.org  </string>
+    <string name="hr_about">Make Shaadi is a india’s first anti dowry muslim matrimony platform. Our aim is to make nikaah easy &amp; successful without demanding dowry. Muslim Marriage in Islam is part of half-of-deen. Make Shaadi are the pioneers of exclusive &amp; trusted muslim matrimony service in India. Our aim is to help community in finding their Islamic soulmate and to complete their half-of-deen. Our muslim matrimonial app connects Islamic muslim male or female looking for their perfect muslim match. We are constantly using innovative ideas to enhance your zawaj search experience. Muslim brothers and sisters who are looking for marriage Make Shaadi is your solution. Come be a part of us and we shall make your Nikaah dream come true. In shaa Allah.
+The Vision of  Make Shaadi is clear.
+To make dowry free society, decrease in dowry demanding and domestic violence cases.
+2. Provide a pleasant, satisfying, and superior matchmaking experience to our customers while zealously protecting their privacy and security.
+3. Give our customers complete control through easy to use interfaces and features that can help them identify, filter and contact potential partners.
+Team Make Shaadi is a set of hardworking people, with a mission, and a promise. Team Make Shaadi is dedicated to provide  you with the ultimate partner search experience and believes that no other matchmaking service can provide you with the value that Make Shaadi can. So much so, that our service is backed by an unconditional guarantee.
+</string>
+    <string name="dev_info">This app is a product of Nikahal Services Pvt Ltd. Designed &amp; Developed by <a href="https://amolborkar.com"> Amol Borkar</a> under the management of <a href="https://hacksinfo.org">Hacksinfo Digital</a></string>
     <string name="meetup_tnc_content">Before you proceed for scheduling meetup, we ask you to keep things Halal. Meeting should be done between families under parents/guardians. Make your meeting successful in the way of honesty. We\'re against dowry help us to make dowry free society by not demanding dowry. \n\nPlease adhere to sensible Islamic etiquette, not doing so will lead to a permanent ban from our service.</string>
     <string name="suspend_txt">You are suspended indefinitely from using this app because of not following our community guidelines or breaking rules.</string>
     <string name="no_data">No data provided by User.</string>
+    <string name="app_tnc">I have read and <b>AGREE</b> to the <a href="https://makeshaadi.com/terms-conditions/">Terms &amp; Conditions</a> and <a href="https://makeshaadi.com/privacy-policy-2/">Privacy Policy</a> of Make Shaadi.</string>
 </resources>

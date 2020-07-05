@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.halalrishtey.HomeFragment"
+        android:name="com.makeshaadi.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/shortlistFragment"
-        android:name="com.halalrishtey.InterestsFragment"
+        android:name="com.makeshaadi.InterestsFragment"
         android:label="fragment_shortlist"
         tools:layout="@layout/fragment_shortlist" />
     <fragment
         android:id="@+id/chatsFragment"
-        android:name="com.halalrishtey.ChatListFragment"
+        android:name="com.makeshaadi.ChatListFragment"
         android:label="fragment_chats"
         tools:layout="@layout/fragment_chatlist" />
     <fragment
         android:id="@+id/meetupFragment"
-        android:name="com.halalrishtey.MeetupFragment"
+        android:name="com.makeshaadi.MeetupFragment"
         android:label="fragment_meetup"
         tools:layout="@layout/fragment_meetup" />
 </navigation>

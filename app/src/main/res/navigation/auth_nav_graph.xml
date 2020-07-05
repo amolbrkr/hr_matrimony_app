@@ -6,7 +6,7 @@
     app:startDestination="@id/welcomeFragment">
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.halalrishtey.WelcomeFragment"
+        android:name="com.makeshaadi.WelcomeFragment"
         android:label="Welcome"
         tools:layout="@layout/fragment_welcome">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.halalrishtey.LoginFragment"
+        android:name="com.makeshaadi.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.halalrishtey.RegisterFragment"
+        android:name="com.makeshaadi.RegisterFragment"
         android:label="Register"
         tools:layout="@layout/fragment_register">
         <action
@@ -51,12 +51,12 @@
     </fragment>
     <fragment
         android:id="@+id/passwordResetFragment"
-        android:name="com.halalrishtey.PasswordResetFragment"
+        android:name="com.makeshaadi.PasswordResetFragment"
         android:label="fragment_password_reset"
         tools:layout="@layout/fragment_password_reset" />
     <fragment
         android:id="@+id/personalDetailsFragment"
-        android:name="com.halalrishtey.PersonalDetailsFragment"
+        android:name="com.makeshaadi.PersonalDetailsFragment"
         android:label="Personal Details"
         tools:layout="@layout/fragment_personal_details">
         <action
@@ -68,7 +68,7 @@
     </fragment>
     <fragment
         android:id="@+id/uploadImageFragment"
-        android:name="com.halalrishtey.UploadImageFragment"
+        android:name="com.makeshaadi.UploadImageFragment"
         android:label="fragment_upload_image"
         tools:layout="@layout/fragment_upload_image">
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/OTPVerificationFragment"
-        android:name="com.halalrishtey.OTPVerificationFragment"
+        android:name="com.makeshaadi.OTPVerificationFragment"
         android:label="fragment_otpverification"
         tools:layout="@layout/fragment_otpverification">
         <action

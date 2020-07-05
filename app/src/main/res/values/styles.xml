@@ -6,10 +6,19 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
+        <item name="colorBackgroundFloating">@color/secondaryColor</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:actionOverflowButtonStyle">@style/CustomActionOverflowButtonStyle</item>
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>
+        <item name="android:buttonBarNegativeButtonStyle">
+            @style/Widget.MaterialComponents.Button.TextButton.Dialog
+        </item>
+        <item name="android:buttonBarNeutralButtonStyle">
+            @style/Widget.MaterialComponents.Button.TextButton.Dialog
+        </item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.MaterialComponents.Button
+        </item>
     </style>
 
     <style name="CustomActionOverflowButtonStyle">
@@ -24,11 +33,6 @@
         <item name="android:paddingStart">28dp</item>
         <item name="android:paddingEnd">28dp</item>
         <item name="shapeAppearanceOverlay">@style/MyShapeAppearance</item>
-    </style>
-
-    <style name="CTAButtonInvertedStyle" parent="@style/CTAButtonStyle">
-        <item name="android:textColor">@color/primaryColor</item>
-        <item name="backgroundTint">#FFF</item>
     </style>
 
     <style name="IconOnlyButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
@@ -53,12 +57,4 @@
         <item name="cornerSizeBottomRight">24dp</item>
     </style>
 
-    <style name="MaterialTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="MaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="MaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

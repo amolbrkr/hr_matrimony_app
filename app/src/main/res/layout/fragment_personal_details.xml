@@ -6,43 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".PersonalDetailsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:padding="16dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/pdBackBtn"
-            style="@style/IconOnlyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_arrow_back"
-            app:iconTint="#000"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/pdTitleText"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="Personal details"
-            android:textColor="@color/primaryColor"
-            android:textSize="24sp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="16dp" />
+            android:gravity="center">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/pdSubtitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Please add your details below"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/pdTitleText" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pdBackBtn"
+                style="@style/IconOnlyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_arrow_back"
+                app:iconTint="#000"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/pdSubtitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:text="Please add your details below"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="16sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/pdTitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="Personal details"
+                android:textColor="@color/primaryColor"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="16dp" />
+        </RelativeLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImageView"
@@ -157,25 +164,25 @@
                 android:id="@+id/idProofImg"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
-                android:maxHeight="200dp"
-                android:padding="8dp"
                 android:layout_weight="0.4"
                 android:contentDescription="Uploaded ID Proof"
+                android:maxHeight="200dp"
+                android:padding="8dp"
                 android:src="@drawable/ph_gray" />
 
             <LinearLayout
-                android:layout_margin="8dp"
-                android:minWidth="64dp"
                 android:layout_width="0dp"
-                android:layout_weight="0.6"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0.6"
+                android:minWidth="64dp"
                 android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/uploadIdBtn"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:text="Upload ID Proof" />
 
                 <TextView
@@ -185,6 +192,14 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/tocCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:checked="false"
+            android:text="@string/app_tnc"
+            app:layout_constraintTop_toBottomOf="@id/idProofLayout" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/pdNextButton"
@@ -199,7 +214,7 @@
             android:theme="@style/Widget.MaterialComponents.Button"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/idProofLayout" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@id/tocCheckBox" />
+    </LinearLayout>
 </ScrollView>
 
