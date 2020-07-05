@@ -12,16 +12,17 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:gravity="center"
-        android:visibility="gone"
         android:orientation="vertical"
-        android:padding="32dp">
+        android:padding="32dp"
+        android:visibility="gone">
 
-        <ImageView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_margin="8dp"
-            android:contentDescription="You are Suspended!"
-            android:src="@drawable/block" />
+        <!--        Gives error saying block is not a path-->
+        <!--        <ImageView-->
+        <!--            android:layout_width="96dp"-->
+        <!--            android:layout_height="96dp"-->
+        <!--            android:layout_margin="8dp"-->
+        <!--            android:contentDescription="You are Suspended!"-->
+        <!--            android:src="@drawable/block" />-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,18 +52,18 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/toggleSearchBtn"
                 style="@style/IconOnlyButton"
-                android:contentDescription="Search Or Filter Profiles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="Search Or Filter Profiles"
                 android:tint="@color/primaryColor"
                 app:icon="@drawable/ic_search" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userImageView"
                 android:layout_width="30dp"
-                android:contentDescription="Profile Options"
                 android:layout_height="30dp"
                 android:layout_margin="8dp"
+                android:contentDescription="Profile Options"
                 android:src="@drawable/ph_gray" />
 
         </LinearLayout>
@@ -84,9 +85,9 @@
             android:layout_margin="8dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#FFF"
+            android:contentDescription="Enter Search Query"
             android:translationZ="100dp"
             android:visibility="gone"
-            android:contentDescription="Enter Search Query"
             app:endIconCheckable="true"
             app:endIconContentDescription="Filter your search"
             app:endIconDrawable="@drawable/ic_filter_list"
@@ -114,17 +115,34 @@
         android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@id/searchLayout">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/closeInfoBtn"
-            style="@style/IconOnlyButton"
-            android:contentDescription="Close Popup"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            app:icon="@drawable/ic_close"
-            app:iconTint="#FFF" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/infoTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:text="Subscription Plans"
+                android:textColor="#FFF"
+                android:textSize="18sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/closeInfoBtn"
+                style="@style/IconOnlyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:contentDescription="Close Popup"
+                app:icon="@drawable/ic_close"
+                app:iconTint="#FFF" />
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/infoContentText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="You are currently on the FREE plan, to get alot more benefits subscribe to one of our paid plans"

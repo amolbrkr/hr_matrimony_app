@@ -6,29 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <ImageView
-        android:id="@+id/searchNoResImg"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:contentDescription="No results from search"
-        android:src="@drawable/search"
-        app:layout_constraintBottom_toTopOf="@id/searchNoResText"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
-
     <TextView
-        android:id="@+id/searchNoResText"
+        android:id="@+id/hfNoResText"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:gravity="center"
-        android:text="No Found! We could not found any profiles for your search."
+        android:text="No profiles to show."
+        android:textColor="#DDD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchNoResImg"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/homeProgress"
@@ -48,5 +37,4 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

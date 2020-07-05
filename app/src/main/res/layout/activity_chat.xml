@@ -60,7 +60,9 @@
             android:id="@+id/messageRV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingVertical="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="64dp"
+            android:layout_marginBottom="64dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 

@@ -231,7 +231,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:hint="Organization Name"
+                android:hint="Profession"
                 app:startIconDrawable="@drawable/ic_account_balance">
 
                 <com.google.android.material.textfield.TextInputEditText
