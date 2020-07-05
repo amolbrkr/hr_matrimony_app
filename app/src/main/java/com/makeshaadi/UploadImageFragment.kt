@@ -2,9 +2,12 @@ package com.makeshaadi
 
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +22,7 @@ import com.google.firebase.storage.UploadTask
 import com.makeshaadi.services.StorageService
 import com.makeshaadi.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_upload_image.*
+import java.io.ByteArrayOutputStream
 
 
 class UploadImageFragment : Fragment() {
@@ -42,7 +46,6 @@ class UploadImageFragment : Fragment() {
         }
 
         uploadImg_button.setOnClickListener {
-
             if (imgUri != null) {
                 Toast.makeText(context, "Upload in progress...", Toast.LENGTH_SHORT).show()
                 uploadImg_button.isEnabled = false
@@ -51,7 +54,7 @@ class UploadImageFragment : Fragment() {
                 val ref = StorageService.imagesReference
                     .child("${System.currentTimeMillis()}.${getExt(imgUri!!)}")
 
-                ref.putFile(imgUri!!)
+                ref.putFile(getImageUri(requireContext(), uploadImg_imageView.croppedImage)!!)
                     .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> {
                         ref.downloadUrl.addOnCompleteListener {
                             if (it.isSuccessful) {
@@ -80,8 +83,9 @@ class UploadImageFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            prvHelpText.visibility = View.GONE
+            uploadImg_imageView.setImageUriAsync(data.data)
             imgUri = data.data
-            uploadImg_imageView.setImageURI(imgUri)
         }
     }
 
@@ -89,5 +93,17 @@ class UploadImageFragment : Fragment() {
         val contentResolver = activity?.contentResolver
         val mimeTypeMap = MimeTypeMap.getSingleton()
         return mimeTypeMap.getExtensionFromMimeType(contentResolver?.getType(uri))
+    }
+
+    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(
+            inContext.contentResolver,
+            inImage,
+            "Title",
+            null
+        )
+        return Uri.parse(path)
     }
 }
