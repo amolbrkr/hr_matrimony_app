@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,18 +12,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/swipeText"
+    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+        android:id="@+id/pageIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:text="Swipe left to continue!"
-        android:textColor="#111"
-        android:shadowColor="#AAA"
-        android:shadowDy="10.0"
-        android:layout_marginBottom="128dp"
-        android:textSize="18sp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        app:dotsColor="@color/primaryColor"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="12dp"
+        app:dotsSpacing="4dp"
+        app:dotsWidthFactor="2.5"
+        app:progressMode="true" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/swipeText"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginBottom="128dp"-->
+    <!--        android:shadowColor="#AAA"-->
+    <!--        android:shadowDy="10.0"-->
+    <!--        android:text="Swipe left to continue!"-->
+    <!--        android:textColor="#111"-->
+    <!--        android:textSize="18sp" />-->
 
     <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
     <!--        android:id="@+id/nextPageBtn"-->
@@ -31,10 +46,11 @@
     <!--        android:layout_alignParentEnd="true"-->
     <!--        android:layout_alignParentBottom="true"-->
     <!--        android:layout_margin="24dp"-->
-    <!--        app:borderWidth="0dp"-->
     <!--        android:backgroundTint="#FFF"-->
+    <!--        android:contentDescription="Next Screen"-->
     <!--        android:src="@drawable/ic_navigate_next"-->
-    <!--        android:tint="@color/primaryDarkColor" />-->
+    <!--        android:tint="@color/primaryDarkColor"-->
+    <!--        app:borderWidth="0dp" />-->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/getStartedBtn"
@@ -43,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="80dp"
         android:backgroundTint="#FFF"
         android:text="Get Started"
         android:textColor="@color/primaryColor"

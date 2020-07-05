@@ -10,7 +10,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -20,9 +19,9 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_margin="2dp"
+            android:contentDescription="Search filter options"
             android:src="@drawable/ic_filter_list"
-            android:tint="@color/primaryColor"
-            android:contentDescription="Search filter options" />
+            android:tint="@color/primaryColor" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,6 +43,13 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/appliedText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Applied Filters" />
+
+    <TextView
         android:id="@+id/ageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,17 +58,16 @@
         android:textColor="@color/primaryColor"
         android:textSize="18sp" />
 
-    <it.sephiroth.android.library.rangeseekbar.RangeSeekBar
-        android:id="@+id/ageRangeSeeker"
-        style="@style/Base.Sephiroth.Widget.RangeSeekBar"
+    <io.apptik.widget.MultiSlider
+        android:id="@+id/ageSlider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:max="27"
-        android:thumbTint="@color/secondaryColor"
-        app:range_progress_endValue="45"
-        app:range_progress_startEnd_minDiff="5"
-        app:range_progress_startValue="0" />
+        app:scaleStep="1"
+        app:stepsThumbsApart="5"
+        app:thumbNumber="2"
+        app:thumbValue1="18"
+        app:thumbValue2="45" />
 
     <TextView
         android:id="@+id/heightText"
@@ -73,17 +78,16 @@
         android:textColor="@color/primaryColor"
         android:textSize="18sp" />
 
-    <it.sephiroth.android.library.rangeseekbar.RangeSeekBar
-        android:id="@+id/heightRangeSeeker"
-        style="@style/Base.Sephiroth.Widget.RangeSeekBar"
+    <io.apptik.widget.MultiSlider
+        android:id="@+id/heightSlider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:max="5"
-        android:thumbTint="@color/secondaryColor"
-        app:range_progress_endValue="5"
-        app:range_progress_startEnd_minDiff="1"
-        app:range_progress_startValue="0" />
+        app:scaleStep="1"
+        app:stepsThumbsApart="30"
+        app:thumbNumber="2"
+        app:thumbValue1="122"
+        app:thumbValue2="227" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchLocInp"
@@ -112,10 +116,10 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/applyFilterBtn"
         style="@style/CTAButtonStyle"
-        android:backgroundTint="#FFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:backgroundTint="#FFF"
         android:text="Apply Filter"
         android:textColor="@color/secondaryColor" />
 
