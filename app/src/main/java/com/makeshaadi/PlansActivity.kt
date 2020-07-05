@@ -46,7 +46,7 @@ class PlansActivity : AppCompatActivity(), PaymentResultListener {
 
         //Payment Gateway
         checkout = Checkout()
-        checkout.setKeyID("rzp_test_dvq5JlDApXAZWu")
+        checkout.setKeyID("rzp_live_KNKY3eOWZH3p4g")
         Checkout.preload(applicationContext)
     }
 
