@@ -15,8 +15,8 @@ android {
         applicationId "com.makeshaadi"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 101
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -36,6 +36,10 @@ android {
 
 dependencies {
     def nav_version = "2.2.1"
+
+    //For Image cropping https://github.com/ArthurHub/Android-Image-Cropper
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
 
     //For viewpager dots
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'

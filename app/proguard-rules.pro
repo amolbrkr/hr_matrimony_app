@@ -35,3 +35,7 @@
 -keepclasseswithmembers class * {
   public void onPayment*(...);
 }
+
+#For image cropping library
+-keep class androidx.appcompat.widget.** { *; }
+
