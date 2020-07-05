@@ -24,9 +24,15 @@ import com.makeshaadi.models.ProfilePicVisibility
 import com.makeshaadi.models.User
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 object CustomUtils {
+
+    fun getMeetupReciever(current: String, meetup: MeetupItem): String {
+        return if (current == meetup.sourceId) meetup.targetId
+        else current
+    }
 
     fun getMeetupInitiator(current: String, meetup: MeetupItem): String {
         return if (current == meetup.sourceId) current
@@ -193,7 +199,8 @@ object CustomUtils {
             currentPlan = convertToPlan(
                 doc.get("currentPlan") as Map<String, Any>?
             ),
-            qualDetails = doc.get("qualDetails").toString()
+            qualDetails = doc.get("qualDetails").toString(),
+            directContacts = doc.get("directContacts") as ArrayList<String>
         )
     }
 
