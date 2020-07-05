@@ -30,6 +30,7 @@ class MeetupFragment : Fragment() {
         val v = inflater.inflate(R.layout.fragment_meetup, container, false)
         meetups = ArrayList()
         adapter = MeetupAdapter(
+            userVM.currentUid.value!!,
             meetups,
             { id -> cancelMeetup(id) },
             { current, target, id -> reschedMeetup(current, target, id) })
