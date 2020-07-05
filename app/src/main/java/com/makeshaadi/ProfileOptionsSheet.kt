@@ -97,7 +97,15 @@ class ProfileOptionsSheet(val user: User) : BottomSheetDialogFragment() {
             ).show()
 
             if (currentPlan.dcCount > 0) {
-                userVM.decDcCount(userVM.currentUid.value!!)
+                if (!userVM.currentUser.value!!.directContacts.contains(user.uid)) {
+                    //If User is contacting target for the first time.
+                    userVM.recordDirectContact(
+                        userVM.currentUid.value!!,
+                        user.uid!!
+                    )
+                    userVM.decDcCount(userVM.currentUid.value!!)
+                }
+
                 val intent = Intent(Intent.ACTION_DIAL)
                 intent.data = Uri.parse("tel:${user.phoneNumber}")
                 startActivity(intent)
