@@ -75,16 +75,16 @@ class MeetupDetailActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         if (data != null && data!!.locLat != 0.0 && data!!.locLong != 0.0) {
             val loc = LatLng(data!!.locLat, data!!.locLong)
-            val userCircle = googleMap!!.addCircle(
-                CircleOptions().center(loc).radius(1000.0)
-                    .strokeWidth(10.0F)
-                    .strokeColor(Color.GREEN).fillColor(Color.GREEN).clickable(true)
-            )
+//            val userCircle = googleMap!!.addCircle(
+//                CircleOptions().center(loc).radius(1000.0)
+//                    .strokeWidth(10.0F)
+//                    .strokeColor(Color.GREEN).fillColor(Color.GREEN).clickable(true)
+//            )
 
             userAuthVM.locationUpdates.observe(this, Observer {
                 if (it != null) {
 
-                    userCircle.center = LatLng(it.latitude, it.longitude)
+//                    userCircle.center = LatLng(it.latitude, it.longitude)
 
 //                    val path: MutableList<List<LatLng>> = ArrayList()
 //                    val urlDirections =
@@ -127,11 +127,11 @@ class MeetupDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
             })
 
-            googleMap.addMarker(
+            googleMap?.addMarker(
                 MarkerOptions().position(loc)
                     .title("Meetup Location")
             )
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 18.0f))
+            googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 18.0f))
         }
     }
 }
