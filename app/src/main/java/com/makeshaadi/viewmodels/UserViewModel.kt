@@ -157,4 +157,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     fun createPayment(userId: String, planId: String, paymentId: String) =
         UserRepository.createPayment(userId, planId, paymentId)
 
+    fun recordDirectContact(currentId: String, targetId: String) =
+        UserRepository.recordDirectContact(currentId, targetId)
 }

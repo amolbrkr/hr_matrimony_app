@@ -703,4 +703,14 @@ object UserRepository {
             }
 
     }
+
+    fun recordDirectContact(currentUserId: String, targetUserId: String) {
+        DatabaseService.getDbInstance()
+            .collection("users")
+            .document(currentUserId)
+            .update(mapOf("directContacts" to FieldValue.arrayUnion(targetUserId)))
+            .addOnSuccessListener {
+                Log.d("UserRepo", "Direct Contact Recorded: $targetUserId")
+            }
+    }
 }

@@ -60,7 +60,8 @@ data class User(
     var profilePicVisibility: ProfilePicVisibility = ProfilePicVisibility.Public,
     var photoList: ArrayList<String> = ArrayList(),
     var currentPlan: PlanItem? = null,
-    var planStart: Long = 0
+    var planStart: Long = 0,
+    var directContacts: ArrayList<String> = ArrayList()
 ) : Parcelable {
     constructor(firebaseUser: FirebaseUser) :
             this(uid = firebaseUser.uid, email = firebaseUser.email!!)
