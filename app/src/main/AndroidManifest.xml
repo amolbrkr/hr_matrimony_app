@@ -25,7 +25,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCsDLdcuW_HeLU0Uus4ppE4M8-uwZhED-k" />
+            android:value="Replace with actual key" />
 
         <service
             android:name="com.makeshaadi.FCMService"
